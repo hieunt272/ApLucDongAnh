@@ -1,0 +1,192 @@
+﻿@model ApLucDongAnh.ViewModel.RecruitViewModel
+@{
+    ViewBag.Title = "Tuyển dụng";
+    ViewBag.Description = Model.Recruit.Description;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Recruit");
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-recruit" @if (Model.Recruit.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/recruits/", Model.Recruit.CoverImage) + ")'") }>
+    <h1>Tuyển dụng</h1>
+    <div class="description">
+        @Model.Recruit.Description
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Tuyển dụng
+        </li>
+    </ol>
+</section>
+<section class="recruit">
+    <div class="ability">
+        <div class="container">
+            <div class="title-section text-center">
+                Khả năng là vô tận
+            </div>
+            <div class="sub-title">
+                @Model.Recruit.Ability
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ability-item">
+                        <div class="ability-img">
+                            <img src="~/Content/images/img-main/icon-ability.png" alt="Ability" />
+                        </div>
+                        <div class="name">
+                            Môi trường thân thiện
+                        </div>
+                        <div class="description">
+                            Một môi trường thân thiện và linh hoạt với nhiều quyền tự chủ và công việc có ý nghĩa cho tất cả mọi người.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ability-item">
+                        <div class="ability-img">
+                            <img src="~/Content/images/img-main/icon-ability.png" alt="Ability" />
+                        </div>
+                        <div class="name">
+                            Giáo dục cá nhân
+                        </div>
+                        <div class="description">
+                            Tài trợ cho các khóa học và đào tạo liên quan đến công việc để tăng tốc phát triển chuyên môn của bạn.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ability-item">
+                        <div class="ability-img">
+                            <img src="~/Content/images/img-main/icon-ability (2).png" alt="Ability" />
+                        </div>
+                        <div class="name">
+                            Phúc lợi tiêu chuẩn
+                        </div>
+                        <div class="description">
+                            Bảo hiểm xã hội và các chế độ nghỉ mát, lễ tết đấy đủ
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ability-item">
+                        <div class="ability-img">
+                            <img src="~/Content/images/img-main/icon-ability (3).png" alt="Ability" />
+                        </div>
+                        <div class="name">
+                            Đào tạo cá nhân
+                        </div>
+                        <div class="description">
+                            phát triển nhiều mặt với môi trường cọ xát thực tế
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recruit-intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="box-content">
+                        <div class="title-section">
+                            Năng lực sản xuất
+                        </div>
+                        <div class="about-content">
+                            @Html.Raw(Model.Recruit.Position)
+                        </div>
+                    </div>
+                </div>
+                @if (Model.Recruit.Image != null)
+                {
+                    <img data-src="@Path.Combine("/images/recruits/", Model.Recruit.Image)" src="~/Content/images/img-main/base64.gif" alt="Ảnh tuyển dụng" class="recruit-img lazyload" />
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.RecruitPositions.Any())
+    {
+        var fisrt = Model.RecruitPositions.FirstOrDefault();
+        var i = 2;
+        <div class="recruit-position">
+            <div class="container">
+                <div class="title-section text-center">
+                    vị trí tuyển dụng
+                </div>
+                <div class="desc-section">
+                    Nếu bạn đọc được những dòng này, cảm ơn bạn đã quan tâm đến cơ hội ứng tuyển tại Công ty Cổ phần thiết bị Áp lực Đông Anh.
+                </div>
+                <div class="accordion" id="recruitPosition">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button class="btn-block text-left" type="button" data-toggle="collapse" data-target="#recruit-1" aria-expanded="true">
+                                    <div class="toggle-dropdown">
+                                        <i class="far fa-chevron-down"></i>
+                                    </div>
+                                    @fisrt.PositionName
+                                    <span>@fisrt.Introduction</span>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="recruit-1" class="collapse show" data-parent="#recruitPosition">
+                            <div class="card-body">
+                                @if (fisrt.Body != null)
+                                {
+                                    @Html.Raw(fisrt.Body)
+                                    <a href="@Url.Action("Contact")" class="btn-main-2">
+                                        <span>ỨNG TUYỂN</span>
+                                        <i class="far fa-long-arrow-right"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.RecruitPositions.Skip(1))
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="mb-0">
+                                    <button class="btn-block text-left" type="button" data-toggle="collapse" data-target="#recruit-@i" aria-expanded="false">
+                                        <div class="toggle-dropdown">
+                                            <i class="far fa-chevron-down"></i>
+                                        </div>
+                                        @item.PositionName
+                                        <span>@item.Introduction</span>
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="recruit-@i" class="collapse" data-parent="#recruitPosition">
+                                <div class="card-body">
+                                    @if (item.Body != null)
+                                    {
+                                        @Html.Raw(item.Body)
+                                        <a href="@Url.Action("Contact")" class="btn-main-2">
+                                            <span>ỨNG TUYỂN</span>
+                                            <i class="far fa-long-arrow-right"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</section>

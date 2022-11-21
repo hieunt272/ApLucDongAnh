@@ -1,0 +1,127 @@
+﻿@model ApLucDongAnh.ViewModel.FooterViewModel
+@using ApLucDongAnh.Models
+@{
+    var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
+}
+
+<section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="logo">
+                    @if (config.Image != null)
+                    {
+                        <img data-src="@Path.Combine("/images/configs/", config.Image)" src="~/Content/images/img-main/base64.gif" alt="Logo" class="lazyload" />
+                    }
+                </div>
+                @if (config.InfoFooter != null)
+                {
+                    <div class="footer-info">
+                        @Html.Raw(config.InfoFooter)
+                    </div>
+                }
+            </div>
+            <div class="col-lg-2">
+                <div class="footer-title">
+                    thông tin
+                </div>
+                <ul class="ul-reset nav-footer">
+                    <li>
+                        <a href="@Url.Action("Introduce")">
+                            Giới thiệu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("AllProduct")">
+                            Sản phẩm
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("AllService")">
+                            Dịch vụ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("AllProject")">
+                            Dự án
+                        </a>
+                    </li>
+                    @if (Model.ArticleCategories.Any())
+                    {
+                        foreach (var item in Model.ArticleCategories)
+                        {
+                            <li>
+                                <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    }
+                    <li>
+                        <a href="@Url.Action("Recruit")">
+                            Tuyển dụng
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <div class="footer-title">
+                    hướng dẫn mua hàng
+                </div>
+                @if (Model.Policies.Any())
+                {
+                    <ul class="ul-reset nav-footer">
+                        @foreach (var item in Model.Policies)
+                        {
+                            <li>
+                                <a href="@Url.Action("ArticleDetail", new { url = item.Url })">
+                                    @item.Subject
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-lg-3">
+                <div class="footer-title">
+                    Fanpage
+                </div>
+                @if (config.Facebook != null)
+                {
+                    <div class="embed-responsive embed-responsive-16by9 fanpage">
+                        <div class="fb-page" data-href="@config.Facebook" data-tabs="" data-width="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <blockquote cite="@config.Facebook" class="fb-xfbml-parse-ignore">
+                                <a href="@config.Facebook">@config.Title</a>
+                            </blockquote>
+                        </div>
+                    </div>
+                }
+                <div class="footer-title mt-3">
+                    Liên kết mạng xã hội
+                </div>
+                <div class="social">
+                    <a href="@config.Facebook" target="_blank" rel="nofollow">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="@config.Instagram" target="_blank" rel="nofollow">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="@config.Youtube" target="_blank" rel="nofollow">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="copyright">
+    © Copyright by Aplucdonganh.com 2022. Designed by Vicogroup.vn
+</section>
+<section class="overlay"></section>
+<section class="btn-scroll" title="Go to top">
+    <i class="fal fa-arrow-up"></i>
+</section>
+<a href="https://zalo.me/@config.Zalo" target="_blank" rel="nofollow" class="zalo">
+    <img src="~/Content/images/img-main/zalo-logo.png" alt="Zalo" />
+</a>
+<a href="tel:@config.Hotline" class="suntory-alo-phone suntory-alo-green" id="suntory-alo-phoneIcon" style="left: 0; bottom: 0;"><div class="suntory-alo-ph-circle"></div><div class="suntory-alo-ph-circle-fill"></div><div class="suntory-alo-ph-img-circle"><i class="fal fa-phone-alt"></i></div><div class="tel"><p class="fone">@config.Hotline</p></div> </a>

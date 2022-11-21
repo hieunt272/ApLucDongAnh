@@ -1,0 +1,177 @@
+﻿@model ApLucDongAnh.ViewModel.ProductDetailViewModel
+@using ApLucDongAnh.Models
+@{
+    var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
+    ViewBag.Title = Model.Product.TitleMeta ?? Model.Product.Name;
+    ViewBag.Description = Model.Product.DescriptionMeta ?? Model.Product.ShortDescription;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ProductDetail", new { url = Model.Product.Url });
+
+    if (Model.Product.ListImage != null)
+    {
+        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/products/", Model.Product.ListImage.Split(',')[0]);
+    }
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-product" @if (Model.Product.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/products/", Model.Product.CoverImage) + ")'") }>
+    <div class="heading">Chi Tiết Sản Phẩm</div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("ProductCategory", "Home", new { url = Model.Product.ProductCategory.Url })">
+                @Model.Product.ProductCategory.CategoryName
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @Model.Product.Name
+        </li>
+    </ol>
+</section>
+<section class="product-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                @if (Model.Product.ListImage != null)
+                {
+                    var arrImg = Model.Product.ListImage.Split(',');
+                    <div class="row list-img">
+                        <div class="col-lg-2">
+                            <div class="slider-nav">
+                                @foreach (var image in arrImg)
+                                {
+                                    <div class="slider-nav-item">
+                                        <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="slider-for">
+                                @foreach (var image in arrImg)
+                                {
+                                    <div class="slider-for-item">
+                                        <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
+                                        <a href="@Path.Combine("/images/products/", image)" data-fancybox="gallery" class="gallery">
+                                            <i class="far fa-search"></i>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6">
+                <h1 class="product-name">
+                    @Model.Product.Name
+                </h1>
+                <div class="product-info">
+                    @Html.Raw(Model.Product.Infomation)
+                </div>
+                <div class="product-contact">
+                    <div data-toggle="modal" data-target="#order-form" class="order-form">
+                        <img src="~/Content/images/img-main/icon-contact.png" />
+                        Liên hệ
+                    </div>
+                    <a href="tel:@config.Hotline" class="btn-phone">
+                        <i class="fas fa-phone-volume"></i>
+                        Gọi Ngay
+                    </a>
+                </div>
+                <div class="share">
+                    <ul class="d-flex align-items-center ul-reset">
+                        <li class="mr-3">Chia sẻ:</li>
+                        <li><button class="facebook" onclick="window.open('https://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;t='+encodeURIComponent(document.title));return false"><img src="~/Content/images/img-main/facebook.png" /></button></li>
+                        <li><button class="google-plus" onclick="window.open('https://myaccount.google.com/?url='+encodeURIComponent(location.href)+'&amp;t='+encodeURIComponent(document.title));return false"><img src="~/Content/images/img-main/google-plus.png" /></button></li>
+                        <li><button class="twitter" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href)+'&amp;text='+encodeURIComponent(document.title));return false"><img src="~/Content/images/img-main/twitter.png"></button></li>
+                        <li><button class="mess" onclick="window.open('https://www.messenger.com/?url='+encodeURIComponent(location.href)+'&amp;t='+encodeURIComponent(document.title));return false"><img src="~/Content/images/img-main/mess.png"></button></li>
+                        <li><button class="pinterest" onclick="window.open('https://www.pinterest.com/?url='+encodeURIComponent(location.href)+'&amp;t='+encodeURIComponent(document.title));return false"><img src="~/Content/images/img-main/pinterest.png"></button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <button class="nav-link active" data-toggle="pill" data-target="#Description" aria-selected="true">Mô tả sản phẩm</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-toggle="pill" data-target="#Specification" aria-selected="false">Chi tiết kĩ thuật</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Description">
+                @if (Model.Product.Description != null)
+                {
+                    @Html.Raw(Model.Product.Description)
+                }
+                else
+                {
+                    <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                }
+            </div>
+            <div class="tab-pane fade" id="Specification">
+                @if (Model.Product.Specification != null)
+                {
+                    @Html.Raw(Model.Product.Specification)
+                }
+                else
+                {
+                    <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                }
+            </div>
+        </div>
+        @if (Model.Products.Any())
+        {
+            <div class="related-section">
+                <div class="title-section text-center">
+                    SẢN PHẨM LIÊN QUAN
+                </div>
+                <div class="related-product-list">
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="main-item product-item">
+                            @if (item.Hot == true)
+                            {
+                                <div class="product-hot">Best Seller</div>
+                            }
+                            <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="main-img">
+                                @if (item.ListImage != null)
+                                {
+                                    <img src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" alt="@item.Name" />
+                                }
+                            </a>
+                            <div class="body">
+                                <div class="subject truncate">
+                                    <a href="@Url.Action("ProductDetail", new { url = item.Url })" title="@item.Name">
+                                        @item.Name
+                                    </a>
+                                </div>
+                                <div class="desc truncate" title="@item.ShortDescription">
+                                    @item.ShortDescription
+                                </div>
+                                <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="btn-view">
+                                    TÌM HIỂU THÊM
+                                    <i class="far fa-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@Html.Action("OrderForm")
+
+@section scripts {
+    <script>
+        productDetail();
+    </script>
+}

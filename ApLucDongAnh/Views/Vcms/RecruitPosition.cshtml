@@ -1,0 +1,57 @@
+﻿@model ApLucDongAnh.Models.RecruitPosition
+@{
+    ViewBag.Title = "Thêm vị trí";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Thêm vị trí</h2>
+@if (ViewBag.ArticleCat == "success")
+{
+    <div id="AlertBox" class="alert alert-success"><strong>Thêm mới vị trí thành công</strong></div>
+}
+@if (ViewBag.ArticleCat == "update")
+{
+    <div id="AlertBox" class="alert alert-success"><strong>Cập nhật vị trí thành công</strong></div>
+}
+<a class="btn quick-link" id="create-cat" href="#list-cat"><i class="far fa-list mr-1"></i> Danh sách vị trí</a>
+<div class="box_content">
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            @using (Html.BeginForm("RecruitPosition", "Vcms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true)
+                <table class="form_table form-table-cat">
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.PositionName)</td>
+                        <td class="form_text">@Html.EditorFor(a => Model.PositionName)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.Introduction)</td>
+                        <td class="form_text">@Html.EditorFor(a => Model.Introduction)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.Body)</td>
+                        <td class="form_text">@Html.EditorFor(a => Model.Body)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.Sort)</td>
+                        <td class="form_text">@Html.EditorFor(a => Model.Sort)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.Active)</td>
+                        <td class="form_text">@Html.CheckBoxFor(a => Model.Active, new { @checked = "checked" })</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name"></td>
+                        <td class="form_text">
+                            <input type="submit" class="btn quick-link" value="Thêm mới" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+        <div class="col-sm-12 col-lg-12">
+            @Html.Action("ListRecruitPosition", "Vcms")
+        </div>
+    </div>
+</div>

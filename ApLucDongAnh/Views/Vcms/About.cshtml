@@ -1,0 +1,70 @@
+﻿@model ApLucDongAnh.Models.About
+@{
+    ViewBag.Title = "Thông tin giới thiệu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Thông tin giới thiệu</h2>
+<a class="btn quick-link" href="@Url.Action("Index","Vcms")"><i class="far fa-list mr-1"></i> Quay lại trang chủ</a>
+<div class="box_content">
+    @if (ViewBag.Result == "success")
+    {
+        <div id="AlertBox" class="alert alert-success"><strong>Cập nhật thông tin thành công</strong></div>}
+    @using (Html.BeginForm("About", "Vcms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(a => a.Id)
+        <table class="form_table">
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.CoverImage)</td>
+                <td class="form_text">@Html.TextBoxFor(model => model.CoverImage, new { type = "file" })</td>
+            </tr>
+            @if (Model.CoverImage != null)
+            {
+                <tr>
+                    <td class="form_name"></td>
+                    <td class="form_text"><img class="img-border" src="@Path.Combine("/images/abouts/", Model.CoverImage)?w=150" /></td>
+                </tr>
+            }
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.ProductionImage)</td>
+                <td class="form_text">@Html.TextBoxFor(model => model.ProductionImage, new { type = "file" })</td>
+            </tr>
+            @if (Model.ProductionImage != null)
+            {
+                <tr>
+                    <td class="form_name"></td>
+                    <td class="form_text"><img class="img-border" src="@Path.Combine("/images/abouts/", Model.ProductionImage)?w=150" /></td>
+                </tr>
+            }
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Description)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Body)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Body)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.SuMenh)</td>
+                <td class="form_text">@Html.EditorFor(model => model.SuMenh)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.TamNhin)</td>
+                <td class="form_text">@Html.EditorFor(model => model.TamNhin)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.GiaTriCotLoi)</td>
+                <td class="form_text">@Html.EditorFor(model => model.GiaTriCotLoi)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Production)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Production)</td>
+            </tr>
+            <tr>
+                <td class="form_name"></td>
+                <td class="form_text"><input type="submit" class="btn quick-link" value="Cập nhật" /></td>
+            </tr>
+        </table>
+    }
+</div>

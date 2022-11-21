@@ -1,0 +1,90 @@
+﻿@model ApLucDongAnh.ViewModel.ListOrderViewModel
+@{
+    ViewBag.Title = "Danh sách nhận báo giá";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh sách nhận báo giá";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Danh sách nhận báo giá</h2>
+<a class="btn quick-link" href="@Url.Action("Index","Vcms")"><i class="fal fa-home mr-1"></i>Về trang chính</a>
+<div class="box_content">
+    <div class="form-search-list">
+        <form action="@Url.Action("ListOrder")" method="get" class="ml-0">
+            <p>
+                Tìm theo số điện thoại @Html.TextBoxFor(a => a.Name, new { @class = "w300" })
+                <button type="submit" class="btn-search">Tìm kiếm</button>
+            </p>
+        </form>
+    </div>
+    <p>Có tổng số <strong>@Model.Orders.TotalItemCount</strong> số khách hàng liên hệ</p>
+    <table class="list_table tablecenter table-striped">
+        <tbody>
+            <tr>
+                <th style="width: 100px">Ngày gửi</th>
+                <th style="width: 150px">Khách hàng</th>
+                <th style="width: 150px">Điện thoại</th>
+                <th style="width: 150px">Email</th>
+                <th>Nội dung</th>
+                <th>Sản phẩm</th>
+                <th style="width: 60px"></th>
+            </tr>
+            @foreach (var order in Model.Orders)
+            {
+                <tr data-id="@order.Id">
+                    <td>@order.CreateDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <strong>@order.CustomerInfo.FullName</strong>
+                    </td>
+                    <td>@order.CustomerInfo.Mobile</td>
+                    <td>@order.CustomerInfo.Email</td>
+                    <td>@order.CustomerInfo.Body</td>
+                    <td class="text-left">
+                        @foreach (var item in Model.Products.Where(l => l.Id == order.ProductId))
+                        {
+                            <strong>Tên sản phẩm: </strong>@item.Name;<br />
+                            <strong><a href="@Url.Action("ProductDetail","Home", new { url = item.Url})">Đường dẫn đến trang sản phẩm</a></strong>
+                        }
+                    </td>
+
+
+                    <td><a href="javascript:;" onclick="deleteOrder('@order.Id')">Xóa</a></td>
+                </tr>
+            }
+            @if (Model.Orders.PageCount > 1)
+            {
+                <tr>
+                    <td colspan="7">@Html.PagedListPager(Model.Orders, page => Url.Action("ListOrder", new { page, name = Model.Name }))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        function deleteOrder(id) {
+            if (confirm("Bạn có chắc chắn xóa liên hệ này không?")) {
+                $.post("/Contact/DeleteOrder", { orderId: id }, function (data) {
+                    if (data) {
+                        $.toast({
+                            text: 'Xóa liên hệ thành công',
+                            position: 'bottom-right',
+                            icon: 'success',
+                        })
+                        $("tr[data-id='" + id + "']").fadeOut();
+                    }
+                    else {
+                        $.toast({
+                            text: 'Quá trình thực hiện không thành công. Hãy thử lại',
+                            icon: 'error',
+                        })
+                    }
+                });
+            }
+        }</script>
+}

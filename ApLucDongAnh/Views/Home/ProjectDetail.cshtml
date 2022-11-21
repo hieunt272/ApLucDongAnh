@@ -1,0 +1,185 @@
+﻿@model ApLucDongAnh.ViewModel.ProjectDetailViewModel
+@{
+    ViewBag.Title = Model.Project.TitleMeta ?? Model.Project.ProjectName;
+    ViewBag.Description = Model.Project.DescriptionMeta ?? Model.Project.Description;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ProjectDetail", new { url = Model.Project.Url });
+    if (Model.Project.ListImage != null)
+    {
+        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/projects/", Model.Project.ListImage.Split(',')[0]);
+    }
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-project" @if (Model.Project.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/projects/", Model.Project.CoverImage) + ")'") }>
+    <h1>@Model.Project.ProjectName</h1>
+    <div class="description">
+        @Model.Project.Description
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("ProjectCategory", "Home", new { url = Model.Project.ProjectCategory.Url })">
+                @Model.Project.ProjectCategory.CategoryName
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @Model.Project.ProjectName
+        </li>
+    </ol>
+</section>
+<section class="project-detail">
+    <div class="container">
+        @if (Model.Project.ListImage != null)
+        {
+            var arrImage = Model.Project.ListImage.Split(',');
+            <div class="project-img-list">
+                @foreach (var image in arrImage)
+                {
+                    <a href="@Path.Combine("/images/projects/", image)" data-fancybox="gallery" class="project-img-item">
+                        <img src="@Path.Combine("/images/projects/", image)" alt="@Model.Project.ProjectName" />
+                    </a>
+                }
+            </div>
+        }
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="box-border">
+                    <div class="title">
+                        Thông Tin Dự Án
+                    </div>
+                    <ul class="ul-reset project-info">
+                        <li>
+                            <div class="project-label">
+                                <i class="fas fa-user-circle"></i>
+                                Khách hàng:
+                            </div>
+                            <span>@Model.Project.Client</span>
+                        </li>
+                        <li>
+                            <div class="project-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                Ngày bắt đầu dự án:
+                            </div>
+                            <span>@Model.Project.StartDate</span>
+                        </li>
+                        <li>
+                            <div class="project-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                Ngày kết thúc dự án:
+                            </div>
+                            <span>@Model.Project.EndDate</span>
+                        </li>
+                        <li>
+                            <div class="project-label">
+                                <i class="fas fa-box"></i>
+                                Sản Phẩm:
+                            </div>
+                            @if (Model.Project.Product != null)
+                            {
+                                <a href="@Url.Action("ProductDetail", new { url = Model.Project.Product.Url })">@Model.Project.Product.Name</a>
+                            }
+                        </li>
+                        <li>
+                            <div class="project-label">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Địa điểm:
+                            </div>
+                            <span>@Model.Project.Place</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-heading">
+                        LET’S START WORK TOGETHER
+                    </div>
+                    <div class="text">
+                        Hãy cho chúng tôi đồng hành cùng bạn <br />
+                        Hãy gọi ngay cho chúng tôi hoặc kết nối trực tiếp qua Zalo để có câu trả lời nhanh nhất cho nhu cầu anh chị cần nhé
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE THẢO
+                        <a href="tel:0968158598">0968.158.598</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE LINH
+                        <a href="tel:0961568199">0961.568.199</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE HÀ
+                        <a href="tel:0981851268">0981.851.268</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact")" class="contact-us">
+                    <span>LIÊN HỆ VỚI CHÚNG TÔI</span>
+                </a>
+            </div>
+            <div class="col-lg-8">
+                <div class="content-detail">
+                    @Html.Raw(Model.Project.Body)
+                </div>
+                @if (Model.Previous != null || Model.Next != null)
+                {
+                    <div class="article-previous-next">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex align-items-center">
+                                @if (Model.Previous != null)
+                                {
+                                    <div class="article-prev">
+                                        <a href="@Url.Action("ProjectDetail", new { url = Model.Previous.Url })" class="article-img">
+                                            @if (Model.Previous.ListImage != null)
+                                            {
+                                                <img data-src="@Path.Combine("/images/projects/", Model.Previous.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.ProjectName" class="lazyload" />
+                                            }
+                                            <i class="far fa-long-arrow-left"></i>
+                                        </a>
+                                        <div class="body">
+                                            <span>BÀI TRƯỚC</span>
+                                            <a href="@Url.Action("ProjectDetail", new { url = Model.Previous.Url })" class="subject">
+                                                @Model.Previous.ProjectName
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            @if (Model.Next != null)
+                            {
+                                <div class="col-lg-6 d-flex justify-content-end align-items-center">
+                                    <div class="article-next">
+                                        <div class="body">
+                                            <span>BÀI SAU</span>
+                                            <a href="@Url.Action("ProjectDetail", new { url = Model.Next.Url })" class="subject">
+                                                @Model.Next.ProjectName
+                                            </a>
+                                        </div>
+                                        <a href="@Url.Action("ProjectDetail", new { url = Model.Next.Url })" class="article-img">
+                                            @if (Model.Next.ListImage != null)
+                                            {
+                                                <img data-src="@Path.Combine("/images/projects/", Model.Next.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.ProjectName" class="lazyload" />
+                                            }
+                                            <i class="far fa-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        projectDetail();
+    </script>
+}

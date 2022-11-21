@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ApLucDongAnh.Models.RecruitPosition>
+
+<table class="list_table tablecenter mb-4" id="list-cat">
+    <tr>
+        <th>STT</th>
+        <th>Vị trí</th>
+        <th>Giới thiệu</th>
+        <th>Hoạt động</th>
+        <th style="width: 160px"></th>
+    </tr>
+    <tbody id="sortable-cat">
+        @foreach (var recruitPosition in Model)
+        {
+            <tr data-id="@recruitPosition.Id">
+                <td style="width: 120px;">
+                    <input type="number" name="Sort" value="@recruitPosition.Sort" class="form_control mb-0" />
+                </td>
+                <td class="left"><strong>@recruitPosition.PositionName</strong></td>
+                <td>@recruitPosition.Introduction</td>
+                <td>@Html.EditorFor(a => recruitPosition.Active, new { htmlAttributes = new { id = "Active" } })</td>
+                <td>
+                    <a href="javascript:;" onclick="updateRecruitPosition('@recruitPosition.Id')">Cập nhật - </a>
+                    @Html.ActionLink("Sửa", "UpdateRecruitPosition", new { recruitId = recruitPosition.Id }) -
+                    <a href="javascript:;" onclick="deleteRecruitPosition('@recruitPosition.Id')" style="color: red">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    function deleteRecruitPosition(id) {
+        if (confirm("Bạn có chắc chắn xóa vị trí này không?")) {
+            $.post("/Vcms/DeleteRecruitPosition", { recruitId: id }, function (data) {
+                if (data) {
+                    $.toast({
+                        text: 'Đang xóa danh mục',
+                        position: 'bottom-right',
+                        icon: 'success',
+                    })
+                    $("tr[data-id='" + id + "']").fadeOut();
+                } else {
+                    $.toast({
+                        text: 'Quá trình thực hiện không thành công. Hãy thử lại',
+                        icon: 'error',
+                    })
+                }
+            });
+        }
+    }
+
+    function updateRecruitPosition(id) {
+        var divId = $("tr[data-id='" + id + "']");
+        var sort = divId.find("input[name=Sort]").val();
+        var active = divId.find("input#Active").prop("checked");
+
+        $.post("/Vcms/QuickUpdate", { recruitId: id, sort, active}, function (data) {
+            if (data) {
+                $.toast({
+                    text: 'Cập nhật thành công',
+                    position: 'bottom-right',
+                    icon: 'success',
+                })
+            } else {
+                $.toast({
+                    text: 'Quá trình thực hiện không thành công. Hãy thử lại',
+                    icon: 'error',
+                })
+            }
+        });
+    }
+</script>

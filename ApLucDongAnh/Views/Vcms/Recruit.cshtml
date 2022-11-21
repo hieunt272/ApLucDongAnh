@@ -1,0 +1,58 @@
+﻿@model ApLucDongAnh.Models.Recruit
+@{
+    ViewBag.Title = "Thông tin tuyển dụng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Thông tin tuyển dụng</h2>
+<a class="btn quick-link" href="@Url.Action("Index","Vcms")"><i class="far fa-list mr-1"></i> Quay lại trang chủ</a>
+<div class="box_content">
+    @if (ViewBag.Result == "success")
+    {
+        <div id="AlertBox" class="alert alert-success"><strong>Cập nhật thông tin thành công</strong></div>}
+    @using (Html.BeginForm("Recruit", "Vcms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(a => a.Id)
+        <table class="form_table">
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.CoverImage)</td>
+                <td class="form_text">@Html.TextBoxFor(model => model.CoverImage, new { type = "file" })</td>
+            </tr>
+            @if (Model.CoverImage != null)
+            {
+                <tr>
+                    <td class="form_name"></td>
+                    <td class="form_text"><img class="img-border" src="@Path.Combine("/images/recruits/", Model.CoverImage)?w=150" /></td>
+                </tr>
+            }
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Image)</td>
+                <td class="form_text">@Html.TextBoxFor(model => model.Image, new { type = "file" })</td>
+            </tr>
+            @if (Model.Image != null)
+            {
+                <tr>
+                    <td class="form_name"></td>
+                    <td class="form_text"><img class="img-border" src="@Path.Combine("/images/recruits/", Model.Image)?w=150" /></td>
+                </tr>
+            }
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Description)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Ability)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Ability)</td>
+            </tr>
+            <tr>
+                <td class="form_name">@Html.LabelFor(model => model.Position)</td>
+                <td class="form_text">@Html.EditorFor(model => model.Position)</td>
+            </tr>
+            <tr>
+                <td class="form_name"></td>
+                <td class="form_text"><input type="submit" class="btn quick-link" value="Cập nhật" /></td>
+            </tr>
+        </table>
+    }
+</div>

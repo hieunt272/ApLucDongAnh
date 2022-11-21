@@ -1,0 +1,158 @@
+﻿@model ApLucDongAnh.ViewModel.HeaderViewModel
+@using ApLucDongAnh.Models
+@{
+    var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
+}
+
+<section class="header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 d-flex align-items-center">
+                <a href="@Url.Action("Index")" class="logo">
+                    @if (config.Image != null)
+                    {
+                        <img src="@Path.Combine("/images/configs/", config.Image)" alt="Logo" />
+                    }
+                </a>
+            </div>
+            <div class="col-8">
+                <div class="header-top">
+                    <ul class="ul-reset lang d-flex">
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|vi')">
+                                <img src="~/Content/images/img-main/vn.png" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|en')">
+                                <img src="~/Content/images/img-main/en.png" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="hotline">
+                        <div class="phone-circle">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <a href="tel:@config.Hotline">
+                            @config.Hotline
+                        </a>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <ul class="ul-reset nav">
+                        <li>
+                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                                <span>Giới thiệu</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                                <span>Sản phẩm</span>
+                            </a>
+                            @if (Model.ProductCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.ProductCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProductCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                                <span>Dịch vụ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                                <span>Dự án</span>
+                            </a>
+                            @if (Model.ProjectCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.ProjectCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProjectCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        @if (Model.ArticleCategories.Any(a => a.ParentId == null))
+                        {
+                            foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
+                            {
+                                <li>
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                        <span>@item.CategoryName</span>
+                                    </a>
+                                    @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
+                                    {
+                                        <div class="drop">
+                                            <ul class="ul-reset sub-nav">
+                                                @foreach (var child in Model.ArticleCategories.Where(a => a.ParentId == item.Id))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("ArticleCategory", "Home", new { url = child.Url })">
+                                                            @child.CategoryName
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </li>
+                            }
+                        }
+                        <li>
+                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                                <span>Tuyển dụng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                                <span>Liên hệ</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="btn-search">
+                        <i class="far fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="body-overlay"></div>
+<div class="site-search">
+    <form action="@Url.Action("SearchProduct")" class="header-search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button>
+                    <i class="far fa-search"></i>
+                </button>
+            </div>
+            <div class="input-effect">
+                <input type="text" class="form-control" name="keywords" required>
+                <label>Tìm kiếm</label>
+                <span class="focus-border"></span>
+            </div>
+        </div>
+    </form>
+    <div class="site-search-close">
+        <i class="fal fa-times"></i>
+    </div>
+</div>

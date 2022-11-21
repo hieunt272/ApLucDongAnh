@@ -1,0 +1,310 @@
+﻿@model ApLucDongAnh.ViewModel.IntroduceViewModel
+@{
+    ViewBag.Title = "Giới thiệu";
+    ViewBag.Description = Model.About.Description;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Introduce");
+}
+
+@Html.Action("Header")
+<section class="banner-category" @if (Model.About.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/abouts/", Model.About.CoverImage) + ")'") }>
+    <h1>Giới thiệu về chúng tôi</h1>
+    <div class="description">
+        @Model.About.Description
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Giới thiệu
+        </li>
+    </ol>
+</section>
+<section class="introduce">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="title-section">
+                    CÔNG TY CỔ PHẦN THIẾT BỊ ÁP LỰC ĐÔNG ANH THƯƠNG HIỆU UY TÍN LÂU NĂM
+                </div>
+                <div class="introduce-content">
+                    @Html.Raw(Model.About.Body)
+                </div>
+                <a href="#Features" class="btn-main-2">
+                    <span>TÌM HIỂU THÊM</span>
+                    <i class="far fa-long-arrow-right"></i>
+                </a>
+            </div>
+            @if (Model.Banners.Any(a => a.GroupId == 6))
+            {
+                <div class="col-lg-4 d-flex flex-column justify-content-end">
+                    <div class="content-intro-list">
+                        @foreach (var item in Model.Banners.Where(a => a.GroupId == 6))
+                        {
+                            <div class="content-intro-item">
+                                <div class="content-intro-top">
+                                    @if (item.Image != null)
+                                    {
+                                        <div class="content-intro-img">
+                                            <img src="@Path.Combine("/images/banners/", item.Image)" alt="@item.BannerName" />
+                                        </div>
+                                    }
+                                    <div class="name">
+                                        @item.BannerName
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    @item.Slogan
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+@if (Model.Banners.Any(a => a.GroupId == 7))
+{
+    <section class="banner-introduce">
+        @foreach (var item in Model.Banners.Where(a => a.GroupId == 7))
+        {
+            <a href="@item.Url" class="banner-item">
+                @if (item.Image != null)
+                {
+                    <img src="@Path.Combine("/images/banners/", item.Image)" alt="@item.BannerName" />
+                }
+            </a>
+        }
+    </section>
+}
+<section id="Features">
+    <div class="container">
+        <div class="text-section">
+            . Features
+        </div>
+        <div class="title-section">
+            Sứ MỆNH - TẦM NHÌN - GIÁ TRỊ CỐT LÕI
+        </div>
+    </div>
+    <div class="feature-content">
+        <div class="container">
+            <div class="box-content offset-lg-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-toggle="pill" data-target="#feature-1" aria-selected="true">SỨ MỆNH</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-toggle="pill" data-target="#feature-2" aria-selected="false">TẦM NHÌN</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-toggle="pill" data-target="#feature-3" aria-selected="false">GIÁ TRỊ CỐT LÕI</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="feature-1">
+                        @if (Model.About.SuMenh != null)
+                        {
+                            <div class="content">
+                                @Html.Raw(Model.About.SuMenh)
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="feature-2">
+                        @if (Model.About.TamNhin != null)
+                        {
+                            <div class="content">
+                                @Html.Raw(Model.About.TamNhin)
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="feature-3">
+                        @if (Model.About.GiaTriCotLoi != null)
+                        {
+                            <div class="content">
+                                @Html.Raw(Model.About.GiaTriCotLoi)
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="numbers-intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="number-intro-item">
+                    <div class="countup">
+                        <span class="number">30</span>+
+                    </div>
+                    <div class="number-name">
+                        NĂM KINH NGHIỆM
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="number-intro-item">
+                    <div class="countup">
+                        <span class="number">34</span>+
+                    </div>
+                    <div class="number-name">
+                        TỈNH THÀNH
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="number-intro-item">
+                    <div class="countup">
+                        <span class="number">13000</span>+
+                    </div>
+                    <div class="number-name">
+                        DIỆN TÍCH NHÀ MÁY
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="number-intro-item">
+                    <div class="countup">
+                        <span class="number">100</span>+
+                    </div>
+                    <div class="number-name">
+                        DỰ ÁN
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="production">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="text-section">
+                    . Production
+                </div>
+                <div class="title-section text-capitalize">
+                    Năng lực sản xuất
+                </div>
+                <div class="about-content">
+                    @Html.Raw(Model.About.Production)
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="production-img">
+                    @if (Model.About.ProductionImage != null)
+                    {
+                        <img data-src="@Path.Combine("/images/abouts/", Model.About.ProductionImage)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@if (Model.Banners.Any(a => a.GroupId == 8))
+{
+    <section class="history">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Achievement
+                </div>
+                <div class="title-section text-capitalize">
+                    Lịch sử hình thành
+                </div>
+            </div>
+            <div class="history-list">
+                @foreach (var item in Model.Banners.Where(a => a.GroupId == 8))
+                {
+                    <div class="history-item">
+                        <div class="years">
+                            @item.Years
+                        </div>
+                        <div class="history-name">
+                            @item.BannerName
+                        </div>
+                        <div class="content">
+                            @item.Slogan
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+@if (Model.Banners.Any(a => a.GroupId == 9))
+{
+    <section class="achievement">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Achievement
+                </div>
+                <div class="title-section">
+                    Thành tựu đạt được
+                </div>
+            </div>
+            <div class="achievement-list">
+                @foreach (var item in Model.Banners.Where(a => a.GroupId == 9))
+                {
+                    <div class="achievement-item">
+                        <a class="achievement-img">
+                            @if (item.Image != null)
+                            {
+                                <img data-src="@Path.Combine("/images/banners/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.BannerName" class="lazyload" />
+                            }
+                        </a>
+                        <div class="body">
+                            <div class="achievement-name">
+                                @item.BannerName
+                            </div>
+                            <div class="description">
+                                @item.Slogan
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+@if (Model.Banners.Any(a => a.GroupId == 2))
+{
+    <section class="partner partner-intro">
+        <div class="container">
+            <div class="partner-list">
+                @foreach (var item in Model.Banners.Where(a => a.GroupId == 2))
+                {
+                    <div class="partner-item">
+                        <a href="@item.Url">
+                            <img data-src="@Path.Combine("/images/banners/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.BannerName" class="lazyload" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+
+@section scripts{
+    <script>
+        introduce();
+    </script>
+}

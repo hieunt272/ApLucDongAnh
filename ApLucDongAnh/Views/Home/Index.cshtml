@@ -1,0 +1,863 @@
+﻿@model ApLucDongAnh.ViewModel.HomeViewModel
+@using ApLucDongAnh.Models
+@using Helpers
+@{
+    var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
+    ViewBag.Title = config.Title;
+    ViewBag.Description = config.Description;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Index");
+
+    var fb = Model.Banners.FirstOrDefault(b => b.Image != null && b.GroupId == 1);
+    if (fb != null)
+    {
+        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/banners/", fb.Image);
+    }
+
+    var number = 1;
+}
+
+<section class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 d-flex align-items-center">
+                <a href="@Url.Action("Index")" class="logo">
+                    <img src="~/Content/images/img-main/logo-white.png" alt="Logo" />
+                </a>
+            </div>
+            <div class="col-8">
+                <div class="header-top">
+                    <ul class="ul-reset lang d-flex">
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|vi')">
+                                <img src="~/Content/images/img-main/vn.png" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|en')">
+                                <img src="~/Content/images/img-main/en.png" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="hotline">
+                        <div class="phone-circle">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <a href="tel:@config.Hotline">
+                            @config.Hotline
+                        </a>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <ul class="ul-reset nav">
+                        <li>
+                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                                <span>Giới thiệu</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                                <span>Sản phẩm</span>
+                            </a>
+                            @if (Model.MenuProductCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.MenuProductCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProductCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                                <span>Dịch vụ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                                <span>Dự án</span>
+                            </a>
+                            @if (Model.ProjectCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.ProjectCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProjectCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        @if (Model.ArticleCategories.Any(a => a.ParentId == null))
+                        {
+                            foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
+                            {
+                                <li>
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                        <span>@item.CategoryName</span>
+                                    </a>
+                                    @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
+                                    {
+                                        <div class="drop">
+                                            <ul class="ul-reset sub-nav">
+                                                @foreach (var child in Model.ArticleCategories.Where(a => a.ParentId == item.Id))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("ArticleCategory", "Home", new { url = child.Url })">
+                                                            @child.CategoryName
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </li>
+                            }
+                        }
+                        <li>
+                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                                <span>Tuyển dụng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                                <span>Liên hệ</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="btn-search">
+                        <i class="far fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="header-sticky header-sticky-home">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 d-flex align-items-center">
+                <a href="@Url.Action("Index")" class="logo">
+                    @if (config.Image != null)
+                    {
+                        <img src="@Path.Combine("/images/configs/", config.Image)" alt="Logo" />
+                    }
+                </a>
+            </div>
+            <div class="col-8">
+                <div class="header-top">
+                    <ul class="ul-reset lang d-flex">
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|vi')">
+                                <img src="~/Content/images/img-main/vn.png" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="doTranslate('vi|en')">
+                                <img src="~/Content/images/img-main/en.png" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="hotline">
+                        <div class="phone-circle">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <a href="tel:@config.Hotline">
+                            @config.Hotline
+                        </a>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <ul class="ul-reset nav">
+                        <li>
+                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                                <span>Giới thiệu</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                                <span>Sản phẩm</span>
+                            </a>
+                            @if (Model.MenuProductCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.MenuProductCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProductCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                                <span>Dịch vụ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                                <span>Dự án</span>
+                            </a>
+                            @if (Model.ProjectCategories.Any())
+                            {
+                                <div class="drop">
+                                    <ul class="ul-reset sub-nav">
+                                        @foreach (var item in Model.ProjectCategories)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("ProjectCategory", "Home", new { url = item.Url })">
+                                                    @item.CategoryName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+                        @if (Model.ArticleCategories.Any(a => a.ParentId == null))
+                        {
+                            foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
+                            {
+                                <li>
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                        <span>@item.CategoryName</span>
+                                    </a>
+                                    @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
+                                    {
+                                        <div class="drop">
+                                            <ul class="ul-reset sub-nav">
+                                                @foreach (var child in Model.ArticleCategories.Where(a => a.ParentId == item.Id))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("ArticleCategory", "Home", new { url = child.Url })">
+                                                            @child.CategoryName
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </li>
+                            }
+                        }
+                        <li>
+                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                                <span>Tuyển dụng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                                <span>Liên hệ</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="btn-search">
+                        <i class="far fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@if (Model.Banner != null)
+{
+    <section class="banner">
+        @if (HtmlHelpers.CheckFileExt(Model.Banner.Image, "jpg|jpeg|png|gif"))
+        {
+            <img src="@Path.Combine("/images/banners/", Model.Banner.Image)" alt="@Model.Banner.BannerName" />
+        }
+        else
+        {
+            <video muted loop autoplay>
+                <source src="@Path.Combine("/images/banners/", Model.Banner.Image)" type="video/mp4" alt="@Model.Banner.BannerName" />
+            </video>
+        }
+        <div class="banner-content">
+            <div class="banner-title">
+                CHẾ TẠO NỒI HƠI <br />
+                <span>CHUYÊN NGHIỆP HÀNG ĐẦU</span>
+            </div>
+            <a href="@Url.Action("Introduce")" class="banner-btn">
+                <span class="position-relative">Giới thiệu</span>
+                <span class="icon">
+                    <i class="fal fa-long-arrow-right"></i>
+                </span>
+            </a>
+        </div>
+    </section>
+}
+<section class="container">
+    <div class="numbers">
+        <div class="number-item">
+            <img src="~/Content/images/img-main/icon-number.png" class="number-img" />
+            <div class="countup">
+                <span class="number">30</span>+
+            </div>
+            <div class="number-name">
+                Năm kinh nghiệm
+            </div>
+        </div>
+        <div class="number-item">
+            <img src="~/Content/images/img-main/icon-number (1).png" class="number-img" />
+            <div class="countup">
+                <span class="number">34</span>+
+            </div>
+            <div class="number-name">
+                Tỉnh thành
+            </div>
+        </div>
+        <div class="number-item">
+            <img src="~/Content/images/img-main/icon-number (2).png" class="number-img" />
+            <div class="countup">
+                <span class="number">13000</span>+
+            </div>
+            <div class="number-name">
+                Diện tích nhà máy
+            </div>
+        </div>
+        <div class="number-item">
+            <img src="~/Content/images/img-main/icon-number (3).png" class="number-img" />
+            <div class="countup">
+                <span class="number">1000</span>+
+            </div>
+            <div class="number-name">
+                Dự án
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="about-us-img">
+                    @if (config.AboutImage != null)
+                    {
+                        <img data-src="@Path.Combine("/images/configs/", config.AboutImage)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
+                    }
+                    <div class="experience">
+                        <div class="countup">
+                            <span class="number">30</span>+
+                        </div>
+                        Chúng tôi có hơn 30 năm kinh nghiệm trong ngành thiết bị áp lực
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+                <div class="text-section">
+                    . About us
+                </div>
+                <div class="title-section">
+                    ÁP LỰC ĐÔNG ANH
+                </div>
+                @if (config.AboutText != null)
+                {
+                    <div class="about-us-content">
+                        @Html.Raw(config.AboutText)
+                    </div>
+                }
+                <a href="@config.AboutUrl" class="btn-main">
+                    TÌM HIỂU THÊM
+                    <svg viewBox="0 0 13 20">
+                        <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5"></polyline>
+                    </svg>
+                    <span class="icon"><i class="fal fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+@if (Model.Projects.Any())
+{
+    <section class="project">
+        <div class="container">
+            <div class="decoration">
+                <div class="decoration-container">
+                    <div class="square"></div>
+                    <div class="square"></div>
+                </div>
+            </div>
+            <div class="project-heading">
+                <div class="project-heading__left">
+                    <div class="text-section">
+                        . Projects
+                    </div>
+                    <div class="title-section">
+                        Các dự án hoàn thành
+                    </div>
+                    <a href="@Url.Action("AllProject")" class="btn-main">
+                        TÌM HIỂU THÊM
+                        <svg viewBox="0 0 13 20">
+                            <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5"></polyline>
+                        </svg>
+                        <span class="icon"><i class="fal fa-long-arrow-right"></i></span>
+                    </a>
+                </div>
+                <div class="project-heading__right">
+                    <div class="countup">
+                        <span class="number">250</span>+
+                    </div>
+                    <div class="text-vertical">
+                        Dự án đã<br />
+                        Hoàn thành
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-list">
+            @foreach (var item in Model.Projects)
+            {
+                <div class="project-item">
+                    <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="project-item-link">
+                        <span class="project-image">
+                            @if (item.ListImage != null)
+                            {
+                                <img src="@Path.Combine("/images/projects/", item.ListImage.Split(',')[0])" alt="@item.ProjectName" />
+                            }
+                        </span>
+                        <span class="body">
+                            <span class="calendar">
+                                <i class="far fa-calendar"></i>
+                                @item.CreateDate.ToString("dd/MM/yyyy")
+                            </span>
+                            <span class="subject">
+                                @item.ProjectName
+                            </span>
+                            <div class="desc truncate">
+                                @item.Description
+                            </div>
+                            <span class="project-item-btn">
+                                <i class="fal fa-long-arrow-right"></i>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@if (Model.Banners.Any(a => a.GroupId == 2))
+{
+    <section class="partner">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Our Customers
+                </div>
+                <div class="title-section">
+                    ĐỐI TÁC KHÁCH HÀNG
+                </div>
+            </div>
+            <div class="partner-list">
+                @foreach (var banner in Model.Banners.Where(a => a.GroupId == 2))
+                {
+                    <div class="partner-item">
+                        <a href="@banner.Url">
+                            @if (banner.Image != null)
+                            {
+                                <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                            }
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.Banners.Any(a => a.GroupId == 3))
+{
+    <section class="business-connect">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Our Customers
+                </div>
+                <div class="title-section">
+                    tổ chức kết nối kinh doanh
+                </div>
+            </div>
+            <div class="row mt-lg-5">
+                @foreach (var banner in Model.Banners.Where(a => a.GroupId == 3).Take(3))
+                {
+                    <div class="col-lg-4 d-flex justify-content-center">
+                        <div class="bc-item">
+                            <div class="bc-img">
+                                @if (banner.Image != null)
+                                {
+                                    <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                                }
+                            </div>
+                            <a href="@banner.Url" class="bc-name">
+                                @banner.BannerName
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.ProductCategories.Any())
+{
+    <section class="category-hot">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Our Categories
+                </div>
+                <div class="title-section">
+                    DANH MỤC SẢN PHẨM NỔI BẬT
+                </div>
+            </div>
+            <div class="category-hot-list">
+                @foreach (var category in Model.ProductCategories)
+                {
+                    <div class="category-item">
+                        <a href="@Url.Action("ProductCategory", "Home", new { url = category.Url })" class="category-img">
+                            @if (category.Image != null)
+                            {
+                                <img data-src="@Path.Combine("/images/productCategory/", category.Image)" src="~/Content/images/img-main/base64.gif" alt="@category.CategoryName" class="lazyload" />
+                            }
+                        </a>
+                        <div class="body">
+                            <a href="@Url.Action("ProductCategory", "Home", new { url = category.Url })" class="category-name">
+                                @category.CategoryName
+                            </a>
+                            <div class="desc truncate" title="@category.Description">
+                                @category.Description
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.Banners.Any(a => a.GroupId == 4))
+{
+    <section class="features">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Features
+                </div>
+                <div class="title-section">
+                    LỢI ÍCH CỦA CHÚNG TÔI
+                </div>
+            </div>
+            <div class="row mt-4 pt-2">
+                @foreach (var banner in Model.Banners.Where(a => a.GroupId == 4))
+                {
+                    <div class="col-lg-4 mb-lg-5">
+                        <a href="@banner.Url" class="feature-item">
+                            <div class="body">
+                                @if (banner.Image != null)
+                                {
+                                    <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                                }
+                                <div class="feature-name">
+                                    @banner.BannerName
+                                </div>
+                            </div>
+                            <div class="box-icon">
+                                <i class="fal fa-long-arrow-right icon-feature__1"></i>
+                                <i class="fal fa-long-arrow-right icon-feature__2"></i>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.Services.Any())
+{
+    <section class="services">
+        <div class="bg-services">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="text-section">
+                            . Our Services
+                        </div>
+                        <div class="title-section">
+                            CÁC DỊCH VỤ TỐT NHẤT
+                        </div>
+                        <a href="@Url.Action("AllService")" class="btn-main">
+                            TÌM HIỂU THÊM
+                            <svg viewBox="0 0 13 20">
+                                <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5"></polyline>
+                            </svg>
+                            <span class="icon"><i class="fal fa-long-arrow-right"></i></span>
+                        </a>
+                    </div>
+                    @if (config.ServiceText != null)
+                    {
+                        <div class="col-lg-7">
+                            <div class="service-desc">
+                                @Html.Raw(config.ServiceText)
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="service-list">
+                @foreach (var item in Model.Services)
+                {
+                    <div class="service-item">
+                        <a href="@Url.Action("ServiceDetail", new { url = item.Url })" class="service-item-link">
+                            <div class="service-item-number">
+                                0 @number
+                            </div>
+                            <div class="service-img">
+                                @if (item.Image != null)
+                                {
+                                    <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Body" class="lazyload" />
+                                }
+                            </div>
+                            <div class="content">
+                                <div class="service-heading">
+                                    <span>@item.Subject</span>
+                                    <i class="fal fa-long-arrow-right"></i>
+                                </div>
+                                <div class="excerpt">
+                                    @item.Description
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    number++;
+                }
+            </div>
+        </div>
+        <div class="decoration">
+            <div class="decoration-container">
+                <div class="square"></div>
+                <div class="square"></div>
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.Articles.Any() || Model.Banners.Any(a => a.GroupId == 5))
+{
+    <section class="news">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . News
+                </div>
+                <div class="title-section">
+                    TIN TỨC SỰ KIỆN
+                </div>
+            </div>
+            <div class="row mt-lg-5">
+                <div class="col-lg-6">
+                    <div class="news-list">
+                        @foreach (var item in Model.Articles)
+                        {
+                            <div class="news-item">
+                                <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="news-img">
+                                    @if (item.Image != null)
+                                    {
+                                        <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Subject" class="lazyload" />
+                                    }
+                                </a>
+                                <div class="body">
+                                    <div class="subject truncate">
+                                        <a href="@Url.Action("ArticleDetail", new { url = item.Url })" title="@item.Subject">
+                                            @item.Subject
+                                        </a>
+                                    </div>
+                                    <div class="desc truncate">
+                                        @item.Description
+                                    </div>
+                                    <div class="calendar">
+                                        <i class="far fa-calendar"></i>
+                                        @item.CreateDate.ToString("dd/MM/yyyy")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="video-slide">
+                        <div class="video-slider-for">
+                            @foreach (var banner in Model.Banners.Where(a => a.GroupId == 5))
+                            {
+                                if (banner.Url != null)
+                                {
+                                    var ytId = HtmlHelpers._pegarIDYoutube(banner.Url);
+                                    <a href="@banner.Url" data-fancybox="gallery" class="video-for-item">
+                                        <img data-src="https://i.ytimg.com/vi_webp/@ytId/maxresdefault.webp" src="~/Content/images/img-main/base64.gif" class="lazyload video-img" alt="@banner.BannerName">
+                                        <img src="~/Content/images/img-main/play.png" alt="Play" class="play" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Path.Combine("/images/banners/", banner.Image)" data-fancybox="gallery" class="video-for-item">
+                                        @if (banner.Image != null)
+                                        {
+                                            <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" class="lazyload video-img" alt="@banner.BannerName">
+                                        }
+                                    </a>
+                                }
+                            }
+                        </div>
+                        <div class="video-slider-nav">
+                            @foreach (var banner in Model.Banners.Where(a => a.GroupId == 5))
+                            {
+                                <div class="video-nav-item">
+                                    @if (banner.Url != null)
+                                    {
+                                        var ytId = HtmlHelpers._pegarIDYoutube(banner.Url);
+                                        <img data-src="https://i.ytimg.com/vi_webp/@ytId/maxresdefault.webp" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                                    }
+                                    else
+                                    {
+
+                                        if (banner.Image != null)
+                                        {
+                                            <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="@Url.Action("AllArticle")" class="btn-main">
+                    TÌM HIỂU THÊM
+                    <svg viewBox="0 0 13 20">
+                        <polyline points="0.5 19.5 3 19.5 12.5 10 3 0.5"></polyline>
+                    </svg>
+                    <span class="icon"><i class="fal fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+}
+
+@if (Model.Feedbacks.Any())
+{
+    <section class="feedback">
+        <div class="container">
+            <div class="box-content">
+                <div class="title">
+                    Mọi người nói gì về Áp Lực Đông Anh
+                </div>
+                <div class="feedback-list">
+                    @foreach (var item in Model.Feedbacks)
+                    {
+                        <div class="feedback-item">
+                            <div class="content">
+                                @item.Content
+                            </div>
+                            <div class="customer">
+                                <div class="d-flex">
+                                    <div class="customer-img">
+                                        @if (item.Image != null)
+                                        {
+                                            <img data-src="@Path.Combine("/images/feedbacks/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Name" class="lazyload" />
+                                        }
+                                    </div>
+                                    <div class="customer-info">
+                                        <div class="customer-name">
+                                            @item.Name
+                                        </div>
+                                        <div class="classify">
+                                            @item.Classify
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vote">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<section class="subcribe">
+    <div class="container">
+        <div class="title-section">
+            ĐĂNG KÝ NHẬN TƯ VẤN
+        </div>
+        <form class="form-subcribe">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="position-relative">
+                @Html.TextBoxFor(model => model.Subcribe.FullName, new { @class = "form-control", @required = "required", @placeholder = "Họ và tên" })
+                @Html.ValidationMessageFor(model => model.Subcribe.FullName)
+            </div>
+            <div class="position-relative">
+                @Html.TextBoxFor(model => model.Subcribe.Email, new { @class = "form-control", @required = "required", @placeholder = "Email" })
+                @Html.ValidationMessageFor(model => model.Subcribe.Email)
+            </div>
+            <div class="position-relative">
+                @Html.TextBoxFor(model => model.Subcribe.Mobile, new { @class = "form-control", @required = "required", @placeholder = "Số điện thoại" })
+                @Html.ValidationMessageFor(model => model.Subcribe.Mobile)
+            </div>
+            <button type="submit" class="btn-main">
+                ĐĂNG KÝ
+            </button>
+        </form>
+    </div>
+</section>
+<div class="body-overlay"></div>
+<div class="site-search">
+    <form action="@Url.Action("SearchProduct")" class="header-search">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button>
+                    <i class="far fa-search"></i>
+                </button>
+            </div>
+            <div class="input-effect">
+                <input type="text" class="form-control" name="keywords" required>
+                <label>Tìm kiếm</label>
+                <span class="focus-border"></span>
+            </div>
+        </div>
+    </form>
+    <div class="site-search-close">
+        <i class="fal fa-times"></i>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        homeJs();
+    </script>
+}

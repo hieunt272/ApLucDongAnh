@@ -1,0 +1,60 @@
+﻿@model ApLucDongAnh.ViewModel.OrderFormViewModel
+
+<div class="modal fade" id="order-form">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="title" id="orderModalLabel">Đặt hàng</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fal fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm">
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="Order.ProductId" value="@Model.Product.Id" />
+                    <input type="hidden" name="Order.ProductName" value="@Model.Product.Name" />
+                    <input type="hidden" name="Order.ProductUrl" value="@Model.Product.Url" />
+                    <input type="hidden" name="Order.ProductImg" value="@Model.Product.ListImage.Split(',')[0]" />
+                    <div class="info-product">
+                        <div class="product-title">Sản phẩm:</div>
+                        <strong>@Model.Product.Name</strong>
+                    </div>
+                    <strong class="title--child">Thông tin của bạn</strong>
+                    <div class="wrapper mt-3">
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.Order.CustomerInfo.FullName, new { @class = "form-control", @placeholder = "Họ và tên" })
+                            @Html.ValidationMessageFor(model => model.Order.CustomerInfo.FullName)
+                        </div>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.Order.CustomerInfo.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
+                            @Html.ValidationMessageFor(model => model.Order.CustomerInfo.Address)
+                        </div>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.Order.CustomerInfo.Mobile, new { @class = "form-control", @placeholder = "Số điện thoại" })
+                            @Html.ValidationMessageFor(model => model.Order.CustomerInfo.Mobile)
+                        </div>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.Order.CustomerInfo.Email, new { @class = "form-control", @placeholder = "Email của bạn" })
+                            @Html.ValidationMessageFor(model => model.Order.CustomerInfo.Email)
+                        </div>
+                        <div class="input-box">
+                            @Html.TextAreaFor(model => model.Order.CustomerInfo.Body, new { row = 3, @placeholder = "Ghi chú, lời nhắn" })
+                        </div>
+                    </div>
+
+                    <div class="form-group form-row float-right">
+                        <button type="submit" class="btn btn-style btn-style--cart">
+                            <i class="far fa-check"></i>
+                            GỬI YÊU CẦU
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+</div>

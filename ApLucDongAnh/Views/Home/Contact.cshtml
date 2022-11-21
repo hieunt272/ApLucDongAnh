@@ -1,0 +1,152 @@
+﻿@model ApLucDongAnh.Models.Contact
+@using ApLucDongAnh.Models
+@{
+    var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
+    ViewBag.Title = "Liên hệ";
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Contact");
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-contact">
+    <h1>Liên hệ</h1>
+    <div class="description">
+        Gọi ngay cho chúng tôi để biết thông tin chi tiết về sản phẩm và dịch vụ bạn quan tâm nhé
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Liên hệ
+        </li>
+    </ol>
+</section>
+<section class="notification">
+    <div class="container">
+        <div class="notifi-list">
+            <div class="notifi-item">
+                <img src="~/Content/images/img-main/notifi.png" alt="Notification" />
+                <div class="name">
+                    Sản phẩm chất lượng
+                </div>
+                <div class="content">
+                    Nồi hơi và thiết bị có áp lực đã khẳng định uy tín trên thị trường hơn 30 năm qua
+                </div>
+            </div>
+            <div class="notifi-item">
+                <img src="~/Content/images/img-main/notifi (1).png" alt="Notification" />
+                <div class="name">
+                    dịch vụ đầy đủ
+                </div>
+                <div class="content">
+                    cung cấp trọn gói – chìa khóa trao tay cho quý khách hàng an tâm sản xuất
+                </div>
+            </div>
+            <div class="notifi-item">
+                <img src="~/Content/images/img-main/notifi (2).png" alt="Notification" />
+                <div class="name">
+                    VẬN CHUYỂN Nhanh
+                </div>
+                <div class="content">
+                    đáp ứng tiến độ nhanh và sẵn sàng giao hàng toàn lãnh thổ Việt Nam
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="box-contact">
+                    <form class="contact-form">
+                        <div class="title-section">
+                            Nhập thông tin lên hệ
+                        </div>
+                        @Html.ValidationSummary(true)
+                        @Html.AntiForgeryToken()
+                        <div>
+                            @Html.LabelFor(model => model.FullName)
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @required = "required", @placeholder = "Họ và tên" })
+                            @Html.ValidationMessageFor(model => model.FullName)
+                        </div>
+                        <div>
+                            @Html.LabelFor(model => model.Mobile)
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @required = "required", @placeholder = "Số điện thoại" })
+                            @Html.ValidationMessageFor(model => model.Mobile)
+                        </div>
+                        <div>
+                            @Html.LabelFor(model => model.Email)
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div>
+                            @Html.LabelFor(model => model.Body)
+                            @Html.TextAreaFor(model => model.Body, new { rows = 3, @placeholder = "Lời nhắn" })
+                            @Html.ValidationMessageFor(model => model.Body)
+                        </div>
+                        <button type="submit" class="btn-contact">
+                            Gửi liên hệ
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="title-contact">
+                    Hãy để chúng tôi được đồng hành cùng Quý Khách
+                </div>
+                <div class="desc-contact">
+                    Cảm ơn đã ghé thăm website, vui lòng gọi ngay cho chúng tôi để câu trả lời nhanh nhất cho nhu cẩu của anh chị cần nhé
+                </div>
+                <div class="color-base">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Địa chỉ:
+                </div>
+                <div class="info-contact">
+                    <b>Trụ sở chính Hà Nội</b>
+                    <div class="fw mb-3">Km 3 Quốc Lộ 3, Mai Lâm, Đông Anh, Hà Nội</div>
+                    <b>Văn phòng Hà Nội</b>
+                    <div class="fw mb-3">Km 2.5, Quốc Lộ 3, Đồng Dầu, Dục Tú, Đông Anh, Hà Nội</div>
+                    <b>Văn phòng Bắc Ninh</b>
+                    <div class="fw">Đường TS 10/8, Khu CN Tiên Sơn, Bắc Ninh</div>
+                </div>
+                <div class="color-base">
+                    <i class="fas fa-calendar-alt"></i>
+                    Thời gian làm việc
+                </div>
+                <div class="info-contact">
+                    <span>07:00 - 17:15 từ thứ Hai đến thứ Bảy, Chủ nhật vui lòng liên hệ trước</span>
+                </div>
+                <div class="color-base">
+                    <i class="fas fa-phone-alt"></i>
+                    Số điện thoại
+                </div>
+                <div class="info-contact">
+                    <a href="tel:@config.Hotline">
+                        @config.Hotline
+                    </a>
+                    <span> | 07:30 - 17:15 hằng ngày (kể cả ngày cuối tuần)</span>
+                </div>
+                <div class="color-base">
+                    <i class="fas fa-envelope"></i>
+                    Email
+                </div>
+                <div class="info-contact">
+                    <a href="mailto:@config.Email">
+                        @config.Email
+                    </a>
+                </div>
+
+                @if (config.GoogleMap != null)
+                {
+                    <div class="embed-responsive embed-responsive-16by9 map">
+                        @Html.Raw(config.GoogleMap)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,142 @@
+﻿@model ApLucDongAnh.ViewModel.CategoryProductViewModel
+@{
+    ViewBag.Title = Model.Category.TitleMeta ?? Model.Category.CategoryName;
+    ViewBag.Description = Model.Category.DescriptionMeta ?? Model.Category.Description;
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ProductCategory", "Home", Model.Category.Url);
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-category__product" @if (Model.Category.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/productCategory/", Model.Category.CoverImage) + ")'") }>
+    <h1>@Model.Category.CategoryName</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            @Model.Category.CategoryName
+        </li>
+    </ol>
+</section>
+<section class="product-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <input type="hidden" name="currentUrl" value="@Url.Action("ProductCategory", "Home")" />
+                <div class="filter">
+                    <div class="result">
+                        Hiển thị @Model.BeginCount-@Model.EndCount của @Model.ProductResult kết quả
+                    </div>
+                    <div class="select">
+                        <select name="sort" id="sort">
+                            <option value="date-desc">Mới nhất</option>
+                            <option value="date-asc">Cũ nhất</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="list-item-sort">
+                    @Html.Action("GetProductCategory")
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="box-border">
+                    <div class="title">
+                        Tìm kiếm
+                    </div>
+                    <form action="@Url.Action("SearchProduct")" class="form-search-product">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="keywords" placeholder="Tìm kiếm sản phẩm..." required>
+                            <div class="input-group-append">
+                                <button type="submit">
+                                    <i class="far fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @if (Model.Categories.Any())
+                {
+                    <div class="box-border">
+                        <div class="title">
+                            Sản phẩm
+                        </div>
+                        <div class="accordion">
+                            @foreach (var item in Model.Categories.Where(a => a.ParentId == null))
+                            {
+                                <div class="card">
+                                    <div class="card-header" id="heading-@item.Id">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="mb-0">
+                                                <a href="@Url.Action("ProductCategory", "Home", new {url = item.Url})">@item.CategoryName</a>
+                                                <span>(@item.Products.Count())</span>
+                                            </h2>
+                                            @if (Model.Categories.Any(a => a.ParentId == item.Id))
+                                            {
+                                                <button class="btn-card" type="button" data-toggle="collapse" data-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                                                    <i class="far fa-chevron-down"></i>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (Model.Categories.Where(a => a.ParentId == item.Id).Any())
+                                    {
+                                        <div id="collapse-@item.Id" class="collapse">
+                                            <div class="card-body">
+                                                <ul class="pl-0 mb-0">
+                                                    @foreach (var child in Model.Categories.Where(p => p.ParentId == item.Id))
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("ProductCategory", "Home", new {url = child.Url})">
+                                                                @child.CategoryName
+                                                            </a>
+                                                            <span>(@child.Products.Count())</span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="contact-info">
+                    <div class="contact-heading">
+                        LET’S START WORK TOGETHER
+                    </div>
+                    <div class="text">
+                        Hãy cho chúng tôi đồng hành cùng bạn <br />
+                        Hãy gọi ngay cho chúng tôi hoặc kết nối trực tiếp qua Zalo để có câu trả lời nhanh nhất cho nhu cầu anh chị cần nhé
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE THẢO
+                        <a href="tel:0968158598">0968.158.598</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE LINH
+                        <a href="tel:0961568199">0961.568.199</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE HÀ
+                        <a href="tel:0981851268">0981.851.268</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact")" class="contact-us">
+                    <span>LIÊN HỆ VỚI CHÚNG TÔI</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        Sort("/Home/GetProductCategory");
+    </script>
+}

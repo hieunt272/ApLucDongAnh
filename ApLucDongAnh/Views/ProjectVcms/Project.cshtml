@@ -1,0 +1,216 @@
+﻿@model ApLucDongAnh.ViewModel.InsertProjectViewModel
+@{
+    ViewBag.Title = "Thêm dự án";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Thêm dự án</h2>
+<a class="btn quick-link" href="@Url.Action("ListProject")"><i class="far fa-list mr-1"></i> Danh sách dự án</a>
+<div class="box_content">
+    @using (Html.BeginForm("Project", "ProjectVcms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="form_table">
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.ProjectName)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.ProjectName)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Description)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Description)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.CoverImage)</td>
+                        <td class="form_text">@Html.TextBoxFor(model => model.Project.CoverImage, new { type = "file" }) <span class="red-warring">Chấp nhận ảnh jpg, png, gif, jpeg < 4MB</span></td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.ListImage)</td>
+                        <td class="form_text">
+                            <div class="alert alert-info">
+                                <p class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Chọn ảnh...</span>
+                                    <input type="file" id="fileupload" name="files[]" accept="image/*" multiple="" />
+                                </p><br />
+                                - Chọn ảnh để upload: (gif, png, jpg, jpeg < 4MB)<br />
+                                - Kích thước: 800x 800px<br />
+                                - Ảnh đầu tiên sẽ là ảnh đại diện<br />
+                            </div>
+                            <div id="progress" class="progress">
+                                <div class="progress-bar progress-bar-success"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_name"></td>
+                        <td class="form_text">
+                            <ul id="ListImages"></ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Client)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Client)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.StartDate)</td>
+                        <td class="form_text">
+                            <input type="text" class="form_control w100 datepicker" name="Project.StartDate" id="Project_StartDate" />
+                            <label for="Project_EndDate" style="font-weight: 500; margin: 0 10px 0 20px;">Ngày kết thúc</label>
+                            <input type="text" class="form_control w100 datepicker" name="Project.EndDate" id="Project_EndDate" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Place)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Place)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Body)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Body)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Url)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Url)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.TitleMeta)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.TitleMeta)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.DescriptionMeta)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.DescriptionMeta)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name"></td>
+                        <td class="form_text">
+                            <input type="submit" class="btn quick-link" value="Thêm mới" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <table class="form_table">
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.ProjectCategoryId)</td>
+                        <td class="form_text">
+                            <select name="CategoryId" class="form_control w300" required="">
+                                <option value="">Danh mục dự án</option>
+                                @foreach (var category in Model.Categories.Where(a => a.ParentId == null))
+                                {
+                                    <option value="@category.Id">@category.CategoryName</option>
+                                    foreach (var child in Model.Categories.Where(a => a.ParentId == category.Id))
+                                    {
+                                        <option value="@child.Id"> -- @child.CategoryName</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.ProductId)</td>
+                        <td class="form_text">
+                            <select name="ProductId" class="form_control w300" id="select-product">
+                                <option value="">Sản phẩm</option>
+                                @foreach (var product in Model.Products)
+                                {
+                                    <option value="@product.Id">@product.Name</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Home)</td>
+                        <td class="form_text">@Html.CheckBoxFor(model => model.Project.Home)</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Active)</td>
+                        <td class="form_text">@Html.CheckBoxFor(model => model.Project.Active, new { @checked = "checked" })</td>
+                    </tr>
+                    <tr>
+                        <td class="form_name">@Html.LabelFor(model => model.Project.Sort)</td>
+                        <td class="form_text">@Html.EditorFor(model => model.Project.Sort)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery-ui.multidatespicker.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+
+        $("#select-product").select2();
+
+        $(function () {
+            $("#ListImages").sortable();
+            $("#ListImages").disableSelection();
+
+
+            $(".tags-wrapper ul").sortable();
+            $(".tags-wrapper ul").disableSelection();
+        });
+
+        var i = 1;
+        $("#fileupload").fileupload({
+            add: function (e, data) {
+                var uploadErrors = [];
+                var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                if (data.originalFiles[0]["type"].length && !acceptFileTypes.test(data.originalFiles[0]["type"])) {
+                    uploadErrors.push("Chỉ chấp nhận định dạng jpeg, jpg, png, gif");
+                }
+                if (data.originalFiles[0]["size"] > 4000000) {
+                    uploadErrors.push("Dung lượng ảnh lớn hơn 4MB");
+                }
+                var totalImg = $("#ListImages .thumb-img-box").length;
+                if (totalImg >= 10) {
+                    uploadErrors.push("Chỉ đăng tối đa 10 ảnh");
+                }
+                if (uploadErrors.length > 0) {
+                    alert(uploadErrors.join("\n"));
+                    return false;
+                } else {
+                    data.submit();
+                }
+                return true;
+            },
+            url: "/Uploader/Upload?folder=projects&r=" + Math.random(),
+            dataType: "json",
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('#ListImages').append('<li><input type="hidden" name="Pictures" value ="' + file.name + '" /><img src="/images/projects/' + file.name + '?w=80&h=80"/><a href="javascript:;" id="' + i + '" onclick="delfile(' + i + ')"><img src="/content/admin/icon-delete.png" alt="" style="vertical-align:middle" /></a></li>');
+                });
+                i = i + 1;
+                $("#progress").fadeOut(2000);
+            },
+            start: function () {
+                $("#progress .progress-bar").css("width", "0");
+                $("#progress").show();
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $("#progress .progress-bar").css("width", progress + "%");
+            }
+        }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        function delfile(divid) {
+            if (confirm('Bạn có chắc xóa ảnh này?')) {
+                $('#' + divid).parent().fadeOut().remove();
+            }
+        }
+
+
+        function loadChildCategory(id) {
+            $.getJSON("/ProjectVcms/GetChildCategory", { parentId: id }, function (data) {
+                var items = [];
+                items.push("<option value>Hãy chọn danh mục</option>");
+                $.each(data, function (key, val) {
+                    items.push("<option value='" + val.Id + "'>" + val.CategoryName + "</option>");
+                });
+                $("#ChildCategoryId").html(items.join(""));
+            });
+        }
+    </script>
+}

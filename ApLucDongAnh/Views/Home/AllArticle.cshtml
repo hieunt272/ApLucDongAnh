@@ -1,0 +1,166 @@
+﻿@model ApLucDongAnh.ViewModel.AllArticleViewModel
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Tin Tức";
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllArticle");
+    ViewBag.Robots = "noindex";
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-category__service">
+    <h1>Tin Tức</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Tin tức
+        </li>
+    </ol>
+</section>
+<section class="article-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    @if (Model.Articles.Any())
+                    {
+                        foreach (var item in Model.Articles)
+                        {
+                            <div class="col-lg-6">
+                                <div class="main-item">
+                                    <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="main-img">
+                                        @if (item.Image != null)
+                                        {
+                                            <img src="@Path.Combine("/images/articles/", item.Image)" alt="@item.Subject" />
+                                        }
+                                    </a>
+                                    <div class="body">
+                                        <div class="subject truncate">
+                                            <a href="@Url.Action("ArticleDetail", new { url = item.Url })" title="@item.Subject">
+                                                @item.Subject
+                                            </a>
+                                        </div>
+                                        <div class="desc truncate" title="@item.Description">
+                                            @item.Description
+                                        </div>
+                                        <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="btn-view">
+                                            TÌM HIỂU THÊM
+                                            <i class="far fa-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-12">
+                            <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                        </div>
+                    }
+                    @if (Model.Articles.PageCount > 1)
+                    {
+                        <div class="col-12 text-center">
+                            @Html.PagedListPager(Model.Articles, page => Url.Action("AllArticle", new { page }))
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="box-border">
+                    <div class="title">
+                        Tìm kiếm
+                    </div>
+                    <form action="@Url.Action("SearchArticle")" class="form-search-product">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="keywords" placeholder="Tìm kiếm bài viết..." required>
+                            <div class="input-group-append">
+                                <button type="submit">
+                                    <i class="far fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @if (Model.Categories.Any())
+                {
+                    <div class="box-border">
+                        <div class="title">
+                            Danh mục bài viết
+                        </div>
+                        <div class="accordion">
+                            @foreach (var item in Model.Categories.Where(a => a.ParentId == null))
+                            {
+                                <div class="card">
+                                    <div class="card-header" id="heading-@item.Id">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="mb-0">
+                                                <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">@item.CategoryName</a>
+                                                <span>(@item.Articles.Count())</span>
+                                            </h2>
+                                            @if (Model.Categories.Any(a => a.ParentId == item.Id))
+                                            {
+                                                <button class="btn-card" type="button" data-toggle="collapse" data-target="#collapse-@item.Id" aria-expanded="false" aria-controls="collapse-@item.Id">
+                                                    <i class="far fa-chevron-down"></i>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (Model.Categories.Where(a => a.ParentId == item.Id).Any())
+                                    {
+                                        <div id="collapse-@item.Id" class="collapse">
+                                            <div class="card-body">
+                                                <ul class="pl-0 mb-0">
+                                                    @foreach (var child in Model.Categories.Where(p => p.ParentId == item.Id))
+                                                    {
+                                                        <li>
+                                                            <a href="@Url.Action("ArticleCategory", "Home", new {url = child.Url})">
+                                                                @child.CategoryName
+                                                            </a>
+                                                            <span>(@child.Articles.Count())</span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="contact-info">
+                    <div class="contact-heading">
+                        LET’S START WORK TOGETHER
+                    </div>
+                    <div class="text">
+                        Hãy cho chúng tôi đồng hành cùng bạn <br />
+                        Hãy gọi ngay cho chúng tôi hoặc kết nối trực tiếp qua Zalo để có câu trả lời nhanh nhất cho nhu cầu anh chị cần nhé
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE THẢO
+                        <a href="tel:0968158598">0968.158.598</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE LINH
+                        <a href="tel:0961568199">0961.568.199</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        SALE HÀ
+                        <a href="tel:0981851268">0981.851.268</a>
+                    </div>
+                </div>
+                <a href="@Url.Action("Contact")" class="contact-us">
+                    <span>LIÊN HỆ VỚI CHÚNG TÔI</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

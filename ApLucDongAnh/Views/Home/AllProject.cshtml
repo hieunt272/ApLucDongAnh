@@ -1,0 +1,83 @@
+﻿@model ApLucDongAnh.ViewModel.ProjectCategoryViewModel
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Dự án";
+    ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllProject");
+    ViewBag.Robots = "noindex";
+}
+
+@Html.Action("Header")
+<section class="banner-category banner-category__project">
+    <h1>Dự án</h1>
+    <div class="description">
+        Uy tín thương hiệu nồi hơi và thiết bị áp lực của TBALĐA được khẳng định qua danh sách dự án trọng điểm, được đối tác khách hàng đánh giá rất cao.
+    </div>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">
+                Trang chủ
+            </a>
+            <i class="fal fa-long-arrow-right"></i>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Dự án
+        </li>
+    </ol>
+</section>
+<section class="project-category">
+    <div class="quick-subcribe">
+        <div class="text">
+            <div class="title">Subscribe to Newletter</div>
+            <span>Get the latest posts delivered right to your email.</span>
+        </div>
+        <form class="form-subcribe">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="position-relative">
+                @Html.TextBoxFor(model => model.Subcribe.Email, new { @class = "form-control", @required = "required", @placeholder = "EMAIL" })
+                @Html.ValidationMessageFor(model => model.Subcribe.Email)
+            </div>
+            <button type="submit">
+                THEO DÕI NGAY
+            </button>
+        </form>
+    </div>
+    @if (Model.Projects.Any())
+    {
+        foreach (var item in Model.Projects)
+        {
+            <div class="project-large">
+                <div class="calendar">
+                    <span class="day">@item.CreateDate.ToString("dd")</span>
+                    T @item.CreateDate.ToString("MM-yy")
+                </div>
+                <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="project-img">
+                    @if (item.ListImage != null)
+                    {
+                        <img src="@Path.Combine("/images/projects/", item.ListImage.Split(',')[0])" alt="@item.ProjectName" />
+                    }
+                </a>
+                <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="subject">
+                    @item.ProjectName
+                </a>
+                <div class="desc">
+                    @item.Description
+                </div>
+                <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="btn-main-2">
+                    <span>TÌM HIỂU THÊM</span>
+                    <i class="far fa-long-arrow-right"></i>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+            <p class="alert alert-success small mt-5">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+    }
+    @if (Model.Projects.PageCount > 1)
+    {
+        <div class="text-center mt-5">
+            @Html.PagedListPager(Model.Projects, page => Url.Action("AllProject", new { page }))
+        </div>
+    }
+</section>

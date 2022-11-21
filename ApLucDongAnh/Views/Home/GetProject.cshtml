@@ -1,0 +1,39 @@
+﻿@model ApLucDongAnh.ViewModel.GetProjectViewModel
+
+<div class="project-new-list">
+    <div class="row">
+        @if (Model.Projects.Any())
+        {
+            foreach (var item in Model.Projects)
+            {
+                <div class="col-lg-3">
+                    <div class="project-new-item">
+                        <img data-src="@Path.Combine("/images/projects", item.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@item.ProjectName" class="lazyload" />
+                        <div class="body">
+                            <div class="action-button">
+                                <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="btn-more-plus">
+                                    <span class="x-line"></span>
+                                    <span class="y-line"></span>
+                                </a>
+                            </div>
+                            <div class="subject truncate">
+                                <a href="@Url.Action("ProjectDetail", new { url = item.Url })" title="@item.ProjectName">
+                                    @item.ProjectName
+                                </a>
+                            </div>
+                            <div class="desc truncate">
+                                @item.Description
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+            </div>
+        }
+    </div>
+</div>
