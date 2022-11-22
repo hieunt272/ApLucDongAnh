@@ -41,12 +41,12 @@
                 <div class="header-bottom">
                     <ul class="ul-reset nav">
                         <li>
-                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                            <a href="@Url.Action("Introduce")">
                                 <span>Giới thiệu</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                            <a href="@Url.Action("AllProduct")">
                                 <span>Sản phẩm</span>
                             </a>
                             @if (Model.ProductCategories.Any())
@@ -66,12 +66,12 @@
                             }
                         </li>
                         <li>
-                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                            <a href="@Url.Action("AllService")">
                                 <span>Dịch vụ</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                            <a href="@Url.Action("AllProject")">
                                 <span>Dự án</span>
                             </a>
                             @if (Model.ProjectCategories.Any())
@@ -95,7 +95,7 @@
                             foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
                             {
                                 <li>
-                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
                                         <span>@item.CategoryName</span>
                                     </a>
                                     @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
@@ -117,12 +117,12 @@
                             }
                         }
                         <li>
-                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                            <a href="@Url.Action("Recruit")">
                                 <span>Tuyển dụng</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                            <a href="@Url.Action("Contact")">
                                 <span>Liên hệ</span>
                             </a>
                         </li>
@@ -135,7 +135,6 @@
         </div>
     </div>
 </section>
-
 <div class="body-overlay"></div>
 <div class="site-search">
     <form action="@Url.Action("SearchProduct")" class="header-search">
@@ -156,3 +155,138 @@
         <i class="fal fa-times"></i>
     </div>
 </div>
+<section class="header-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 d-flex align-items-center">
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <a href="@Url.Action("Index")" class="logo">
+                    @if (config.Image != null)
+                    {
+                        <img src="@Path.Combine("/images/configs/", config.Image)" alt="Logo" />
+                    }
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <ul class="ul-reset lang d-flex" id="google_translate_element2">
+                    <li>
+                        <a href="javascript:;" onclick="doTranslate('vi|vi')">
+                            <img src="~/Content/images/img-main/vn.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="doTranslate('vi|en')">
+                            <img src="~/Content/images/img-main/en.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="menu-mb">
+        <form action="@Url.Action("SearchProduct")" class="header-search-mb">
+            <input type="text" name="keyword" required="" class="form-control" placeholder="Nhập tìm kiếm bằng từ khóa..." />
+            <button type="submit">
+                <i class="far fa-search"></i>
+            </button>
+        </form>
+        <ul class="ul-reset nav-mb">
+            <li>
+                <a href="@Url.Action("Introduce")">Giới thiệu</a>
+            </li>
+            <li>
+                <a href="@Url.Action("AllProduct")">
+                    Sản phẩm
+                </a>
+                @if (Model.ProductCategories.Any(a => a.ParentId == null))
+                {
+                    <div class="toggle">
+                        <i class="fal fa-plus"></i>
+                        <i class="fal fa-minus"></i>
+                    </div>
+                    <ul class="ul-reset sub-nav-mb">
+                        @foreach (var item in Model.ProductCategories.Where(a => a.ParentId == null))
+                        {
+                            <li>
+                                <a href="@Url.Action("ProductCategory", "Home" , new { url = item.Url })">
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+            <li>
+                <a href="@Url.Action("AllService")">
+                    Dịch vụ
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("AllProject")">
+                    Dự án
+                </a>
+                @if (Model.ProjectCategories.Any(a => a.ParentId == null))
+                {
+                    <div class="toggle">
+                        <i class="fal fa-plus"></i>
+                        <i class="fal fa-minus"></i>
+                    </div>
+                    <ul class="ul-reset sub-nav-mb">
+                        @foreach (var item in Model.ProjectCategories.Where(a => a.ParentId == null))
+                        {
+                            <li>
+                                <a href="@Url.Action("ProjectCategory", "Home" , new { url = item.Url })">
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+            @if (Model.ArticleCategories.Any(a => a.ParentId == null))
+            {
+                foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
+                {
+                    <li>
+                        <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
+                            @item.CategoryName
+                        </a>
+                        @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
+                        {
+                            <div class="toggle">
+                                <i class="fal fa-plus"></i>
+                                <i class="fal fa-minus"></i>
+                            </div>
+                            <ul class="ul-reset sub-nav-mb">
+                                @foreach (var child in Model.ArticleCategories.Where(a => a.ParentId == item.Id))
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ProjectCategory", "Home" , new { url = child.Url })">
+                                            @child.CategoryName
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+            <li>
+                <a href="@Url.Action("Recruit", "Home")">
+                    Tuyển dụng
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Contact")">
+                    liên hệ
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

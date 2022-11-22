@@ -21,6 +21,32 @@ function homeJs() {
         }
     );
 
+    $(".project-list").slick({
+        dots: true,
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 3000,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
     $(".category-hot-list").slick({
         dots: false,
         infinite: true,
@@ -34,7 +60,7 @@ function homeJs() {
             {
                 breakpoint: 830,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1
                 }
             },
@@ -58,6 +84,20 @@ function homeJs() {
         dots: true,
         arrows: false,
         variableWidth: true,
+        responsive: [
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
     });
 
     $('.video-slider-for').slick({
@@ -77,19 +117,10 @@ function homeJs() {
         arrows: false,
         responsive: [
             {
-                breakpoint: 830,
-                settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
-                    vertical: false,
-                }
-            },
-            {
                 breakpoint: 480,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 1,
-                    vertical: false,
                 }
             },
         ]
@@ -172,8 +203,9 @@ function productDetail() {
             {
                 breakpoint: 830,
                 settings: {
-                    slidesToShow: 4,
+                    slidesToShow: 5,
                     slidesToScroll: 1,
+                    vertical: false,
                 }
             },
             {
@@ -181,6 +213,7 @@ function productDetail() {
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 1,
+                    vertical: false,
                 }
             },
         ]
@@ -267,6 +300,18 @@ function introduce() {
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
     });
 
+    $('.production-img-list').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        speed: 1500,
+        autoplaySpeed: 3000,
+        dots: false,
+        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
+    });
+
     $('.history-list').slick({
         infinite: false,
         slidesToShow: 5,
@@ -278,6 +323,22 @@ function introduce() {
         variableWidth: true,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
+        responsive: [
+            {
+                breakpoint: 830,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ],
     });
 
     $(".achievement-list").slick({
@@ -333,33 +394,6 @@ function getProject(action) {
 
 
 $(document).ready(function () {
-    $(".product-list").slick({
-        dots: false,
-        infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: false,
-        autoplaySpeed: 3000,
-        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
-        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
-        responsive: [
-            {
-                breakpoint: 830,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    });
-
     $(".partner-list").slick({
         dots: true,
         infinite: true,
@@ -379,7 +413,7 @@ $(document).ready(function () {
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1
                 }
             }
@@ -435,10 +469,15 @@ $(document).ready(function () {
         $(".site-search").removeClass('active');
     });
 
-    //const loadG = sessionStorage.getItem("loadGT");
-    //if (loadG === "1") {
-    //    $.getScript("/Scripts/Google_element.js");
-    //}
+    $(".toggle").click(function () {
+        $(this).toggleClass('active');
+        $(this).siblings('.sub-nav-mb').slideToggle();
+    });
+
+    const loadG = sessionStorage.getItem("loadGT");
+    if (loadG === "1") {
+        $.getScript("/Scripts/Google_element.js");
+    }
 })
 
 $(function () {
@@ -563,6 +602,9 @@ function doTranslate(a) {
         GTranslateFireEvent(c, "change");
         GTranslateFireEvent(c, "change");
     }
+
+    var item = document.getElementById("google_translate_element2");
+    console.log(item);
 }
 function googleTranslateElementInit() {
     const translateElement = new google.translate.TranslateElement({

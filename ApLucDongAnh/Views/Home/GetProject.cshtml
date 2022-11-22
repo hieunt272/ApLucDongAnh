@@ -6,7 +6,7 @@
         {
             foreach (var item in Model.Projects)
             {
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-6">
                     <div class="project-new-item">
                         <img data-src="@Path.Combine("/images/projects", item.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@item.ProjectName" class="lazyload" />
                         <div class="body">

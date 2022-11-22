@@ -120,9 +120,11 @@ namespace ApLucDongAnh.Controllers
                     }
                 }
 
-                if (fc["CurrentFile"] == "")
+                var file = Request.Files["ArticleCategory.Image"];
+
+                if (file != null && file.ContentLength == 0)
                 {
-                    category.Image = model.ArticleCategory.Image;
+                    category.Image = fc["CurrentFile"] == "" ? null : fc["CurrentFile"];
                 }
 
                 category.Url = HtmlHelpers.ConvertToUnSign(null, model.ArticleCategory.Url ?? model.ArticleCategory.CategoryName);
@@ -318,13 +320,16 @@ namespace ApLucDongAnh.Controllers
                     }
                 }
 
-                if (fc["CurrentFile"] == "")
+                var file = Request.Files["Article.CoverImage"];
+                var file2 = Request.Files["Article.Image"];
+
+                if (file != null && file.ContentLength == 0)
                 {
-                    article.CoverImage = model.Article.CoverImage;
+                    article.CoverImage = fc["CurrentFile"] == "" ? null : fc["CurrentFile"];
                 }
-                if (fc["CurrentFile2"] == "")
+                if (file2 != null && file2.ContentLength == 0)
                 {
-                    article.Image = model.Article.Image;
+                    article.Image = fc["CurrentFile2"] == "" ? null : fc["CurrentFile2"];
                 }
 
                 article.Url = HtmlHelpers.ConvertToUnSign(null, model.Article.Url ?? model.Article.Subject);

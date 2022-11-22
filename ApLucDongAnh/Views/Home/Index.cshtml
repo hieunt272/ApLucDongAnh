@@ -26,7 +26,7 @@
             </div>
             <div class="col-8">
                 <div class="header-top">
-                    <ul class="ul-reset lang d-flex">
+                    <ul class="ul-reset lang d-flex" id="google_translate_element2">
                         <li>
                             <a href="javascript:;" onclick="doTranslate('vi|vi')">
                                 <img src="~/Content/images/img-main/vn.png" />
@@ -50,12 +50,12 @@
                 <div class="header-bottom">
                     <ul class="ul-reset nav">
                         <li>
-                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                            <a href="@Url.Action("Introduce")">
                                 <span>Giới thiệu</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                            <a href="@Url.Action("AllProduct")">
                                 <span>Sản phẩm</span>
                             </a>
                             @if (Model.MenuProductCategories.Any())
@@ -75,12 +75,12 @@
                             }
                         </li>
                         <li>
-                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                            <a href="@Url.Action("AllService")">
                                 <span>Dịch vụ</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                            <a href="@Url.Action("AllProject")">
                                 <span>Dự án</span>
                             </a>
                             @if (Model.ProjectCategories.Any())
@@ -104,7 +104,7 @@
                             foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
                             {
                                 <li>
-                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
                                         <span>@item.CategoryName</span>
                                     </a>
                                     @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
@@ -126,12 +126,12 @@
                             }
                         }
                         <li>
-                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                            <a href="@Url.Action("Recruit")">
                                 <span>Tuyển dụng</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                            <a href="@Url.Action("Contact")">
                                 <span>Liên hệ</span>
                             </a>
                         </li>
@@ -157,7 +157,7 @@
             </div>
             <div class="col-8">
                 <div class="header-top">
-                    <ul class="ul-reset lang d-flex">
+                    <ul class="ul-reset lang d-flex" id="google_translate_element2">
                         <li>
                             <a href="javascript:;" onclick="doTranslate('vi|vi')">
                                 <img src="~/Content/images/img-main/vn.png" />
@@ -181,12 +181,12 @@
                 <div class="header-bottom">
                     <ul class="ul-reset nav">
                         <li>
-                            <a href="@Url.Action("Introduce")" data-replace="Giới thiệu">
+                            <a href="@Url.Action("Introduce")">
                                 <span>Giới thiệu</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProduct")" data-replace="Sản phẩm">
+                            <a href="@Url.Action("AllProduct")">
                                 <span>Sản phẩm</span>
                             </a>
                             @if (Model.MenuProductCategories.Any())
@@ -206,12 +206,12 @@
                             }
                         </li>
                         <li>
-                            <a href="@Url.Action("AllService")" data-replace="Dịch vụ">
+                            <a href="@Url.Action("AllService")">
                                 <span>Dịch vụ</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AllProject")" data-replace="Dự án">
+                            <a href="@Url.Action("AllProject")">
                                 <span>Dự án</span>
                             </a>
                             @if (Model.ProjectCategories.Any())
@@ -235,7 +235,7 @@
                             foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
                             {
                                 <li>
-                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })" data-replace="@item.CategoryName">
+                                    <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
                                         <span>@item.CategoryName</span>
                                     </a>
                                     @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
@@ -257,12 +257,12 @@
                             }
                         }
                         <li>
-                            <a href="@Url.Action("Recruit")" data-replace="Tuyển dụng">
+                            <a href="@Url.Action("Recruit")">
                                 <span>Tuyển dụng</span>
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Contact")" data-replace="Liên hệ">
+                            <a href="@Url.Action("Contact")">
                                 <span>Liên hệ</span>
                             </a>
                         </li>
@@ -273,6 +273,141 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+<section class="header-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 d-flex align-items-center">
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <a href="@Url.Action("Index")" class="logo">
+                    @if (config.Image != null)
+                    {
+                        <img src="@Path.Combine("/images/configs/", config.Image)" alt="Logo" />
+                    }
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <ul class="ul-reset lang d-flex">
+                    <li>
+                        <a href="javascript:;" onclick="doTranslate('vi|vi')">
+                            <img src="~/Content/images/img-main/vn.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="doTranslate('vi|en')">
+                            <img src="~/Content/images/img-main/en.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="menu-mb">
+        <form action="@Url.Action("SearchProduct")" class="header-search-mb">
+            <input type="text" name="keyword" required="" class="form-control" placeholder="Nhập tìm kiếm bằng từ khóa..." />
+            <button type="submit">
+                <i class="far fa-search"></i>
+            </button>
+        </form>
+        <ul class="ul-reset nav-mb">
+            <li>
+                <a href="@Url.Action("Introduce")">Giới thiệu</a>
+            </li>
+            <li>
+                <a href="@Url.Action("AllProduct")">
+                    Sản phẩm
+                </a>
+                @if (Model.MenuProductCategories.Any(a => a.ParentId == null))
+                {
+                    <div class="toggle">
+                        <i class="fal fa-plus"></i>
+                        <i class="fal fa-minus"></i>
+                    </div>
+                    <ul class="ul-reset sub-nav-mb">
+                        @foreach (var item in Model.MenuProductCategories.Where(a => a.ParentId == null))
+                        {
+                            <li>
+                                <a href="@Url.Action("ProductCategory", "Home" , new { url = item.Url })">
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+            <li>
+                <a href="@Url.Action("AllService")">
+                    Dịch vụ
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("AllProject")">
+                    Dự án
+                </a>
+                @if (Model.ProjectCategories.Any(a => a.ParentId == null))
+                {
+                    <div class="toggle">
+                        <i class="fal fa-plus"></i>
+                        <i class="fal fa-minus"></i>
+                    </div>
+                    <ul class="ul-reset sub-nav-mb">
+                        @foreach (var item in Model.ProjectCategories.Where(a => a.ParentId == null))
+                        {
+                            <li>
+                                <a href="@Url.Action("ProjectCategory", "Home" , new { url = item.Url })">
+                                    @item.CategoryName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+            @if (Model.ArticleCategories.Any(a => a.ParentId == null))
+            {
+                foreach (var item in Model.ArticleCategories.Where(a => a.ParentId == null))
+                {
+                    <li>
+                        <a href="@Url.Action("ArticleCategory", "Home", new { url = item.Url })">
+                            @item.CategoryName
+                        </a>
+                        @if (Model.ArticleCategories.Any(a => a.ParentId == item.Id))
+                        {
+                            <div class="toggle">
+                                <i class="fal fa-plus"></i>
+                                <i class="fal fa-minus"></i>
+                            </div>
+                            <ul class="ul-reset sub-nav-mb">
+                                @foreach (var child in Model.ArticleCategories.Where(a => a.ParentId == item.Id))
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ProjectCategory", "Home" , new { url = child.Url })">
+                                            @child.CategoryName
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+            <li>
+                <a href="@Url.Action("Recruit", "Home")">
+                    Tuyển dụng
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Contact")">
+                    liên hệ
+                </a>
+            </li>
+        </ul>
     </div>
 </section>
 @if (Model.Banner != null)
@@ -346,7 +481,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <div class="about-us-img">
+                <div class="about-us-img"  data-aos="fade-right" data-aos-duration="700">
                     @if (config.AboutImage != null)
                     {
                         <img data-src="@Path.Combine("/images/configs/", config.AboutImage)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
@@ -363,7 +498,7 @@
                 <div class="text-section">
                     . About us
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     ÁP LỰC ĐÔNG ANH
                 </div>
                 @if (config.AboutText != null)
@@ -385,6 +520,7 @@
 </section>
 @if (Model.Projects.Any())
 {
+    var delay = 200;
     <section class="project">
         <div class="container">
             <div class="decoration">
@@ -398,7 +534,7 @@
                     <div class="text-section">
                         . Projects
                     </div>
-                    <div class="title-section">
+                    <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                         Các dự án hoàn thành
                     </div>
                     <a href="@Url.Action("AllProject")" class="btn-main">
@@ -423,7 +559,7 @@
         <div class="project-list">
             @foreach (var item in Model.Projects)
             {
-                <div class="project-item">
+                <div class="project-item" data-aos="flip-left" data-aos-duration="700" data-aos-delay="@delay">
                     <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="project-item-link">
                         <span class="project-image">
                             @if (item.ListImage != null)
@@ -439,15 +575,16 @@
                             <span class="subject">
                                 @item.ProjectName
                             </span>
-                            <div class="desc truncate">
+                            <span class="desc truncate">
                                 @item.Description
-                            </div>
+                            </span>
                             <span class="project-item-btn">
                                 <i class="fal fa-long-arrow-right"></i>
                             </span>
                         </span>
                     </a>
                 </div>
+                delay += 200;
             }
         </div>
     </section>
@@ -455,20 +592,21 @@
 
 @if (Model.Banners.Any(a => a.GroupId == 2))
 {
+    var delay = 200;
     <section class="partner">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
                     . Our Customers
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     ĐỐI TÁC KHÁCH HÀNG
                 </div>
             </div>
             <div class="partner-list">
                 @foreach (var banner in Model.Banners.Where(a => a.GroupId == 2))
                 {
-                    <div class="partner-item">
+                    <div class="partner-item" data-aos="zoom-in-up" data-aos-duration="700" data-aos-delay="@delay">
                         <a href="@banner.Url">
                             @if (banner.Image != null)
                             {
@@ -476,6 +614,7 @@
                             }
                         </a>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -484,21 +623,22 @@
 
 @if (Model.Banners.Any(a => a.GroupId == 3))
 {
+    var delay = 400;
     <section class="business-connect">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
                     . Our Customers
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     tổ chức kết nối kinh doanh
                 </div>
             </div>
-            <div class="row mt-lg-5">
+            <div class="row mt-5">
                 @foreach (var banner in Model.Banners.Where(a => a.GroupId == 3).Take(3))
                 {
-                    <div class="col-lg-4 d-flex justify-content-center">
-                        <div class="bc-item">
+                    <div class="col-lg-4 col-md-4 d-flex justify-content-center">
+                        <div class="bc-item" data-aos="fade-down-right" data-aos-duration="700" data-aos-delay="@delay">
                             <div class="bc-img">
                                 @if (banner.Image != null)
                                 {
@@ -510,6 +650,7 @@
                             </a>
                         </div>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -518,20 +659,21 @@
 
 @if (Model.ProductCategories.Any())
 {
+    var delay = 300;
     <section class="category-hot">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
                     . Our Categories
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     DANH MỤC SẢN PHẨM NỔI BẬT
                 </div>
             </div>
             <div class="category-hot-list">
                 @foreach (var category in Model.ProductCategories)
                 {
-                    <div class="category-item">
+                    <div class="category-item" data-aos="zoom-out-up" data-aos-duration="700" data-aos-delay="@delay">
                         <a href="@Url.Action("ProductCategory", "Home", new { url = category.Url })" class="category-img">
                             @if (category.Image != null)
                             {
@@ -547,6 +689,7 @@
                             </div>
                         </div>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -555,21 +698,22 @@
 
 @if (Model.Banners.Any(a => a.GroupId == 4))
 {
+    var delay = 200;
     <section class="features">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
                     . Features
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     LỢI ÍCH CỦA CHÚNG TÔI
                 </div>
             </div>
             <div class="row mt-4 pt-2">
                 @foreach (var banner in Model.Banners.Where(a => a.GroupId == 4))
                 {
-                    <div class="col-lg-4 mb-lg-5">
-                        <a href="@banner.Url" class="feature-item">
+                    <div class="col-lg-4 col-md-6 mb-lg-5 mb-4">
+                        <a href="@banner.Url" class="feature-item" data-aos="flip-down" data-aos-duration="700" data-aos-delay="@delay">
                             <div class="body">
                                 @if (banner.Image != null)
                                 {
@@ -585,6 +729,7 @@
                             </div>
                         </a>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -593,6 +738,7 @@
 
 @if (Model.Services.Any())
 {
+    var delay = 400;
     <section class="services">
         <div class="bg-services">
             <div class="container">
@@ -601,7 +747,7 @@
                         <div class="text-section">
                             . Our Services
                         </div>
-                        <div class="title-section">
+                        <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                             CÁC DỊCH VỤ TỐT NHẤT
                         </div>
                         <a href="@Url.Action("AllService")" class="btn-main">
@@ -625,7 +771,7 @@
             <div class="service-list">
                 @foreach (var item in Model.Services)
                 {
-                    <div class="service-item">
+                    <div class="service-item"  data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
                         <a href="@Url.Action("ServiceDetail", new { url = item.Url })" class="service-item-link">
                             <div class="service-item-number">
                                 0 @number
@@ -648,6 +794,7 @@
                         </a>
                     </div>
                     number++;
+                    delay += 200;
                 }
             </div>
         </div>
@@ -662,22 +809,23 @@
 
 @if (Model.Articles.Any() || Model.Banners.Any(a => a.GroupId == 5))
 {
+    var delay = 200;
     <section class="news">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
                     . News
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     TIN TỨC SỰ KIỆN
                 </div>
             </div>
-            <div class="row mt-lg-5">
+            <div class="row mt-lg-5 mt-4">
                 <div class="col-lg-6">
                     <div class="news-list">
                         @foreach (var item in Model.Articles)
                         {
-                            <div class="news-item">
+                            <div class="news-item" data-aos="fade-up-right" data-aos-duration="700" data-aos-delay="@delay">
                                 <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="news-img">
                                     @if (item.Image != null)
                                     {
@@ -699,6 +847,7 @@
                                     </div>
                                 </div>
                             </div>
+                            delay += 200;
                         }
                     </div>
                 </div>
@@ -773,7 +922,7 @@
                 <div class="feedback-list">
                     @foreach (var item in Model.Feedbacks)
                     {
-                        <div class="feedback-item">
+                        <div class="feedback-item" data-aos="flip-left" data-aos-duration="700">
                             <div class="content">
                                 @item.Content
                             </div>

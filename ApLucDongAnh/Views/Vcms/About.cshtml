@@ -28,15 +28,43 @@
             }
             <tr>
                 <td class="form_name">@Html.LabelFor(model => model.ProductionImage)</td>
-                <td class="form_text">@Html.TextBoxFor(model => model.ProductionImage, new { type = "file" })</td>
+                <td class="form_text">
+                    <div class="alert alert-info">
+                        <p class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Chọn ảnh...</span>
+                            <input type="file" id="fileupload" name="files[]" accept="image/*" multiple="" />
+                        </p><br />
+                        - Chọn ảnh để upload: (gif, png, jpg, jpeg < 4MB)<br />
+                        - Kích thước: 800x 800px<br />
+                        - Ảnh đầu tiên sẽ là ảnh đại diện<br />
+                    </div>
+                    <div id="progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                </td>
             </tr>
-            @if (Model.ProductionImage != null)
-            {
-                <tr>
-                    <td class="form_name"></td>
-                    <td class="form_text"><img class="img-border" src="@Path.Combine("/images/abouts/", Model.ProductionImage)?w=150" /></td>
-                </tr>
-            }
+            <tr>
+                <td class="form_name"></td>
+                <td class="form_text">
+                    <ul id="ListImages">
+                        @if (Model.ProductionImage != null)
+                        {
+                            var i = 1;
+                            var arrPic = Model.ProductionImage.Split(',');
+                            foreach (var item in arrPic)
+                            {
+                                <li>
+                                    <input type="hidden" name="Pictures" value="@item" />
+                                    <img src="@Path.Combine("/images/abouts/",item)?w=80&h=80&mode=crop" alt="" />
+                                    <a href="javascript:;" id="@i" onclick="delfile( '@i')"><img src="/content/admin/icon-delete.png" alt="" /></a>
+                                </li>
+                                i = i + 1;
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
             <tr>
                 <td class="form_name">@Html.LabelFor(model => model.Description)</td>
                 <td class="form_text">@Html.EditorFor(model => model.Description)</td>
@@ -68,3 +96,60 @@
         </table>
     }
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#ListImages").sortable();
+            $("#ListImages").disableSelection();
+        });
+
+        var i = 1;
+        $("#fileupload").fileupload({
+            add: function (e, data) {
+                var uploadErrors = [];
+                var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                if (data.originalFiles[0]["type"].length && !acceptFileTypes.test(data.originalFiles[0]["type"])) {
+                    uploadErrors.push("Chỉ chấp nhận định dạng jpeg, jpg, png, gif");
+                }
+                if (data.originalFiles[0]["size"] > 4000000) {
+                    uploadErrors.push("Dung lượng ảnh lớn hơn 4MB");
+                }
+                var totalImg = $("#ListImages .thumb-img-box").length;
+                if (totalImg >= 10) {
+                    uploadErrors.push("Chỉ đăng tối đa 10 ảnh");
+                }
+                if (uploadErrors.length > 0) {
+                    alert(uploadErrors.join("\n"));
+                    return false;
+                } else {
+                    data.submit();
+                }
+                return true;
+            },
+            url: "/Uploader/Upload?folder=abouts&r=" + Math.random(),
+            dataType: "json",
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('#ListImages').append('<li><input type="hidden" name="Pictures" value ="' + file.name + '" /><img src="/images/abouts/' + file.name + '?w=80&h=80"/><a href="javascript:;" id="' + i + '" onclick="delfile(' + i + ')"><img src="/content/admin/icon-delete.png" alt="" style="vertical-align:middle" /></a></li>');
+                });
+                i = i + 1;
+                $("#progress").fadeOut(2000);
+            },
+            start: function () {
+                $("#progress .progress-bar").css("width", "0");
+                $("#progress").show();
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $("#progress .progress-bar").css("width", progress + "%");
+            }
+        }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        function delfile(divid) {
+            if (confirm('Bạn có chắc xóa ảnh này?')) {
+                $('#' + divid).parent().fadeOut().remove();
+            }
+        }
+    </script>
+}

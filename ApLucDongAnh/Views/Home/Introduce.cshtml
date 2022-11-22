@@ -149,7 +149,7 @@
 <section class="numbers-intro">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-6">
                 <div class="number-intro-item">
                     <div class="countup">
                         <span class="number">30</span>+
@@ -159,7 +159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-6">
                 <div class="number-intro-item">
                     <div class="countup">
                         <span class="number">34</span>+
@@ -169,7 +169,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-6">
                 <div class="number-intro-item">
                     <div class="countup">
                         <span class="number">13000</span>+
@@ -179,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-6">
                 <div class="number-intro-item">
                     <div class="countup">
                         <span class="number">100</span>+
@@ -200,19 +200,25 @@
                     . Production
                 </div>
                 <div class="title-section text-capitalize">
-                    Năng lực sản xuất
+                    NĂNG LỰC SẢN XUẤT
                 </div>
                 <div class="about-content">
                     @Html.Raw(Model.About.Production)
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="production-img">
-                    @if (Model.About.ProductionImage != null)
-                    {
-                        <img data-src="@Path.Combine("/images/abouts/", Model.About.ProductionImage)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
-                    }
-                </div>
+                @if (Model.About.ProductionImage != null)
+                {
+                    var arrImage = Model.About.ProductionImage.Split(',');
+                    <div class="production-img-list">
+                        @foreach (var image in arrImage)
+                        {
+                            <a href="@Path.Combine("/images/abouts/", image)" data-fancybox="gallery" class="production-img-item">
+                                <img data-src="@Path.Combine("/images/abouts/", image)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
+                            </a>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -226,7 +232,7 @@
                     . Achievement
                 </div>
                 <div class="title-section text-capitalize">
-                    Lịch sử hình thành
+                    LỊCH SỬ HÌNH THÀNH
                 </div>
             </div>
             <div class="history-list">
@@ -288,6 +294,14 @@
 {
     <section class="partner partner-intro">
         <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    . Achievement
+                </div>
+                <div class="title-section">
+                    Thành tựu đạt được
+                </div>
+            </div>
             <div class="partner-list">
                 @foreach (var item in Model.Banners.Where(a => a.GroupId == 2))
                 {
