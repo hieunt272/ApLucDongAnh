@@ -131,13 +131,16 @@ namespace ApLucDongAnh.Controllers
                     }
                 }
 
-                if (fc["CurrentFile"] == "")
+                var file = Request.Files["ProductCategory.CoverImage"];
+                var file2 = Request.Files["ProductCategory.Image"];
+
+                if (file != null && file.ContentLength == 0)
                 {
-                    category.CoverImage = model.ProductCategory.CoverImage;
+                    category.CoverImage = fc["CurrentFile"] == "" ? null : fc["CurrentFile"];
                 }
-                if (fc["CurrentFile2"] == "")
+                if (file2 != null && file2.ContentLength == 0)
                 {
-                    category.Image = model.ProductCategory.Image;
+                    category.Image = fc["CurrentFile2"] == "" ? null : fc["CurrentFile2"];
                 }
 
                 category.Url = HtmlHelpers.ConvertToUnSign(null, model.ProductCategory.Url ?? model.ProductCategory.CategoryName);
@@ -345,9 +348,11 @@ namespace ApLucDongAnh.Controllers
                     }
                 }
 
-                if (fc["CurrentFile"] == "")
+                var file = Request.Files["Product.CoverImage"];
+
+                if (file != null && file.ContentLength == 0)
                 {
-                    product.CoverImage = model.Product.CoverImage;
+                    product.CoverImage = fc["CurrentFile"] == "" ? null : fc["CurrentFile"];
                 }
 
                 product.ListImage = fc["Pictures"] == "" ? null : fc["Pictures"];

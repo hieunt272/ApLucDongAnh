@@ -315,12 +315,9 @@ namespace ApLucDongAnh.Controllers
                     {
                         about.CoverImage = imgFile;
                     }
-                    else if (Request.Files.Keys[i] == "ProductionImage")
-                    {
-                        about.ProductionImage = imgFile;
-                    }
                 }
 
+                about.ProductionImage = fc["Pictures"] == "" ? null : fc["Pictures"];
                 about.Description = model.Description;
                 about.Body = model.Body;
                 about.SuMenh = model.SuMenh;
