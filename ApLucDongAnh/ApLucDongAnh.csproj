@@ -147,7 +147,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductVcmsController.cs" />
     <Compile Include="Controllers\ProjectVcmsController.cs" />
-    <Compile Include="Controllers\RecruitController.cs" />
     <Compile Include="Controllers\UploaderController.cs" />
     <Compile Include="Controllers\VcmsController.cs" />
     <Compile Include="DAL\DataEntities.cs" />
@@ -1809,7 +1808,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Recruit\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

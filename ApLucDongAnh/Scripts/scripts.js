@@ -26,14 +26,43 @@ function homeJs() {
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         arrows: false,
         responsive: [
             {
-                breakpoint: 830,
+                breakpoint: 900,
                 settings: {
                     slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+    $(".business-connect-list").slick({
+        dots: false,
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        speed: 1000,
+        autoplay: false,
+        autoplaySpeed: 3000,
+        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
+        responsive: [
+            {
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 3,
                     slidesToScroll: 1
                 }
             },
@@ -53,6 +82,7 @@ function homeJs() {
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: false,
+        speed: 1000,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -79,14 +109,15 @@ function homeJs() {
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: false,
-        speed: 1500,
+        speed: 1000,
         autoplaySpeed: 3000,
-        dots: true,
-        arrows: false,
+        dots: false,
         variableWidth: true,
+        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
         responsive: [
             {
-                breakpoint: 830,
+                breakpoint: 1400,
                 settings: {
                     slidesToShow: 2,
                 }
@@ -112,9 +143,11 @@ function homeJs() {
         slidesToScroll: 1,
         asNavFor: '.video-slider-for',
         dots: false,
+        speed: 1000,
         centerMode: false,
         focusOnSelect: true,
-        arrows: false,
+        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
         responsive: [
             {
                 breakpoint: 480,
@@ -131,6 +164,7 @@ function homeJs() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -159,6 +193,7 @@ function homeJs() {
         infinite: true,
         slidesToShow: 2,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -195,6 +230,7 @@ function productDetail() {
         slidesToShow: 5,
         slidesToScroll: 1,
         asNavFor: '.slider-for',
+        speed: 1000,
         dots: false,
         focusOnSelect: true,
         arrows: false,
@@ -224,6 +260,7 @@ function productDetail() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -253,6 +290,7 @@ function serviceCategory() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -283,6 +321,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         arrows: false,
@@ -293,7 +332,7 @@ function introduce() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: false,
-        speed: 1500,
+        speed: 1000,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -305,7 +344,7 @@ function introduce() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: false,
-        speed: 1500,
+        speed: 1000,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -346,6 +385,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         arrows: false,
@@ -374,7 +414,7 @@ function projectDetail() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: false,
-        speed: 1500,
+        speed: 1000,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -385,9 +425,13 @@ function projectDetail() {
 function getProject(action) {
     $('#project-cat .nav-link').click(function () {
         let catId = parseInt($(this).val());
+
+        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
         $.get(action, { catId: catId }, function (data) {
             $('#list-project-sort').empty();
             $('#list-project-sort').html(data);
+        }).then(function () {
+            $('.loading').remove();
         });
     })
 }
@@ -399,6 +443,7 @@ $(document).ready(function () {
         infinite: true,
         slidesToShow: 6,
         slidesToScroll: 1,
+        speed: 1000,
         autoplay: false,
         autoplaySpeed: 3000,
         arrows: false,
@@ -473,6 +518,16 @@ $(document).ready(function () {
         $(this).toggleClass('active');
         $(this).siblings('.sub-nav-mb').slideToggle();
     });
+
+    $(".project-item").hover(
+        function () {
+            $(this).addClass('active');
+            $(this).parents('.slick-slide').siblings().find('.project-item').removeClass('active');
+        },
+        function () {
+            $(this).parents('.slick-slide').siblings().find('.project-item').removeClass('active');
+        }
+    );
 
     const loadG = sessionStorage.getItem("loadGT");
     if (loadG === "1") {
@@ -560,9 +615,13 @@ function Sort(action) {
         url = url.split('/').at(-1);
 
         window.history.pushState(title, '', url);
+
+        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
         $.get(action, { keywords: keywords, url, sort: sort }, function (data) {
             $('#list-item-sort').empty();
             $('#list-item-sort').html(data);
+        }).then(function () {
+            $('.loading').remove();
         });
     });
 }
@@ -602,9 +661,6 @@ function doTranslate(a) {
         GTranslateFireEvent(c, "change");
         GTranslateFireEvent(c, "change");
     }
-
-    var item = document.getElementById("google_translate_element2");
-    console.log(item);
 }
 function googleTranslateElementInit() {
     const translateElement = new google.translate.TranslateElement({

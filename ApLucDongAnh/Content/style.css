@@ -78,6 +78,21 @@ input::-webkit-inner-spin-button {
   display: none !important;
 }
 
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 2.5rem;
+  z-index: 999 !important;
+}
+
 /* Common */
 .text-section {
   color: #FF6600;
@@ -138,7 +153,7 @@ input::-webkit-inner-spin-button {
 }
 .btn-main .icon {
   display: inline-block;
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
   margin-left: 3px;
   transition: all 0.3s;
 }
@@ -243,10 +258,19 @@ input::-webkit-inner-spin-button {
   filter: brightness(0) invert(1);
 }
 .header .drop {
+  left: 0;
   top: 45px;
+  padding: 0;
 }
 .header .drop .sub-nav {
   background: rgba(0, 0, 0, 0.5);
+  box-shadow: none;
+}
+.header .drop .sub-nav li {
+  border-color: #fff;
+}
+.header .drop .sub-nav a {
+  color: #fff;
 }
 
 .header-sticky {
@@ -302,15 +326,8 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 .hotline .phone-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
   color: #fff;
-  background: #FF6600;
-  font-size: 0.75rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 1.125rem;
   margin-right: 5px;
 }
 .hotline .phone-circle i {
@@ -340,7 +357,7 @@ input::-webkit-inner-spin-button {
   justify-content: space-around;
 }
 .nav > li {
-  padding: 15px 0;
+  padding: 11px 0;
   position: relative;
 }
 .nav > li:hover .drop {
@@ -349,6 +366,13 @@ input::-webkit-inner-spin-button {
 .nav > li:hover .sub-nav {
   transform: translate(0, 0);
 }
+.nav > li:hover > a {
+  color: #fff;
+}
+.nav > li:hover > a::before {
+  transform-origin: 0% 50%;
+  transform: scaleX(1);
+}
 .nav > li > a {
   color: #fff;
   font-size: 0.875rem;
@@ -356,50 +380,45 @@ input::-webkit-inner-spin-button {
   overflow: hidden;
   position: relative;
   display: inline-block;
-  padding: 1px 0;
-}
-.nav > li > a:hover {
-  color: #FF6600;
-}
-.nav > li > a:hover::before {
-  transform-origin: 0% 50%;
-  transform: scaleX(1);
+  padding: 5px 10px;
 }
 .nav > li > a::before {
   content: "";
   position: absolute;
-  width: 100%;
-  left: 0;
-}
-.nav > li > a::before {
-  background: #FF6600;
-  height: 1px;
   bottom: 0;
-  transform-origin: 100% 50%;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: #FF6600;
+  transform-origin: bottom right;
   transform: scaleX(0);
-  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.5s ease;
 }
 .nav > li > a span {
+  position: relative;
   display: inline-block;
-  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: all 0.3s;
 }
 
 .drop {
   position: absolute;
+  left: -10px;
   top: 60px;
   width: max-content;
   visibility: hidden;
   overflow: hidden;
+  padding: 0 10px 15px 10px;
 }
 .drop .sub-nav {
-  background: #121c22d6;
+  background: #fff;
   transform: translate(0, -100%);
   transition: all 0.5s 0.1s;
   position: relative;
   z-index: 90;
+  box-shadow: 0 4px 10px #7991ad70;
 }
 .drop .sub-nav li {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #121C22;
   position: relative;
 }
 .drop .sub-nav li:last-child {
@@ -410,7 +429,6 @@ input::-webkit-inner-spin-button {
 }
 .drop .sub-nav a {
   padding: 7px 50px 7px 15px;
-  color: #fff;
   display: inline-block;
   transition: all 0.5s;
   font-size: 0.875rem;
@@ -693,15 +711,6 @@ input::-webkit-inner-spin-button {
   background: #121C22;
   position: relative;
 }
-.project::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 35px;
-  bottom: -1px;
-  left: 0;
-  background: #fff;
-}
 .project .title-section {
   color: #fff;
 }
@@ -781,22 +790,22 @@ input::-webkit-inner-spin-button {
   border-left: 0;
   position: relative;
   height: 710px;
-  margin-bottom: 35px;
+  cursor: pointer;
 }
-.project-item:hover .project-image {
+.project-item.active .project-image {
   opacity: 1;
   clip-path: inset(0 0 0 0);
   -webkit-clip-path: inset(0 0 0 0);
   left: -1px;
   right: -1px;
 }
-.project-item:hover .body {
-  transform: translateY(20%);
+.project-item.active .body {
+  transform: translateY(10%);
 }
-.project-item:hover .subject {
+.project-item.active .subject {
   color: #fff;
 }
-.project-item:hover .project-item-btn i {
+.project-item.active .project-item-btn i {
   transform: none;
 }
 .project-item .project-image {
@@ -850,17 +859,22 @@ input::-webkit-inner-spin-button {
   line-height: 20px;
   font-weight: 300;
   -webkit-line-clamp: 3;
+  font-size: 0.875rem;
 }
 .project-item .project-item-btn i {
   color: #FF6600;
   margin-top: 20px;
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
   font-size: 1.5rem;
   transition: all 0.4s;
 }
 
 .partner {
-  padding: 40px 0 100px;
+  padding: 40px 0 80px;
+  background: #121C22;
+}
+.partner .title-section {
+  color: #fff;
 }
 
 .partner-list {
@@ -872,6 +886,9 @@ input::-webkit-inner-spin-button {
 .partner-list .slick-slide {
   padding: 0 15px;
 }
+.partner-list .slick-dots {
+  bottom: -45px;
+}
 
 .partner-item {
   border: 1px solid #DEDEDE;
@@ -880,6 +897,7 @@ input::-webkit-inner-spin-button {
   display: flex !important;
   align-items: center;
   justify-content: center;
+  background: #fff;
 }
 .partner-item img {
   width: 135px;
@@ -888,8 +906,30 @@ input::-webkit-inner-spin-button {
 }
 
 .business-connect {
-  padding: 65px 0 50px;
+  padding: 65px 0;
   background: url("images/img-main/bg-business-connect.png") no-repeat top center/cover;
+}
+
+.business-connect-list {
+  margin-top: 30px;
+}
+.business-connect-list > .bc-item:not(:first-child) {
+  display: none;
+}
+.business-connect-list .slick-list {
+  margin: 0 -10px;
+}
+.business-connect-list .slick-slide {
+  padding: 0 10px;
+}
+.business-connect-list .slick-arrow {
+  top: 40%;
+}
+.business-connect-list .chevron-prev {
+  left: 0;
+}
+.business-connect-list .chevron-next {
+  right: 0;
 }
 
 .bc-item {
@@ -907,6 +947,7 @@ input::-webkit-inner-spin-button {
   width: 135px;
   height: 70px;
   object-fit: contain;
+  margin: 0 auto;
 }
 .bc-item .bc-name {
   font-family: "Montserrat-Bold";
@@ -1009,10 +1050,10 @@ input::-webkit-inner-spin-button {
   color: #FF6600;
 }
 .feature-item:hover .box-icon .icon-feature__1 {
-  transform: translate(0, 0) rotate(45deg);
+  transform: translate(0, 0) rotate(-45deg);
 }
 .feature-item:hover .box-icon .icon-feature__2 {
-  transform: translate(125%, 110%) rotate(45deg);
+  transform: translate(110%, -90%) rotate(-45deg);
 }
 .feature-item .body {
   display: flex;
@@ -1036,20 +1077,20 @@ input::-webkit-inner-spin-button {
   margin-bottom: 4px;
   width: 24px;
   height: 24px;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 .feature-item .box-icon i {
   position: absolute;
   top: 0;
   left: 0;
-  transform: rotate(45deg);
   font-size: 1.25rem;
+  transform: rotate(-45deg);
   transition: all 0.5s;
 }
 .feature-item .box-icon .icon-feature__1 {
   color: #FF6600;
-  transform: translate(-125%, -110%) rotate(45deg);
+  transform: translate(-100%, 80%) rotate(-45deg);
 }
 .feature-item .box-icon .icon-feature__2 {
   color: #CFD1D5;
@@ -1084,7 +1125,7 @@ input::-webkit-inner-spin-button {
 
 .service-list {
   margin-left: 250px;
-  margin-top: -60px;
+  margin-top: -20px;
   transform: translateY(50px);
 }
 .service-list > .service-item:not(:first-child) {
@@ -1097,17 +1138,21 @@ input::-webkit-inner-spin-button {
   padding: 0 15px;
   margin-bottom: -6px;
 }
-.service-list .slick-dots {
-  top: -20px;
-  left: 0;
-  bottom: auto;
+.service-list .slick-arrow {
+  font-size: 1rem;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: #FF6600;
+  top: -60px;
   transform: none;
 }
-.service-list .slick-dots .slick-active button {
-  background: #FF6600;
+.service-list .chevron-prev {
+  left: 0;
 }
-.service-list .slick-dots button {
-  background: #DEDEDE;
+.service-list .chevron-next {
+  left: 60px;
+  right: auto;
 }
 
 .service-item {
@@ -1132,7 +1177,7 @@ input::-webkit-inner-spin-button {
   background: #FF6600;
 }
 .service-item .service-item-link:hover .service-heading i {
-  transform: rotate(45deg);
+  transform: rotate(0);
 }
 .service-item .service-item-number {
   position: absolute;
@@ -1290,6 +1335,8 @@ input::-webkit-inner-spin-button {
 }
 .video-nav-item img {
   width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
 }
 
 .feedback {
@@ -3181,13 +3228,6 @@ input::-webkit-inner-spin-button {
   margin-top: 5px;
 }
 
-.partner-intro {
-  padding: 10px 0 80px;
-}
-.partner-intro .partner-list .slick-dots {
-  bottom: -40px;
-}
-
 .ability {
   padding: 60px 0;
 }
@@ -4008,8 +4048,8 @@ input::-webkit-inner-spin-button {
     bottom: -40px;
   }
   .slick-dots button {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
   }
 
   .header,
@@ -4231,6 +4271,13 @@ input::-webkit-inner-spin-button {
     font-size: 4.5rem;
   }
 
+  .business-connect-list {
+    padding: 0 30px;
+  }
+  .partner-list {
+    padding: 0 30px;
+  }
+
   .category-hot-list {
     padding: 0 40px;
   }
@@ -4252,8 +4299,8 @@ input::-webkit-inner-spin-button {
     display: none;
   }
 
-  .service-list .slick-dots {
-    top: 20px;
+  .service-list .slick-arrow {
+    top: -20px;
   }
 
   .service-item {
@@ -4267,6 +4314,20 @@ input::-webkit-inner-spin-button {
 
   .video-slide {
     margin-top: 30px;
+  }
+
+  .video-slider-nav .slick-arrow {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    background: #FF6600;
+    font-size: 1rem;
+  }
+  .video-slider-nav .chevron-prev {
+    left: -5px;
+  }
+  .video-slider-nav .chevron-next {
+    right: -5px;
   }
 
   .form-subcribe .form-control {
@@ -4547,6 +4608,10 @@ input::-webkit-inner-spin-button {
     font-size: 0.875rem;
   }
 
+  .partner-list {
+    padding: 0;
+  }
+
   .category-hot {
     padding: 40px 0;
   }
@@ -4565,9 +4630,18 @@ input::-webkit-inner-spin-button {
   .service-list {
     margin-left: 15px;
   }
+  .service-list .slick-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 0.875rem;
+  }
+  .service-list .chevron-next {
+    left: 40px;
+  }
 
   .service-item {
     width: 250px !important;
+    margin-top: 50px;
   }
   .service-item .service-item-number {
     font-size: 3rem;
@@ -4596,6 +4670,12 @@ input::-webkit-inner-spin-button {
   }
   .news-item .subject a {
     font-size: 1rem;
+  }
+
+  .video-slider-nav .slick-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 0.875rem;
   }
 
   .feedback .box-content {

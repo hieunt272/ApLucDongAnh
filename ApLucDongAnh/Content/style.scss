@@ -123,8 +123,22 @@ input::-webkit-inner-spin-button {
 .goog-te-banner-frame {
     top: -100% !important;
 }
+
 .goog-te-gadget {
     display: none !important;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    @include flex-item(center, center);
+    color: $white;
+    font-size: 2.5rem;
+    z-index: 999 !important;
 }
 
 /* Common */
@@ -190,7 +204,7 @@ input::-webkit-inner-spin-button {
 
     .icon {
         display: inline-block;
-        transform: rotate(45deg);
+        transform: rotate(-45deg);
         margin-left: 3px;
         transition: all .3s;
     }
@@ -308,10 +322,21 @@ input::-webkit-inner-spin-button {
     }
 
     .drop {
+        left: 0;
         top: 45px;
+        padding: 0;
 
         .sub-nav {
             background: rgba(0, 0, 0, 0.5);
+            box-shadow: none;
+
+            li {
+                border-color: $white;
+            }
+
+            a {
+                color: $white;
+            }
         }
     }
 }
@@ -378,13 +403,8 @@ input::-webkit-inner-spin-button {
     align-items: center;
 
     .phone-circle {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
         color: $white;
-        background: $colorMain;
-        font-size: .75rem;
-        @include flex-item(center, center);
+        font-size: 1.125rem;
         margin-right: 5px;
 
         i {
@@ -415,7 +435,7 @@ input::-webkit-inner-spin-button {
     justify-content: space-around;
 
     > li {
-        padding: 15px 0;
+        padding: 11px 0;
         position: relative;
 
         &:hover {
@@ -426,6 +446,15 @@ input::-webkit-inner-spin-button {
             .sub-nav {
                 transform: translate(0, 0);
             }
+
+            > a {
+                color: $white;
+
+                &::before {
+                    transform-origin: 0% 50%;
+                    transform: scaleX(1);
+                }
+            }
         }
 
         > a {
@@ -435,35 +464,25 @@ input::-webkit-inner-spin-button {
             overflow: hidden;
             position: relative;
             display: inline-block;
-            padding: 1px 0;
-
-            &:hover {
-                color: $colorMain;
-                &::before {
-                    transform-origin: 0% 50%;
-                    transform: scaleX(1);
-                }
-            }
+            padding: 5px 10px;
 
             &::before {
                 content: '';
                 position: absolute;
-                width: 100%;
-                left: 0;
-            }
-
-            &::before {
-                background: $colorMain;
-                height: 1px;
                 bottom: 0;
-                transform-origin: 100% 50%;
+                left: 0;
+                right: 0;
+                height: 100%;
+                background-color: $colorMain;
+                transform-origin: bottom right;
                 transform: scaleX(0);
-                transition: transform .5s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: transform 0.5s ease;
             }
 
             span {
+                position: relative;
                 display: inline-block;
-                transition: transform .5s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: all .3s;
             }
         }
     }
@@ -471,20 +490,23 @@ input::-webkit-inner-spin-button {
 
 .drop {
     position: absolute;
+    left: -10px;
     top: 60px;
     width: max-content;
     visibility: hidden;
     overflow: hidden;
+    padding: 0 10px 15px 10px;
 
     .sub-nav {
-        background: #121c22d6;
+        background: $white;
         transform: translate(0, -100%);
         transition: all .5s .1s;
         position: relative;
         z-index: 90;
+        box-shadow: 0 4px 10px $blur;
 
         li {
-            border-bottom: 1px solid $white;
+            border-bottom: 1px solid $colorMain2;
             position: relative;
 
             &:last-child {
@@ -498,7 +520,6 @@ input::-webkit-inner-spin-button {
 
         a {
             padding: 7px 50px 7px 15px;
-            color: $white;
             display: inline-block;
             transition: all .5s;
             font-size: .875rem;
@@ -799,13 +820,6 @@ input::-webkit-inner-spin-button {
     background: $colorMain2;
     position: relative;
 
-    &::before {
-        @include before(100%, 35px);
-        bottom: -1px;
-        left: 0;
-        background: $white;
-    }
-
     .title-section {
         color: $white;
     }
@@ -898,9 +912,9 @@ input::-webkit-inner-spin-button {
     border-left: 0;
     position: relative;
     height: 710px;
-    margin-bottom: 35px;
+    cursor: pointer;
 
-    &:hover {
+    &.active {
         .project-image {
             opacity: 1;
             clip-path: inset(0 0 0 0);
@@ -910,7 +924,7 @@ input::-webkit-inner-spin-button {
         }
 
         .body {
-            transform: translateY(20%);
+            transform: translateY(10%);
         }
 
         .subject {
@@ -979,19 +993,25 @@ input::-webkit-inner-spin-button {
         line-height: 20px;
         font-weight: 300;
         -webkit-line-clamp: 3;
+        font-size: .875rem;
     }
 
     .project-item-btn i {
         color: $colorMain;
         margin-top: 20px;
-        transform: rotate(45deg);
+        transform: rotate(-45deg);
         font-size: 1.5rem;
         transition: all .4s;
     }
 }
 
 .partner {
-    padding: 40px 0 100px;
+    padding: 40px 0 80px;
+    background: $colorMain2;
+
+    .title-section {
+        color: $white;
+    }
 }
 
 .partner-list {
@@ -1004,6 +1024,10 @@ input::-webkit-inner-spin-button {
     .slick-slide {
         padding: 0 15px;
     }
+
+    .slick-dots {
+        bottom: -45px;
+    }
 }
 
 .partner-item {
@@ -1013,6 +1037,7 @@ input::-webkit-inner-spin-button {
     display: flex !important;
     align-items: center;
     justify-content: center;
+    background: $white;
 
     img {
         width: 135px;
@@ -1022,8 +1047,36 @@ input::-webkit-inner-spin-button {
 }
 
 .business-connect {
-    padding: 65px 0 50px;
+    padding: 65px 0;
     background: url('images/img-main/bg-business-connect.png') no-repeat top center / cover;
+}
+
+.business-connect-list {
+    margin-top: 30px;
+
+    > .bc-item:not(:first-child) {
+        display: none;
+    }
+
+    .slick-list {
+        margin: 0 -10px;
+    }
+
+    .slick-slide {
+        padding: 0 10px;
+    }
+
+    .slick-arrow {
+        top: 40%;
+    }
+
+    .chevron-prev {
+        left: 0;
+    }
+
+    .chevron-next {
+        right: 0;
+    }
 }
 
 .bc-item {
@@ -1041,6 +1094,7 @@ input::-webkit-inner-spin-button {
             width: 135px;
             height: 70px;
             object-fit: contain;
+            margin: 0 auto;
         }
     }
 
@@ -1158,11 +1212,11 @@ input::-webkit-inner-spin-button {
 
         .box-icon {
             .icon-feature__1 {
-                transform: translate(0, 0) rotate(45deg);
+                transform: translate(0, 0) rotate(-45deg);
             }
 
             .icon-feature__2 {
-                transform: translate(125%, 110%) rotate(45deg);
+                transform: translate(110%, -90%) rotate(-45deg);
             }
         }
     }
@@ -1192,21 +1246,21 @@ input::-webkit-inner-spin-button {
         margin-bottom: 4px;
         width: 24px;
         height: 24px;
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
 
         i {
             position: absolute;
             top: 0;
             left: 0;
-            transform: rotate(45deg);
             font-size: 1.25rem;
+            transform: rotate(-45deg);
             transition: all .5s;
         }
 
         .icon-feature__1 {
             color: $colorMain;
-            transform: translate(-125%, -110%) rotate(45deg);
+            transform: translate(-100%, 80%) rotate(-45deg);
         }
 
         .icon-feature__2 {
@@ -1250,7 +1304,7 @@ input::-webkit-inner-spin-button {
 
 .service-list {
     margin-left: 250px;
-    margin-top: -60px;
+    margin-top: -20px;
     transform: translateY(50px);
 
     > .service-item:not(:first-child) {
@@ -1266,21 +1320,23 @@ input::-webkit-inner-spin-button {
         margin-bottom: -6px;
     }
 
-    .slick-dots {
-        top: -20px;
-        left: 0;
-        bottom: auto;
+    .slick-arrow {
+        font-size: 1rem;
+        width: 40px;
+        height: 40px;
+        color: $white;
+        background: $colorMain;
+        top: -60px;
         transform: none;
+    }
 
-        .slick-active {
-            button {
-                background: $colorMain;
-            }
-        }
+    .chevron-prev {
+        left: 0;
+    }
 
-        button {
-            background: #DEDEDE;
-        }
+    .chevron-next {
+        left: 60px;
+        right: auto;
     }
 }
 
@@ -1309,7 +1365,7 @@ input::-webkit-inner-spin-button {
 
             .service-heading {
                 i {
-                    transform: rotate(45deg);
+                    transform: rotate(0);
                 }
             }
         }
@@ -1493,6 +1549,8 @@ input::-webkit-inner-spin-button {
 
     img {
         width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
     }
 }
 
@@ -3601,16 +3659,6 @@ input::-webkit-inner-spin-button {
     }
 }
 
-.partner-intro {
-    padding: 10px 0 80px;
-
-    .partner-list {
-        .slick-dots {
-            bottom: -40px;
-        }
-    }
-}
-
 .ability {
     padding: 60px 0;
 
@@ -4544,8 +4592,8 @@ input::-webkit-inner-spin-button {
         bottom: -40px;
 
         button {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
         }
     }
 
@@ -4807,6 +4855,16 @@ input::-webkit-inner-spin-button {
         }
     }
 
+    .business-connect-list {
+            padding: 0 30px;
+        .slick-list {
+        }
+    }
+
+    .partner-list {
+        padding: 0 30px;
+    }
+
     .category-hot-list {
         padding: 0 40px;
 
@@ -4834,8 +4892,8 @@ input::-webkit-inner-spin-button {
     }
 
     .service-list {
-        .slick-dots {
-            top: 20px;
+        .slick-arrow {
+            top: -20px;
         }
     }
 
@@ -4850,6 +4908,24 @@ input::-webkit-inner-spin-button {
 
     .video-slide {
         margin-top: 30px;
+    }
+
+    .video-slider-nav {
+        .slick-arrow {
+            width: 40px;
+            height: 40px;
+            color: $white;
+            background: $colorMain;
+            font-size: 1rem;
+        }
+
+        .chevron-prev {
+            left: -5px;
+        }
+
+        .chevron-next {
+            right: -5px;
+        }
     }
 
     .form-subcribe {
@@ -5174,6 +5250,10 @@ input::-webkit-inner-spin-button {
         }
     }
 
+    .partner-list {
+        padding: 0;
+    }
+
     .category-hot {
         padding: 40px 0;
     }
@@ -5194,10 +5274,21 @@ input::-webkit-inner-spin-button {
 
     .service-list {
         margin-left: 15px;
+
+        .slick-arrow {
+            width: 30px;
+            height: 30px;
+            font-size: .875rem;
+        }
+
+        .chevron-next {
+            left: 40px;
+        }
     }
 
     .service-item {
         width: 250px !important;
+        margin-top: 50px;
 
         .service-item-number {
             font-size: 3rem;
@@ -5236,6 +5327,14 @@ input::-webkit-inner-spin-button {
             a {
                 font-size: 1rem;
             }
+        }
+    }
+
+    .video-slider-nav {
+        .slick-arrow {
+            width: 30px;
+            height: 30px;
+            font-size: .875rem;
         }
     }
 

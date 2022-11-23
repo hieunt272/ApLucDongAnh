@@ -50,6 +50,11 @@
                 <div class="header-bottom">
                     <ul class="ul-reset nav">
                         <li>
+                            <a href="@Url.Action("Index")">
+                                <span>Trang chủ</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="@Url.Action("Introduce")">
                                 <span>Giới thiệu</span>
                             </a>
@@ -180,6 +185,11 @@
                 </div>
                 <div class="header-bottom">
                     <ul class="ul-reset nav">
+                        <li>
+                            <a href="@Url.Action("Index")">
+                                <span>Trang chủ</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="@Url.Action("Introduce")">
                                 <span>Giới thiệu</span>
@@ -318,6 +328,9 @@
         </form>
         <ul class="ul-reset nav-mb">
             <li>
+                <a href="@Url.Action("Index")">Trang chủ</a>
+            </li>
+            <li>
                 <a href="@Url.Action("Introduce")">Giới thiệu</a>
             </li>
             <li>
@@ -424,11 +437,11 @@
             </video>
         }
         <div class="banner-content">
-            <div class="banner-title">
+            <div class="banner-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
                 CHẾ TẠO NỒI HƠI <br />
                 <span>CHUYÊN NGHIỆP HÀNG ĐẦU</span>
             </div>
-            <a href="@Url.Action("Introduce")" class="banner-btn">
+            <a href="@Url.Action("Introduce")" class="banner-btn" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
                 <span class="position-relative">Giới thiệu</span>
                 <span class="icon">
                     <i class="fal fa-long-arrow-right"></i>
@@ -481,7 +494,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <div class="about-us-img"  data-aos="fade-right" data-aos-duration="700">
+                <div class="about-us-img" data-aos="fade-right" data-aos-duration="700">
                     @if (config.AboutImage != null)
                     {
                         <img data-src="@Path.Combine("/images/configs/", config.AboutImage)" src="~/Content/images/img-main/base64.gif" alt="Ảnh giới thiệu" class="lazyload" />
@@ -496,7 +509,7 @@
             </div>
             <div class="col-lg-6 d-flex flex-column justify-content-center">
                 <div class="text-section">
-                    . About us
+                    About us
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     ÁP LỰC ĐÔNG ANH
@@ -521,6 +534,7 @@
 @if (Model.Projects.Any())
 {
     var delay = 200;
+    var count = 1;
     <section class="project">
         <div class="container">
             <div class="decoration">
@@ -532,7 +546,7 @@
             <div class="project-heading">
                 <div class="project-heading__left">
                     <div class="text-section">
-                        . Projects
+                        Our Projects
                     </div>
                     <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                         Các dự án hoàn thành
@@ -547,7 +561,7 @@
                 </div>
                 <div class="project-heading__right">
                     <div class="countup">
-                        <span class="number">250</span>+
+                        <span class="number">1000</span>+
                     </div>
                     <div class="text-vertical">
                         Dự án đã<br />
@@ -559,7 +573,7 @@
         <div class="project-list">
             @foreach (var item in Model.Projects)
             {
-                <div class="project-item" data-aos="flip-left" data-aos-duration="700" data-aos-delay="@delay">
+                <div class="project-item @if (count == 1) { @Html.Raw("active") }" data-aos="flip-left" data-aos-duration="700" data-aos-delay="@delay">
                     <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="project-item-link">
                         <span class="project-image">
                             @if (item.ListImage != null)
@@ -585,7 +599,42 @@
                     </a>
                 </div>
                 delay += 200;
+                count++;
             }
+        </div>
+    </section>
+}
+
+@if (Model.Banners.Any(a => a.GroupId == 3))
+{
+    var delay = 400;
+    <section class="business-connect">
+        <div class="container">
+            <div class="text-center">
+                <div class="text-section">
+                    Our Customers
+                </div>
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
+                    tổ chức kết nối kinh doanh
+                </div>
+            </div>
+            <div class="business-connect-list">
+                @foreach (var banner in Model.Banners.Where(a => a.GroupId == 3))
+                {
+                    <div class="bc-item" data-aos="fade-down-right" data-aos-duration="700" data-aos-delay="@delay">
+                        <div class="bc-img">
+                            @if (banner.Image != null)
+                            {
+                                <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
+                            }
+                        </div>
+                        <a href="@banner.Url" class="bc-name">
+                            @banner.BannerName
+                        </a>
+                    </div>
+                    delay += 200;
+                }
+            </div>
         </div>
     </section>
 }
@@ -597,7 +646,7 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    . Our Customers
+                    Our Customers
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     ĐỐI TÁC KHÁCH HÀNG
@@ -621,42 +670,6 @@
     </section>
 }
 
-@if (Model.Banners.Any(a => a.GroupId == 3))
-{
-    var delay = 400;
-    <section class="business-connect">
-        <div class="container">
-            <div class="text-center">
-                <div class="text-section">
-                    . Our Customers
-                </div>
-                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
-                    tổ chức kết nối kinh doanh
-                </div>
-            </div>
-            <div class="row mt-5">
-                @foreach (var banner in Model.Banners.Where(a => a.GroupId == 3).Take(3))
-                {
-                    <div class="col-lg-4 col-md-4 d-flex justify-content-center">
-                        <div class="bc-item" data-aos="fade-down-right" data-aos-duration="700" data-aos-delay="@delay">
-                            <div class="bc-img">
-                                @if (banner.Image != null)
-                                {
-                                    <img data-src="@Path.Combine("/images/banners/", banner.Image)" src="~/Content/images/img-main/base64.gif" alt="@banner.BannerName" class="lazyload" />
-                                }
-                            </div>
-                            <a href="@banner.Url" class="bc-name">
-                                @banner.BannerName
-                            </a>
-                        </div>
-                    </div>
-                    delay += 200;
-                }
-            </div>
-        </div>
-    </section>
-}
-
 @if (Model.ProductCategories.Any())
 {
     var delay = 300;
@@ -664,7 +677,7 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    . Our Categories
+                    Our Categories
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     DANH MỤC SẢN PHẨM NỔI BẬT
@@ -703,10 +716,10 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    . Features
+                    Features
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
-                    LỢI ÍCH CỦA CHÚNG TÔI
+                    Tại sao chọn chúng tôi
                 </div>
             </div>
             <div class="row mt-4 pt-2">
@@ -745,7 +758,7 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="text-section">
-                            . Our Services
+                            Our Services
                         </div>
                         <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                             CÁC DỊCH VỤ TỐT NHẤT
@@ -771,7 +784,7 @@
             <div class="service-list">
                 @foreach (var item in Model.Services)
                 {
-                    <div class="service-item"  data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
+                    <div class="service-item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
                         <a href="@Url.Action("ServiceDetail", new { url = item.Url })" class="service-item-link">
                             <div class="service-item-number">
                                 0 @number
@@ -814,7 +827,7 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    . News
+                    News
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     TIN TỨC SỰ KIỆN
@@ -915,14 +928,14 @@
 {
     <section class="feedback">
         <div class="container">
-            <div class="box-content">
+            <div class="box-content" data-aos="zoom-in" data-aos-duration="700">
                 <div class="title">
                     Mọi người nói gì về Áp Lực Đông Anh
                 </div>
                 <div class="feedback-list">
                     @foreach (var item in Model.Feedbacks)
                     {
-                        <div class="feedback-item" data-aos="flip-left" data-aos-duration="700">
+                        <div class="feedback-item">
                             <div class="content">
                                 @item.Content
                             </div>
