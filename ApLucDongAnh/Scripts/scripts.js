@@ -3,24 +3,6 @@
 });
 
 function homeJs() {
-    var decoration = $(".decoration");
-    $(window).on('scroll', function () {
-        decoration.each(function () {
-            if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
-                $(this).addClass('active');
-            }
-        });
-    });
-
-    $('.service-item-link').hover(
-        function () {
-            $(this).find('.excerpt').slideDown(300);
-        },
-        function () {
-            $(this).find('.excerpt').slideUp(300);
-        }
-    );
-
     $(".project-list").slick({
         dots: true,
         infinite: true,
@@ -51,7 +33,7 @@ function homeJs() {
     $(".business-connect-list").slick({
         dots: false,
         infinite: true,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         speed: 1000,
         autoplay: false,
@@ -105,19 +87,24 @@ function homeJs() {
     });
 
     $('.service-list').slick({
-        infinite: false,
-        slidesToShow: 3,
+        infinite: true,
+        slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: false,
         speed: 1000,
         autoplaySpeed: 3000,
         dots: false,
-        variableWidth: true,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
         responsive: [
             {
                 breakpoint: 1400,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 900,
                 settings: {
                     slidesToShow: 2,
                 }
@@ -526,6 +513,24 @@ $(document).ready(function () {
         },
         function () {
             $(this).parents('.slick-slide').siblings().find('.project-item').removeClass('active');
+        }
+    );
+
+    var decoration = $(".decoration");
+    $(window).on('scroll', function () {
+        decoration.each(function () {
+            if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
+                $(this).addClass('active');
+            }
+        });
+    });
+
+    $('.service-item-link').hover(
+        function () {
+            $(this).find('.excerpt').slideDown(300);
+        },
+        function () {
+            $(this).find('.excerpt').slideUp(300);
         }
     );
 

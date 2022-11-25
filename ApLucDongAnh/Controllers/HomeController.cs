@@ -91,8 +91,9 @@ namespace ApLucDongAnh.Controllers
             _unitOfWork.Save();
             var subject = "Email liên hệ từ website: " + Request.Url?.Host;
             var body = $"<p>Tên người liên hệ: {model.FullName},</p>" +
-                       $"<p>Số điện thoại: {model.Mobile},</p>" +
                        $"<p>Email: {model.Email},</p>" +
+                       $"<p>Số điện thoại: {model.Mobile},</p>" +
+                       $"<p>Tên Công Ty: {model.Company},</p>" +
                        $"<p>Nội dung: {model.Body}</p>" +
                        $"<p>Đây là hệ thống gửi email tự động, vui lòng không phản hồi lại email này.</p>";
             Task.Run(() => HtmlHelpers.SendEmail("gmail", subject, body, ConfigSite.Email, Email, Email, Password, "Áp Lực Đông Anh"));

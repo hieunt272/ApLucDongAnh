@@ -161,7 +161,7 @@ input::-webkit-inner-spin-button {
 .btn-main-2 {
   margin-top: 20px;
   color: #fff;
-  background: #FF6600;
+  background: #121C22;
   display: inline-block;
   padding: 10px 25px;
   font-weight: 500;
@@ -184,7 +184,7 @@ input::-webkit-inner-spin-button {
   height: 100%;
   top: 0;
   left: 0;
-  background: #121C22;
+  background: #FF6600;
   transform-origin: bottom right;
   transform: scaleX(0);
   transition: transform 0.5s ease;
@@ -194,7 +194,7 @@ input::-webkit-inner-spin-button {
 }
 .btn-main-2 i {
   font-size: 0.875rem;
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
   margin-left: 4px;
   transition: all 0.5s;
 }
@@ -555,7 +555,7 @@ input::-webkit-inner-spin-button {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
 }
 .banner img {
   width: 100%;
@@ -1124,7 +1124,6 @@ input::-webkit-inner-spin-button {
 }
 
 .service-list {
-  margin-left: 250px;
   margin-top: -20px;
   transform: translateY(50px);
 }
@@ -1156,7 +1155,6 @@ input::-webkit-inner-spin-button {
 }
 
 .service-item {
-  width: 450px !important;
   padding-top: 30px;
   margin-top: 30px;
 }
@@ -1168,9 +1166,6 @@ input::-webkit-inner-spin-button {
 }
 .service-item .service-item-link:hover {
   transform: translateY(-30px);
-}
-.service-item .service-item-link:hover img {
-  filter: grayscale(0);
 }
 .service-item .service-item-link:hover .content {
   bottom: 0;
@@ -1185,7 +1180,7 @@ input::-webkit-inner-spin-button {
   left: 20px;
   transform: translateY(-50%);
   font-family: "Montserrat-Bold";
-  font-size: 5rem;
+  font-size: 4.5rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   letter-spacing: -11px;
   line-height: 98px;
@@ -1195,7 +1190,6 @@ input::-webkit-inner-spin-button {
   width: 100%;
   aspect-ratio: 4/5;
   object-fit: cover;
-  filter: grayscale(1);
   transition: all 0.3s;
 }
 .service-item .content {
@@ -1219,6 +1213,7 @@ input::-webkit-inner-spin-button {
 }
 .service-item .excerpt {
   padding-right: 20px;
+  font-size: 0.875rem;
   display: none;
 }
 
@@ -2140,7 +2135,7 @@ input::-webkit-inner-spin-button {
 }
 .main-item .btn-view i {
   color: #FF6600;
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
   font-size: 0.875rem;
   transition: all 0.5s;
 }
@@ -2471,9 +2466,10 @@ input::-webkit-inner-spin-button {
 }
 .project-new .btn-main-2 {
   margin-top: 40px;
+  background: #FF6600;
 }
 .project-new .btn-main-2:before {
-  background: #CD0001;
+  display: none;
 }
 
 .desc-section {
@@ -3923,7 +3919,6 @@ input::-webkit-inner-spin-button {
 }
 .contact .box-contact {
   border-top: 6px solid #FF6600;
-  padding: 0 48px 0 16px;
 }
 .contact .btn-contact {
   border-radius: 5px;
@@ -3931,9 +3926,11 @@ input::-webkit-inner-spin-button {
   background: #FF6600;
   border: 0;
   outline: 0;
-  text-transform: uppercase;
   padding: 8px 25px;
-  margin-top: 15px;
+  margin-top: 30px;
+  width: 100%;
+  font-size: 1.125rem;
+  font-weight: 500;
   transition: all 0.5s;
 }
 .contact .btn-contact:hover {
@@ -3941,12 +3938,15 @@ input::-webkit-inner-spin-button {
 }
 
 .contact-form {
-  padding: 20px;
+  padding: 35px 40px 50px;
   background: #fff;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
 }
 .contact-form .title-section {
   margin-bottom: 30px;
+}
+.contact-form label {
+  font-weight: 600;
 }
 .contact-form .form-control {
   height: 40px;
@@ -3970,8 +3970,51 @@ input::-webkit-inner-spin-button {
   transform: translate(5px, -20px);
   display: inline-block;
 }
-.contact-form .btn-main {
-  border: 0;
+.contact-form .region {
+  margin-bottom: 20px;
+}
+.contact-form .radio-region {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding-left: 30px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.contact-form .radio-region input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.contact-form .checkmark {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border: 1px solid #959391;
+  border-radius: 50%;
+}
+.contact-form .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.contact-form .radio-region input:checked ~ .checkmark:after {
+  display: block;
+}
+.contact-form .radio-region .checkmark:after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #FF6600;
 }
 
 .title-contact {
@@ -3983,12 +4026,12 @@ input::-webkit-inner-spin-button {
 
 .desc-contact {
   font-weight: 300;
-  margin: 10px 0 20px;
+  margin: 10px 0 10px;
   width: 475px;
 }
 
 .color-base {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #FF6600;
   font-weight: 500;
 }
@@ -3999,7 +4042,8 @@ input::-webkit-inner-spin-button {
 
 .info-contact {
   color: #000;
-  margin: 8px 0 16px;
+  margin: 8px 0 10px;
+  font-size: 1.125rem;
 }
 .info-contact a {
   color: #007bff;
@@ -4009,8 +4053,8 @@ input::-webkit-inner-spin-button {
 }
 
 .map {
-  margin-top: 30px;
-  height: auto;
+  margin-top: 20px;
+  height: 270px;
   box-shadow: 0 12px 22px 0 rgba(0, 0, 0, 0.07);
   border-radius: 10px;
 }
@@ -4029,10 +4073,6 @@ input::-webkit-inner-spin-button {
 
   .services .decoration .decoration-container {
     left: 38px;
-  }
-
-  .service-list {
-    margin-left: 75px;
   }
 
   .news-item img {
@@ -4305,7 +4345,6 @@ input::-webkit-inner-spin-button {
 
   .service-item {
     margin-top: 60px;
-    width: 350px !important;
   }
 
   .news {
@@ -4553,6 +4592,10 @@ input::-webkit-inner-spin-button {
     padding: 0;
     margin-bottom: 30px;
   }
+
+  .map {
+    height: auto;
+  }
 }
 @media (max-width: 600px) {
   .title-section {
@@ -4627,9 +4670,6 @@ input::-webkit-inner-spin-button {
     margin-bottom: 15px;
   }
 
-  .service-list {
-    margin-left: 15px;
-  }
   .service-list .slick-arrow {
     width: 30px;
     height: 30px;
@@ -4640,7 +4680,6 @@ input::-webkit-inner-spin-button {
   }
 
   .service-item {
-    width: 250px !important;
     margin-top: 50px;
   }
   .service-item .service-item-number {
@@ -4900,6 +4939,18 @@ input::-webkit-inner-spin-button {
 
   .desc-contact {
     width: 100%;
+  }
+
+  .contact-form {
+    padding: 30px 15px 40px;
+  }
+
+  .color-base {
+    font-size: 1.125rem;
+  }
+
+  .info-contact {
+    font-size: 0.875rem;
   }
 }
 @keyframes flyRightToLeft {

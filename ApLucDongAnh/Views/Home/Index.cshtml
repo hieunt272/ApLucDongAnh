@@ -509,7 +509,7 @@
             </div>
             <div class="col-lg-6 d-flex flex-column justify-content-center">
                 <div class="text-section">
-                    About us
+                    About Us
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     ÁP LỰC ĐÔNG ANH
@@ -612,7 +612,7 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    Our Customers
+                    Business Network Organizations
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     tổ chức kết nối kinh doanh
@@ -716,7 +716,7 @@
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    Features
+                    Why Us?
                 </div>
                 <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     Tại sao chọn chúng tôi
@@ -780,35 +780,35 @@
                         </div>
                     }
                 </div>
-            </div>
-            <div class="service-list">
-                @foreach (var item in Model.Services)
-                {
-                    <div class="service-item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
-                        <a href="@Url.Action("ServiceDetail", new { url = item.Url })" class="service-item-link">
-                            <div class="service-item-number">
-                                0 @number
-                            </div>
-                            <div class="service-img">
-                                @if (item.Image != null)
-                                {
-                                    <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Body" class="lazyload" />
-                                }
-                            </div>
-                            <div class="content">
-                                <div class="service-heading">
-                                    <span>@item.Subject</span>
-                                    <i class="fal fa-long-arrow-right"></i>
+                <div class="service-list">
+                    @foreach (var item in Model.Services)
+                    {
+                        <div class="service-item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
+                            <a href="@Url.Action("ServiceDetail", new { url = item.Url })" class="service-item-link">
+                                <div class="service-item-number">
+                                    0 @number
                                 </div>
-                                <div class="excerpt">
-                                    @item.Description
+                                <div class="service-img">
+                                    @if (item.Image != null)
+                                    {
+                                        <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Body" class="lazyload" />
+                                    }
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    number++;
-                    delay += 200;
-                }
+                                <div class="content">
+                                    <div class="service-heading">
+                                        <span>@item.Subject</span>
+                                        <i class="fal fa-long-arrow-right"></i>
+                                    </div>
+                                    <div class="excerpt">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        number++;
+                        delay += 200;
+                    }
+                </div>
             </div>
         </div>
         <div class="decoration">

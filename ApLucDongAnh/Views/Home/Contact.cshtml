@@ -68,28 +68,52 @@
                         </div>
                         @Html.ValidationSummary(true)
                         @Html.AntiForgeryToken()
+                        <div class="region">
+                            <label>Anh/chị thuộc khu vực*</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="radio-region">
+                                        Miền Bắc
+                                        <input type="radio" name="Region" value="1" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="radio-region">
+                                        Miền Nam và Miền Trung
+                                        <input type="radio" name="Region" value="2">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div>
                             @Html.LabelFor(model => model.FullName)
-                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @required = "required", @placeholder = "Họ và tên" })
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @required = "required", @placeholder = "Nhập họ và tên" })
                             @Html.ValidationMessageFor(model => model.FullName)
                         </div>
                         <div>
-                            @Html.LabelFor(model => model.Mobile)
-                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @required = "required", @placeholder = "Số điện thoại" })
-                            @Html.ValidationMessageFor(model => model.Mobile)
-                        </div>
-                        <div>
                             @Html.LabelFor(model => model.Email)
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Nhập email" })
                             @Html.ValidationMessageFor(model => model.Email)
                         </div>
                         <div>
+                            @Html.LabelFor(model => model.Mobile)
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", @required = "required", @placeholder = "Nhập số điện thoại" })
+                            @Html.ValidationMessageFor(model => model.Mobile)
+                        </div>
+                        <div>
+                            @Html.LabelFor(model => model.Company)
+                            @Html.TextBoxFor(model => model.Company, new { @class = "form-control", @required = "required", @placeholder = "Nhập tên công ty của bạn" })
+                            @Html.ValidationMessageFor(model => model.Company)
+                        </div>
+                        <div>
                             @Html.LabelFor(model => model.Body)
-                            @Html.TextAreaFor(model => model.Body, new { rows = 3, @placeholder = "Lời nhắn" })
+                            @Html.TextAreaFor(model => model.Body, new { rows = 7, @placeholder = "Nhập lời nhắn" })
                             @Html.ValidationMessageFor(model => model.Body)
                         </div>
                         <button type="submit" class="btn-contact">
-                            Gửi liên hệ
+                            Gửi Ngay
                         </button>
                     </form>
                 </div>

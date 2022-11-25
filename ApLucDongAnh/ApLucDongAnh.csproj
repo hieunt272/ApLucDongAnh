@@ -160,6 +160,14 @@
     <Compile Include="Migrations\202211210706157_UpdateProductionImage.designer.cs">
       <DependentUpon>202211210706157_UpdateProductionImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211250240120_AddSomeToContactClass.cs" />
+    <Compile Include="Migrations\202211250240120_AddSomeToContactClass.designer.cs">
+      <DependentUpon>202211250240120_AddSomeToContactClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.cs" />
+    <Compile Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.designer.cs">
+      <DependentUpon>202211250243054_UpdateRequiredCompanyInContactClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -647,6 +655,7 @@
     <Content Include="Views\Vcms\RecruitPosition.cshtml" />
     <Content Include="Views\Vcms\UpdateRecruitPosition.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DisplayRegion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -666,6 +675,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211210706157_UpdateProductionImage.resx">
       <DependentUpon>202211210706157_UpdateProductionImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211250240120_AddSomeToContactClass.resx">
+      <DependentUpon>202211250240120_AddSomeToContactClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.resx">
+      <DependentUpon>202211250243054_UpdateRequiredCompanyInContactClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

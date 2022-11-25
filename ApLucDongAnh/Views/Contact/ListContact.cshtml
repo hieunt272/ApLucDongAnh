@@ -20,21 +20,25 @@
         <tbody>
             <tr>
                 <th style="width: 100px">Ngày gửi</th>
+                <th>Khu vực</th>
                 <th style="width: 150px">Họ và tên</th>
-                <th>Số điện thoại</th>
                 <th>Email</th>
-                <th style="width: 400px">Lời nhắn</th>
+                <th>Số điện thoại</th>
+                <th style="width: 300px">Tên Công Ty</thstyle="width:>
+                <th style="width: 350px">Lời nhắn</th>
                 <th style="width: 60px"></th>
             </tr>
             @foreach (var contact in Model.Contacts)
             {
                 <tr data-id="@contact.Id">
                     <td>@contact.CreateDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@Html.DisplayFor(m => contact.Region)</td>
                     <td>
                         <strong>@contact.FullName</strong>
                     </td>
-                    <td>@contact.Mobile</td>
                     <td>@contact.Email</td>
+                    <td>@contact.Mobile</td>
+                    <td>@contact.Company</td>
                     <td>@contact.Body</td>
                     <td><a href="javascript:;" onclick="deletecontact('@contact.Id')">Xóa</a></td>
                 </tr>
