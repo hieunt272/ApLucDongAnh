@@ -143,7 +143,6 @@ input::-webkit-inner-spin-button {
 
 /* Common */
 .text-section {
-    color: $colorMain;
     margin-bottom: 5px;
 }
 
@@ -361,8 +360,14 @@ input::-webkit-inner-spin-button {
         color: $black;
     }
 
-    .hotline a {
-        color: $black;
+    .hotline {
+        .phone-circle {
+            color: $black;
+        }
+
+        a {
+            color: $black;
+        }
     }
 
     .btn-search {
@@ -415,7 +420,6 @@ input::-webkit-inner-spin-button {
     a {
         color: $white;
         @include MontserratBold;
-        font-size: .875rem;
     }
 }
 
@@ -1006,12 +1010,7 @@ input::-webkit-inner-spin-button {
 }
 
 .partner {
-    padding: 40px 0 80px;
-    background: $colorMain2;
-
-    .title-section {
-        color: $white;
-    }
+    padding: 20px 0 80px;
 }
 
 .partner-list {
@@ -1281,6 +1280,7 @@ input::-webkit-inner-spin-button {
 
     .service-desc {
         text-align: justify;
+        min-height: 168px;
     }
 
     .decoration {
@@ -1888,7 +1888,7 @@ input::-webkit-inner-spin-button {
     overflow: hidden;
     position: relative;
     top: 26px;
-    width: 205px;
+    width: 220px;
     z-index: -1;
 
     @include maxWidth(768px) {
@@ -2274,6 +2274,16 @@ input::-webkit-inner-spin-button {
     }
 }
 
+#list-item-sort {
+    .row {
+        margin: 0 -25px;
+
+        [class*="col-"] {
+            padding: 0 25px;
+        }
+    }
+}
+
 .main-item {
     position: relative;
     border: 1px solid #DEDEDE;
@@ -2385,6 +2395,7 @@ input::-webkit-inner-spin-button {
         position: relative;
         color: #393E46;
         -webkit-line-clamp: 4;
+        height: 88px;
 
         &::before {
             @include before(100%, 1px);
@@ -2674,7 +2685,7 @@ input::-webkit-inner-spin-button {
 }
 
 .contact-info {
-    padding: 40px 50px 50px 25px;
+    padding: 40px 20px 50px 25px;
     color: $white;
     background: $colorMain2;
     position: relative;
@@ -3219,6 +3230,7 @@ input::-webkit-inner-spin-button {
 .introduce {
     padding: 60px 0 80px;
     position: relative;
+    overflow: hidden;
 
     &::after {
         @include before(340px, 260px);
@@ -3583,11 +3595,12 @@ input::-webkit-inner-spin-button {
         width: 180px;
         line-height: 22px;
         margin-top: 5px;
+        min-height: 66px;
     }
 }
 
 .achievement {
-    padding: 50px 0 70px;
+    padding: 50px 0;
 }
 
 .achievement-list {
@@ -4326,6 +4339,14 @@ input::-webkit-inner-spin-button {
     padding: 60px 0;
 }
 
+.list-article-cat {
+    margin: 0 -25px;
+
+    [class*="col-"] {
+        padding: 0 25px;
+    }
+}
+
 .project-detail {
     padding: 60px 0;
 
@@ -5034,7 +5055,12 @@ input::-webkit-inner-spin-button {
         padding: 0 10px;
 
         .slick-list {
-            padding: 0 40px;
+            padding: 0 20px;
+            margin: 0 -20px;
+        }
+
+        .slick-slide {
+            padding: 0 20px;
         }
 
         .chevron-prev {
@@ -5052,6 +5078,16 @@ input::-webkit-inner-spin-button {
 
     .product-category {
         padding: 40px 10px;
+    }
+
+    #list-item-sort {
+        .row {
+            margin: 0 -15px;
+
+            [class*="col-"] {
+                padding: 0 15px;
+            }
+        }
     }
 
     .slider-for {
@@ -5173,6 +5209,14 @@ input::-webkit-inner-spin-button {
         padding: 40px 10px;
     }
 
+    .list-article-cat {
+        margin: 0 -15px;
+
+        [class*="col-"] {
+            padding: 0 15px;
+        }
+    }
+
     .ability {
         padding: 40px 0 10px;
 
@@ -5237,7 +5281,7 @@ input::-webkit-inner-spin-button {
             margin-bottom: 30px;
         }
     }
-    
+
     .map {
         height: auto;
     }

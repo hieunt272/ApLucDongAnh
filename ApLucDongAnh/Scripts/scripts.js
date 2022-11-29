@@ -351,7 +351,7 @@ function introduce() {
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
         responsive: [
             {
-                breakpoint: 830,
+                breakpoint: 1000,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1
@@ -378,7 +378,7 @@ function introduce() {
         arrows: false,
         responsive: [
             {
-                breakpoint: 830,
+                breakpoint: 1000,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1
@@ -419,6 +419,7 @@ function getProject(action) {
             $('#list-project-sort').html(data);
         }).then(function () {
             $('.loading').remove();
+            AOS.init();
         });
     })
 }
@@ -436,7 +437,7 @@ $(document).ready(function () {
         arrows: false,
         responsive: [
             {
-                breakpoint: 830,
+                breakpoint: 1000,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 1
@@ -627,6 +628,7 @@ function Sort(action) {
             $('#list-item-sort').html(data);
         }).then(function () {
             $('.loading').remove();
+            AOS.init();
         });
     });
 }

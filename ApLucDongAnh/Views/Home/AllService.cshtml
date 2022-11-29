@@ -1,4 +1,5 @@
 ﻿@model ApLucDongAnh.ViewModel.AllServiceViewModel
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Dịch vụ";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllService");
@@ -7,11 +8,11 @@
 
 @Html.Action("Header")
 <section class="banner-category banner-category__service">
-    <h1>Dịch vụ</h1>
-    <div class="description">
+    <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Dịch vụ</h1>
+    <div class="description" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
         Chúng tôi đem được đến cho Doanh Nghiệp của Quý khách những lợi ích thiết thực nhất, những lời tư vấn được chắt lọc, trải nghiệm phù hợp nhất với các nhu cầu thực tế của từng doanh nghiệp.
     </div>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index")">
                 Trang chủ
@@ -23,15 +24,16 @@
         </li>
     </ol>
 </section>
-@if (Model.Services.Any())
-{
-    <section class="service-category">
-        <div class="container">
-            <div class="row">
-                @foreach (var service in Model.Services)
+<section class="service-category">
+    <div class="container">
+        <div class="row">
+            @if (Model.Services.Any())
+            {
+                var delay = 200;
+                foreach (var service in Model.Services)
                 {
                     <div class="col-lg-4 col-md-6">
-                        <div class="main-item">
+                        <div class="main-item" data-aos="flip-left" data-aos-duration="700" data-aos-delay="@delay">
                             <div class="icon-category">
                                 <img src="~/Content/images/img-main/icon-category.png" alt="Icon" />
                             </div>
@@ -57,20 +59,33 @@
                             </div>
                         </div>
                     </div>
+                    delay += 100;
                 }
-            </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
+                </div>
+            }
+            @if (Model.Services.PageCount > 1)
+            {
+                <div class="col-12 text-center">
+                    @Html.PagedListPager(Model.Services, page => Url.Action("AllService", new { page }))
+                </div>
+            }
         </div>
-    </section>
-}
+    </div>
+</section>
 @if (Model.ProjectCategories.Any())
 {
     <section class="project-new">
         <div class="container">
             <div class="text-center">
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     CÁC DỰ ÁN MỚI NHẤT
                 </div>
-                <div class="desc-section">
+                <div class="desc-section" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
                     Take a look at the work we are in need of partners, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id quam tortor. Aenean et quam non nunc.
                 </div>
             </div>
@@ -99,6 +114,7 @@
 }
 @if (Model.Feedbacks.Any())
 {
+    var delay = 200;
     <section class="feedback-customer">
         <div class="container">
             <div class="title-section text-center">
@@ -110,7 +126,7 @@
             <div class="feedback-customer-list">
                 @foreach (var item in Model.Feedbacks)
                 {
-                    <div class="feedback-customer-item">
+                    <div class="feedback-customer-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
                         <div class="icon-feedback"></div>
                         <div class="content">
                             @item.Content
@@ -141,6 +157,7 @@
                             </div>
                         </div>
                     </div>
+                    delay += 100;
                 }
             </div>
         </div>

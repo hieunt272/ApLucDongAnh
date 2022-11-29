@@ -4,10 +4,11 @@
 <div class="row">
     @if (Model.Products.Any())
     {
+        var delay = 200;
         foreach (var item in Model.Products)
         {
             <div class="col-lg-6 col-md-6">
-                <div class="main-item product-item">
+                <div class="main-item product-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
                     @if (item.Hot == true)
                     {
                         <div class="product-hot">Best Seller</div>
@@ -34,6 +35,7 @@
                     </div>
                 </div>
             </div>
+            delay += 100;
         }
     }
     else

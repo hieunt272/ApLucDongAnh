@@ -8,11 +8,11 @@
 
 @Html.Action("Header")
 <section class="banner-category banner-category__project" @if (Model.Category.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/projectCategory/", Model.Category.CoverImage) + ")'") }>
-    <h1>@Model.Category.CategoryName</h1>
-    <div class="description">
+    <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">@Model.Category.CategoryName</h1>
+    <div class="description" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
         @Model.Category.Description
     </div>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index")">
                 Trang chủ
@@ -51,9 +51,10 @@
         </div>
         @if (Model.Projects.Any())
         {
+            var delay = 200;
             foreach (var item in Model.Projects)
             {
-                <div class="project-large">
+                <div class="project-large" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
                     <div class="calendar">
                         <span class="day">@item.CreateDate.ToString("dd")</span>
                         T @item.CreateDate.ToString("MM-yy")
@@ -75,6 +76,7 @@
                         <i class="far fa-long-arrow-right"></i>
                     </a>
                 </div>
+                delay += 100;
             }
         }
         else

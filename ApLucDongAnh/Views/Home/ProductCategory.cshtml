@@ -7,8 +7,8 @@
 
 @Html.Action("Header")
 <section class="banner-category banner-category__product" @if (Model.Category.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/productCategory/", Model.Category.CoverImage) + ")'") }>
-    <h1>@Model.Category.CategoryName</h1>
-    <ol class="breadcrumb">
+    <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">@Model.Category.CategoryName</h1>
+    <ol class="breadcrumb" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index")">
                 Trang chủ
@@ -23,7 +23,7 @@
 <section class="product-category">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <input type="hidden" name="currentUrl" value="@Url.Action("ProductCategory", "Home")" />
                 <div class="filter">
                     <div class="result">
@@ -40,7 +40,7 @@
                     @Html.Action("GetProductCategory")
                 </div>
             </div>
-            <div class="col-lg-4 mt-lg-0 mt-5">
+            <div class="col-lg-3 mt-lg-0 mt-5">
                 <div class="box-border">
                     <div class="title">
                         Tìm kiếm

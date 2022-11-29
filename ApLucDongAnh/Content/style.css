@@ -95,7 +95,6 @@ input::-webkit-inner-spin-button {
 
 /* Common */
 .text-section {
-  color: #FF6600;
   margin-bottom: 5px;
 }
 
@@ -289,6 +288,9 @@ input::-webkit-inner-spin-button {
 .header-sticky .nav > li > a {
   color: #000;
 }
+.header-sticky .hotline .phone-circle {
+  color: #000;
+}
 .header-sticky .hotline a {
   color: #000;
 }
@@ -336,7 +338,6 @@ input::-webkit-inner-spin-button {
 .hotline a {
   color: #fff;
   font-family: "Montserrat-Bold";
-  font-size: 0.875rem;
 }
 
 .header-bottom {
@@ -870,11 +871,7 @@ input::-webkit-inner-spin-button {
 }
 
 .partner {
-  padding: 40px 0 80px;
-  background: #121C22;
-}
-.partner .title-section {
-  color: #fff;
+  padding: 20px 0 80px;
 }
 
 .partner-list {
@@ -1107,6 +1104,7 @@ input::-webkit-inner-spin-button {
 }
 .services .service-desc {
   text-align: justify;
+  min-height: 168px;
 }
 .services .decoration {
   text-align: left;
@@ -1636,7 +1634,7 @@ input::-webkit-inner-spin-button {
   overflow: hidden;
   position: relative;
   top: 26px;
-  width: 205px;
+  width: 220px;
   z-index: -1;
 }
 @media (max-width: 768px) {
@@ -2000,6 +1998,13 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+#list-item-sort .row {
+  margin: 0 -25px;
+}
+#list-item-sort .row [class*=col-] {
+  padding: 0 25px;
+}
+
 .main-item {
   position: relative;
   border: 1px solid #DEDEDE;
@@ -2104,6 +2109,7 @@ input::-webkit-inner-spin-button {
   position: relative;
   color: #393E46;
   -webkit-line-clamp: 4;
+  height: 88px;
 }
 .main-item .desc::before {
   content: "";
@@ -2342,7 +2348,7 @@ input::-webkit-inner-spin-button {
 }
 
 .contact-info {
-  padding: 40px 50px 50px 25px;
+  padding: 40px 20px 50px 25px;
   color: #fff;
   background: #121C22;
   position: relative;
@@ -2839,6 +2845,7 @@ input::-webkit-inner-spin-button {
 .introduce {
   padding: 60px 0 80px;
   position: relative;
+  overflow: hidden;
 }
 .introduce::after {
   content: "";
@@ -3165,10 +3172,11 @@ input::-webkit-inner-spin-button {
   width: 180px;
   line-height: 22px;
   margin-top: 5px;
+  min-height: 66px;
 }
 
 .achievement {
-  padding: 50px 0 70px;
+  padding: 50px 0;
 }
 
 .achievement-list {
@@ -3822,6 +3830,13 @@ input::-webkit-inner-spin-button {
   padding: 60px 0;
 }
 
+.list-article-cat {
+  margin: 0 -25px;
+}
+.list-article-cat [class*=col-] {
+  padding: 0 25px;
+}
+
 .project-detail {
   padding: 60px 0;
 }
@@ -4422,7 +4437,11 @@ input::-webkit-inner-spin-button {
     padding: 0 10px;
   }
   .history-list .slick-list {
-    padding: 0 40px;
+    padding: 0 20px;
+    margin: 0 -20px;
+  }
+  .history-list .slick-slide {
+    padding: 0 20px;
   }
   .history-list .chevron-prev {
     left: 0;
@@ -4437,6 +4456,13 @@ input::-webkit-inner-spin-button {
 
   .product-category {
     padding: 40px 10px;
+  }
+
+  #list-item-sort .row {
+    margin: 0 -15px;
+  }
+  #list-item-sort .row [class*=col-] {
+    padding: 0 15px;
   }
 
   .slider-for .slider-for-item img {
@@ -4536,6 +4562,13 @@ input::-webkit-inner-spin-button {
 
   .article-category {
     padding: 40px 10px;
+  }
+
+  .list-article-cat {
+    margin: 0 -15px;
+  }
+  .list-article-cat [class*=col-] {
+    padding: 0 15px;
   }
 
   .ability {

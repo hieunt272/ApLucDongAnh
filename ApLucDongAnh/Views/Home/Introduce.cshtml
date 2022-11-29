@@ -7,11 +7,11 @@
 
 @Html.Action("Header")
 <section class="banner-category" @if (Model.About.CoverImage != null) { @Html.Raw("style='background-image:url(" + Path.Combine("/images/abouts/", Model.About.CoverImage) + ")'") }>
-    <h1>Giới thiệu về chúng tôi</h1>
-    <div class="description">
+    <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Giới thiệu về chúng tôi</h1>
+    <div class="description" data-aos="fade-up" data-aos-duration="700" data-aos-delay="500">
         @Model.About.Description
     </div>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index")">
                 Trang chủ
@@ -27,13 +27,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     CÔNG TY CỔ PHẦN THIẾT BỊ ÁP LỰC ĐÔNG ANH THƯƠNG HIỆU UY TÍN LÂU NĂM
                 </div>
-                <div class="introduce-content">
+                <div class="introduce-content" data-aos="fade-right" data-aos-duration="700">
                     @Html.Raw(Model.About.Body)
                 </div>
-                <a href="#Features" class="btn-main-2">
+                <a href="#Features" class="btn-main-2" data-aos="fade-right" data-aos-duration="700">
                     <span>TÌM HIỂU THÊM</span>
                     <i class="far fa-long-arrow-right"></i>
                 </a>
@@ -41,7 +41,7 @@
             @if (Model.Banners.Any(a => a.GroupId == 6))
             {
                 <div class="col-lg-4 d-flex flex-column justify-content-end">
-                    <div class="content-intro-list">
+                    <div class="content-intro-list" data-aos="fade-left" data-aos-duration="700">
                         @foreach (var item in Model.Banners.Where(a => a.GroupId == 6))
                         {
                             <div class="content-intro-item">
@@ -84,15 +84,15 @@
 <section id="Features">
     <div class="container">
         <div class="text-section">
-            Features
+            <img src="~/Content/images/img-main/Features.svg" alt="Features" />
         </div>
-        <div class="title-section">
+        <div class="title-section" data-aos="fade-up" data-aos-duration="700">
             Sứ MỆNH - TẦM NHÌN - GIÁ TRỊ CỐT LÕI
         </div>
     </div>
     <div class="feature-content">
         <div class="container">
-            <div class="box-content offset-lg-5">
+            <div class="box-content offset-lg-5" data-aos="zoom-in" data-aos-duration="700">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
                         <button class="nav-link active" data-toggle="pill" data-target="#feature-1" aria-selected="true">SỨ MỆNH</button>
@@ -197,12 +197,12 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="text-section">
-                    Production Capacity
+                    <img src="~/Content/images/img-main/Production Capacity.svg" alt="Production Capacity" />
                 </div>
-                <div class="title-section text-capitalize">
+                <div class="title-section text-capitalize" data-aos="fade-up" data-aos-duration="700">
                     NĂNG LỰC SẢN XUẤT
                 </div>
-                <div class="about-content">
+                <div class="about-content" data-aos="fade-right" data-aos-duration="700">
                     @Html.Raw(Model.About.Production)
                 </div>
             </div>
@@ -210,7 +210,7 @@
                 @if (Model.About.ProductionImage != null)
                 {
                     var arrImage = Model.About.ProductionImage.Split(',');
-                    <div class="production-img-list">
+                    <div class="production-img-list" data-aos="zoom-in" data-aos-duration="700">
                         @foreach (var image in arrImage)
                         {
                             <a href="@Path.Combine("/images/abouts/", image)" data-fancybox="gallery" class="production-img-item">
@@ -225,20 +225,21 @@
 </section>
 @if (Model.Banners.Any(a => a.GroupId == 8))
 {
+    var delay = 200;
     <section class="history">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    Achievement
+                    <img src="~/Content/images/img-main/History Begin.svg" alt="History Begin" />
                 </div>
-                <div class="title-section text-capitalize">
+                <div class="title-section text-capitalize" data-aos="fade-up" data-aos-duration="700">
                     LỊCH SỬ HÌNH THÀNH
                 </div>
             </div>
             <div class="history-list">
                 @foreach (var item in Model.Banners.Where(a => a.GroupId == 8))
                 {
-                    <div class="history-item">
+                    <div class="history-item" data-aos="flip-left" data-aos-duration="700" data-aos-delay="@delay">
                         <div class="years">
                             @item.Years
                         </div>
@@ -249,6 +250,7 @@
                             @item.Slogan
                         </div>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -256,20 +258,21 @@
 }
 @if (Model.Banners.Any(a => a.GroupId == 9))
 {
+    var delay = 200;
     <section class="achievement">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    Achievement
+                    <img src="~/Content/images/img-main/Achievements Acquired.svg" alt="Achievements Acquired" />
                 </div>
-                <div class="title-section">
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
                     Thành tựu đạt được
                 </div>
             </div>
             <div class="achievement-list">
                 @foreach (var item in Model.Banners.Where(a => a.GroupId == 9))
                 {
-                    <div class="achievement-item">
+                    <div class="achievement-item" data-aos="zoom-in-down" data-aos-duration="700" data-aos-delay="@delay">
                         <a class="achievement-img">
                             @if (item.Image != null)
                             {
@@ -285,6 +288,7 @@
                             </div>
                         </div>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>
@@ -292,24 +296,26 @@
 }
 @if (Model.Banners.Any(a => a.GroupId == 2))
 {
+    var delay = 200;
     <section class="partner">
         <div class="container">
             <div class="text-center">
                 <div class="text-section">
-                    Achievement
+                    <img src="~/Content/images/img-main/Our Customers.svg" alt="Our Customers" />
                 </div>
-                <div class="title-section">
-                    Thành tựu đạt được
+                <div class="title-section" data-aos="fade-up" data-aos-duration="700">
+                    Đối tác tiêu biểu
                 </div>
             </div>
             <div class="partner-list">
                 @foreach (var item in Model.Banners.Where(a => a.GroupId == 2))
                 {
-                    <div class="partner-item">
+                    <div class="partner-item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="@delay">
                         <a href="@item.Url">
                             <img data-src="@Path.Combine("/images/banners/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.BannerName" class="lazyload" />
                         </a>
                     </div>
+                    delay += 200;
                 }
             </div>
         </div>

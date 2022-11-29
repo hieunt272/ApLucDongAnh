@@ -8,8 +8,8 @@
 
 @Html.Action("Header")
 <section class="banner-category banner-category__service">
-    <h1>Tìm kiếm</h1>
-    <ol class="breadcrumb">
+    <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Tìm kiếm</h1>
+    <ol class="breadcrumb" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index")">
                 Trang chủ
@@ -23,15 +23,16 @@
 </section>
 <section class="article-category">
     <div class="container">
-        <div class="row">
+        <div class="row list-article-cat">
             <div class="col-lg-8">
                 <div class="row">
                     @if (Model.Articles.Any())
                     {
+                        var delay = 200;
                         foreach (var item in Model.Articles)
                         {
                             <div class="col-lg-6 col-md-6">
-                                <div class="main-item">
+                                <div class="main-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
                                     <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="main-img">
                                         @if (item.Image != null)
                                         {
@@ -54,6 +55,7 @@
                                     </div>
                                 </div>
                             </div>
+                            delay += 100;
                         }
                     }
                     else
@@ -71,7 +73,7 @@
                     }
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="box-border">
                     <div class="title">
                         Tìm kiếm
