@@ -4,6 +4,18 @@
     ViewBag.Title = "Dịch vụ";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllService");
     ViewBag.Robots = "noindex";
+    var fa = Model.Services.FirstOrDefault();
+    if (fa?.Image != null)
+    {
+        if (fa.Image.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fa.Image;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", fa.Image);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -40,7 +52,14 @@
                             <a href="@Url.Action("ServiceDetail", new { url = service.Url })" class="main-img">
                                 @if (service.Image != null)
                                 {
-                                    <img src="@Path.Combine("/images/articles/", service.Image)" alt="@service.Subject" />
+                                    if (service.Image.StartsWith("https://lohoidonganh.com"))
+                                    {
+                                        <img src="@service.Image" alt="@service.Subject" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@Path.Combine("/images/articles/", service.Image)" alt="@service.Subject" />
+                                    }
                                 }
                             </a>
                             <div class="body">
@@ -61,17 +80,17 @@
                     </div>
                     delay += 100;
                 }
+                if (Model.Services.PageCount > 1)
+                {
+                    <div class="col-12 text-center">
+                        @Html.PagedListPager(Model.Services, page => Url.Action("AllService", new { page }))
+                    </div>
+                }
             }
             else
             {
                 <div class="col-12">
                     <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
-                </div>
-            }
-            @if (Model.Services.PageCount > 1)
-            {
-                <div class="col-12 text-center">
-                    @Html.PagedListPager(Model.Services, page => Url.Action("AllService", new { page }))
                 </div>
             }
         </div>

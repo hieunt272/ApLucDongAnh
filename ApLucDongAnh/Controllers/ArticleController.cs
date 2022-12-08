@@ -1,15 +1,15 @@
-﻿using Helpers;
+﻿using ApLucDongAnh.DAL;
+using ApLucDongAnh.Models;
+using ApLucDongAnh.ViewModel;
+using Helpers;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using ApLucDongAnh.DAL;
-using ApLucDongAnh.Models;
-using ApLucDongAnh.ViewModel;
 
 namespace ApLucDongAnh.Controllers
 {
@@ -67,7 +67,7 @@ namespace ApLucDongAnh.Controllers
                 }
 
                 model.ArticleCategory.Url = HtmlHelpers.ConvertToUnSign(null, model.ArticleCategory.Url ?? model.ArticleCategory.CategoryName);
-                
+
                 _unitOfWork.ArticleCategoryRepository.Insert(model.ArticleCategory);
                 _unitOfWork.Save();
                 return RedirectToAction("ArticleCategory", new { result = "success" });
@@ -180,7 +180,7 @@ namespace ApLucDongAnh.Controllers
             ViewBag.Result = result;
             var pageNumber = page ?? 1;
             const int pageSize = 15;
-            var article = _unitOfWork.ArticleRepository.GetQuery(orderBy: l => l.OrderByDescending(a => a.Id));
+            var article = _unitOfWork.ArticleRepository.GetQuery(orderBy: l => l.OrderByDescending(a => a.CreateDate));
 
             if (childId.HasValue)
             {
@@ -229,7 +229,7 @@ namespace ApLucDongAnh.Controllers
                     if (Request.Files[i] == null || Request.Files[i].ContentLength <= 0) continue;
                     if (!HtmlHelpers.CheckFileExt(Request.Files[i].FileName, "jpg|jpeg|png|gif")) continue;
                     if (Request.Files[i].ContentLength > 1024 * 1024 * 4) continue;
-                    
+
                     var imgFileName = HtmlHelpers.ConvertToUnSign(null, Path.GetFileNameWithoutExtension(Request.Files[i].FileName)) +
                         "-" + DateTime.Now.Millisecond + Path.GetExtension(Request.Files[i].FileName);
                     var imgPath = "/images/articles/" + DateTime.Now.ToString("yyyy/MM/dd");

@@ -1,9 +1,23 @@
 ﻿@model ApLucDongAnh.ViewModel.ArticleCategoryViewModel
+@using ApLucDongAnh.ViewModel
 @using PagedList.Mvc
 @{
     ViewBag.Title = Model.Category.TitleMeta ?? Model.Category.CategoryName;
     ViewBag.Description = Model.Category.DescriptionMeta ?? Model.Category.Description;
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ArticleCategory", "Home", new { url = Model.Category.Url });
+
+    var fa = Model.Articles.FirstOrDefault();
+    if (fa?.Image != null)
+    {
+        if (fa.Image.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fa.Image;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", fa.Image);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -40,29 +54,13 @@
                         var delay = 200;
                         foreach (var item in Model.Articles)
                         {
+                            var artItem = new ArticleItemPartial
+                            {
+                                Article = item,
+                                Delay = delay
+                            };
                             <div class="col-lg-6 col-md-6">
-                                <div class="main-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
-                                    <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="main-img">
-                                        @if (item.Image != null)
-                                        {
-                                            <img src="@Path.Combine("/images/articles/", item.Image)" alt="@item.Subject" />
-                                        }
-                                    </a>
-                                    <div class="body">
-                                        <div class="subject truncate">
-                                            <a href="@Url.Action("ArticleDetail", new { url = item.Url })" title="@item.Subject">
-                                                @item.Subject
-                                            </a>
-                                        </div>
-                                        <div class="desc truncate" title="@item.Description">
-                                            @item.Description
-                                        </div>
-                                        <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="btn-view">
-                                            TÌM HIỂU THÊM
-                                            <i class="far fa-long-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                @Html.Partial("_ArticleItem", artItem)
                             </div>
                             delay += 100;
                         }
@@ -111,7 +109,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h2 class="mb-0">
                                                 <a href="@Url.Action("ArticleCategory", "Home", new {url = item.Url})">@item.CategoryName</a>
-                                                <span>(@item.Articles.Count())</span>
+                                                <span>(@item.Articles.Count)</span>
                                             </h2>
                                             @if (Model.Categories.Any(a => a.ParentId == item.Id))
                                             {
@@ -121,7 +119,7 @@
                                             }
                                         </div>
                                     </div>
-                                    @if (Model.Categories.Where(a => a.ParentId == item.Id).Any())
+                                    @if (Model.Categories.Any(a => a.ParentId == item.Id))
                                     {
                                         <div id="collapse-@item.Id" class="collapse">
                                             <div class="card-body">

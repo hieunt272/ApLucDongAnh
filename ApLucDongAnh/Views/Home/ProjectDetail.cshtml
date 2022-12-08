@@ -5,7 +5,14 @@
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ProjectDetail", new { url = Model.Project.Url });
     if (Model.Project.ListImage != null)
     {
-        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/projects/", Model.Project.ListImage.Split(',')[0]);
+        if (Model.Project.ListImage.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = Model.Project.ListImage;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/projects/", Model.Project.ListImage.Split(',')[0]);
+        }
     }
 }
 
@@ -41,9 +48,18 @@
             <div class="project-img-list">
                 @foreach (var image in arrImage)
                 {
-                    <a href="@Path.Combine("/images/projects/", image)" data-fancybox="gallery" class="project-img-item">
-                        <img src="@Path.Combine("/images/projects/", image)" alt="@Model.Project.ProjectName" />
-                    </a>
+                    if (image.StartsWith("https://lohoidonganh.com"))
+                    {
+                        <a href="@image" data-fancybox="gallery" class="project-img-item">
+                            <img src="@image" alt="@Model.Project.ProjectName" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Path.Combine("/images/projects/", image)" data-fancybox="gallery" class="project-img-item">
+                            <img src="@Path.Combine("/images/projects/", image)" alt="@Model.Project.ProjectName" />
+                        </a>
+                    }
                 }
             </div>
         }
@@ -96,7 +112,7 @@
                 </div>
                 <div class="contact-info">
                     <div class="contact-heading">
-                        LET’S START WORKING TOGETHER
+                        GỌI NGAY CHO <br/>CHÚNG TÔI NHÉ!
                     </div>
                     <div class="text">
                         Hãy cho chúng tôi đồng hành cùng bạn <br />
@@ -137,7 +153,14 @@
                                         <a href="@Url.Action("ProjectDetail", new { url = Model.Previous.Url })" class="article-img">
                                             @if (Model.Previous.ListImage != null)
                                             {
-                                                <img data-src="@Path.Combine("/images/projects/", Model.Previous.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.ProjectName" class="lazyload" />
+                                                if (Model.Previous.ListImage.StartsWith("https://lohoidonganh.com"))
+                                                {
+                                                    <img data-src="@Model.Previous.ListImage" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.ProjectName" class="lazyload" />
+                                                }
+                                                else
+                                                {
+                                                    <img data-src="@Path.Combine("/images/projects/", Model.Previous.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.ProjectName" class="lazyload" />
+                                                }
                                             }
                                             <i class="far fa-long-arrow-left"></i>
                                         </a>
@@ -163,7 +186,14 @@
                                         <a href="@Url.Action("ProjectDetail", new { url = Model.Next.Url })" class="article-img">
                                             @if (Model.Next.ListImage != null)
                                             {
-                                                <img data-src="@Path.Combine("/images/projects/", Model.Next.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.ProjectName" class="lazyload" />
+                                                if (Model.Next.ListImage.StartsWith("https://lohoidonganh.com"))
+                                                {
+                                                    <img data-src="@Model.Next.ListImage" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.ProjectName" class="lazyload" />
+                                                }
+                                                else
+                                                {
+                                                    <img data-src="@Path.Combine("/images/projects/", Model.Next.ListImage.Split(',')[0])" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.ProjectName" class="lazyload" />
+                                                }
                                             }
                                             <i class="far fa-long-arrow-right"></i>
                                         </a>

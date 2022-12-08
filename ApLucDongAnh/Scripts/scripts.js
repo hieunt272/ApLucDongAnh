@@ -8,8 +8,7 @@ function homeJs() {
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         arrows: false,
         responsive: [
@@ -29,14 +28,12 @@ function homeJs() {
             }
         ]
     });
-
     $(".business-connect-list").slick({
         dots: false,
         infinite: true,
         slidesToShow: 5,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -57,14 +54,12 @@ function homeJs() {
             }
         ]
     });
-
     $(".category-hot-list").slick({
         dots: false,
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
+        autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -85,13 +80,11 @@ function homeJs() {
             }
         ]
     });
-
     $('.service-list').slick({
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
+        autoplay: true,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -117,7 +110,6 @@ function homeJs() {
             }
         ]
     });
-
     $('.video-slider-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -145,14 +137,12 @@ function homeJs() {
             },
         ]
     });
-
     $(".feedback-list").slick({
         dots: true,
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -174,14 +164,12 @@ function homeJs() {
             }
         ]
     });
-
     $(".article-list").slick({
         dots: false,
         infinite: true,
         slidesToShow: 2,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -197,6 +185,31 @@ function homeJs() {
                 breakpoint: 600,
                 settings: {
                     slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+    $(".partner-list").slick({
+        dots: true,
+        infinite: true,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1000,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
                     slidesToScroll: 1
                 }
             }
@@ -241,7 +254,6 @@ function productDetail() {
             },
         ]
     });
-
     $(".related-product-list").slick({
         dots: false,
         infinite: true,
@@ -269,6 +281,8 @@ function productDetail() {
             }
         ]
     });
+
+    $(".content-detail table").addClass('table').wrap("<div class='table-responsive'>");
 }
 
 function serviceCategory() {
@@ -277,8 +291,7 @@ function serviceCategory() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
@@ -308,8 +321,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         arrows: false,
     });
@@ -318,8 +330,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
+        autoplay: true,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -330,8 +341,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
+        autoplay: true,
         autoplaySpeed: 3000,
         dots: false,
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
@@ -342,8 +352,7 @@ function introduce() {
         infinite: false,
         slidesToShow: 5,
         slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
+        autoplay: true,
         autoplaySpeed: 3000,
         dots: false,
         variableWidth: true,
@@ -372,8 +381,7 @@ function introduce() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         arrows: false,
         responsive: [
@@ -393,46 +401,13 @@ function introduce() {
             }
         ]
     });
-}
 
-function projectDetail() {
-    $('.project-img-list').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: false,
-        speed: 1000,
-        autoplaySpeed: 3000,
-        dots: false,
-        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
-        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
-    });
-}
-
-function getProject(action) {
-    $('#project-cat .nav-link').click(function () {
-        let catId = parseInt($(this).val());
-
-        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
-        $.get(action, { catId: catId }, function (data) {
-            $('#list-project-sort').empty();
-            $('#list-project-sort').html(data);
-        }).then(function () {
-            $('.loading').remove();
-            AOS.init();
-        });
-    })
-}
-
-
-$(document).ready(function () {
     $(".partner-list").slick({
         dots: true,
         infinite: true,
         slidesToShow: 6,
         slidesToScroll: 1,
-        speed: 1000,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
         arrows: false,
         responsive: [
@@ -452,6 +427,39 @@ $(document).ready(function () {
             }
         ]
     });
+}
+
+function projectDetail() {
+    $('.project-img-list').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        dots: false,
+        prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
+    });
+
+    $(".content-detail table").addClass('table').wrap("<div class='table-responsive'>");
+}
+
+function getProject(action) {
+    $('#project-cat .nav-link').click(function () {
+        let catId = parseInt($(this).val());
+
+        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
+        $.get(action, { catId: catId }, function (data) {
+            $('#list-project-sort').empty();
+            $('#list-project-sort').html(data);
+        }).then(function () {
+            $('.loading').remove();
+            AOS.init();
+        });
+    })
+}
+
+$(document).ready(function () {
 
     $('.number').countUp();
 
@@ -490,6 +498,7 @@ $(document).ready(function () {
     $(".btn-search").click(function () {
         $(".body-overlay").addClass('active');
         $(".site-search").addClass('active');
+
         function delay() {
             $(".site-search .form-control").focus();
         }
@@ -518,13 +527,14 @@ $(document).ready(function () {
     );
 
     var decoration = $(".decoration");
-    $(window).on('scroll', function () {
-        decoration.each(function () {
-            if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
-                $(this).addClass('active');
-            }
+    $(window).on('scroll',
+        function () {
+            decoration.each(function () {
+                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
+                    $(this).addClass('active');
+                }
+            });
         });
-    });
 
     $('.service-item-link').hover(
         function () {
@@ -539,9 +549,7 @@ $(document).ready(function () {
     if (loadG === "1") {
         $.getScript("/Scripts/Google_element.js");
     }
-})
 
-$(function () {
     $(".contact-form").on("submit", function (e) {
         e.preventDefault();
         $.post("/Home/ContactForm", $(this).serialize(), function (data) {

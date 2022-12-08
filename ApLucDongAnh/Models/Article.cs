@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace ApLucDongAnh.Models
 {
@@ -19,7 +16,7 @@ namespace ApLucDongAnh.Models
         public string Description { get; set; }
         [Display(Name = "Nội dung"), UIHint("EditorBox")]
         public string Body { get; set; }
-        [Display(Name = "Ảnh đại diện"), UIHint("ImageArticle")]
+        [Display(Name = "Ảnh đại diện"), UIHint("ImageArticle"), StringLength(500)]
         public string Image { get; set; }
         [Display(Name = "Ảnh bìa"), StringLength(500)]
         public string CoverImage { get; set; }
@@ -34,14 +31,16 @@ namespace ApLucDongAnh.Models
         public bool Active { get; set; }
         [Display(Name = "Hiện trang chủ")]
         public bool Home { get; set; }
-
         [StringLength(300)]
         public string Url { get; set; }
-        [Display(Name = "Thẻ tiêu đề"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự"), UIHint("TextBox")]
+        [Display(Name = "Thẻ tiêu đề"), StringLength(200, ErrorMessage = "Tối đa 200 ký tự"), UIHint("TextBox")]
         public string TitleMeta { get; set; }
-
         [Display(Name = "Thẻ mô tả"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextArea")]
         public string DescriptionMeta { get; set; }
+
+        [StringLength(500)]
+        public string UrlSource { get; set; }
+
         public virtual ArticleCategory ArticleCategory { get; set; }
 
         public Article()

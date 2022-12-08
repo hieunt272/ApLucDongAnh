@@ -1,10 +1,6 @@
-﻿using PagedList;
-using System;
+﻿using ApLucDongAnh.Models;
+using PagedList;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ApLucDongAnh.Models;
 
 namespace ApLucDongAnh.ViewModel
 {
@@ -25,8 +21,8 @@ namespace ApLucDongAnh.ViewModel
         public IEnumerable<ProjectCategory> ProjectCategories { get; set; }
     }
 
-    public class HeaderViewModel 
-    { 
+    public class HeaderViewModel
+    {
         public IEnumerable<ArticleCategory> ArticleCategories { get; set; }
         public IEnumerable<ProductCategory> ProductCategories { get; set; }
         public IEnumerable<ProjectCategory> ProjectCategories { get; set; }
@@ -49,10 +45,10 @@ namespace ApLucDongAnh.ViewModel
         public IEnumerable<ArticleCategory> Categories { get; set; }
         public string Sort { get; set; }
     }
-    public class ArticleDetailsViewModel 
+    public class ArticleDetailsViewModel
     {
         public Article Article { get; set; }
-        public Article Previous{ get; set; }
+        public Article Previous { get; set; }
         public Article Next { get; set; }
     }
     public class MenuArticleViewModel
@@ -147,5 +143,11 @@ namespace ApLucDongAnh.ViewModel
     {
         public Recruit Recruit { get; set; }
         public IEnumerable<RecruitPosition> RecruitPositions { get; set; }
+    }
+
+    public class ArticleItemPartial
+    {
+        public Article Article { get; set; }
+        public int Delay { get; set; }
     }
 }

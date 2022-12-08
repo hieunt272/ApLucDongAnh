@@ -327,12 +327,12 @@
                 <ul class="ul-reset lang d-flex">
                     <li>
                         <a href="javascript:;" onclick="doTranslate('vi|vi')">
-                            <img src="~/Content/images/img-main/vn.png" />
+                            <img src="~/Content/images/img-main/vn.png" alt="VN"/>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:;" onclick="doTranslate('vi|en')">
-                            <img src="~/Content/images/img-main/en.png" />
+                            <img src="~/Content/images/img-main/en.png" alt="En" />
                         </a>
                     </li>
                     <li>
@@ -483,7 +483,7 @@
 <section class="container">
     <div class="numbers">
         <div class="number-item">
-            <img src="~/Content/images/img-main/icon-number.png" class="number-img" />
+            <img src="~/Content/images/img-main/icon-number.png" class="number-img" alt="Kinh nghiệm"/>
             <div class="countup">
                 <span class="number">30</span>+
             </div>
@@ -492,7 +492,7 @@
             </div>
         </div>
         <div class="number-item">
-            <img src="~/Content/images/img-main/icon-number (1).png" class="number-img" />
+            <img src="~/Content/images/img-main/icon-number (1).png" class="number-img" alt="tỉnh" />
             <div class="countup">
                 <span class="number">34</span>+
             </div>
@@ -501,7 +501,7 @@
             </div>
         </div>
         <div class="number-item">
-            <img src="~/Content/images/img-main/icon-number (2).png" class="number-img" />
+            <img src="~/Content/images/img-main/icon-number (2).png" class="number-img" alt="Diện tích"/>
             <div class="countup">
                 <span class="number">13000</span>+
             </div>
@@ -510,7 +510,7 @@
             </div>
         </div>
         <div class="number-item">
-            <img src="~/Content/images/img-main/icon-number (3).png" class="number-img" />
+            <img src="~/Content/images/img-main/icon-number (3).png" class="number-img" alt="Dự án"/>
             <div class="countup">
                 <span class="number">1000</span>+
             </div>
@@ -872,7 +872,14 @@
                                 <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="news-img">
                                     @if (item.Image != null)
                                     {
-                                        <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Subject" class="lazyload" />
+                                        if (item.Image.StartsWith("https://lohoidonganh.com"))
+                                        {
+                                            <img data-src="@item.Image" src="~/Content/images/img-main/base64.gif" alt="@item.Subject" class="lazyload" />
+                                        }
+                                        else
+                                        {
+                                            <img data-src="@Path.Combine("/images/articles/", item.Image)" src="~/Content/images/img-main/base64.gif" alt="@item.Subject" class="lazyload" />
+                                        }
                                     }
                                 </a>
                                 <div class="body">

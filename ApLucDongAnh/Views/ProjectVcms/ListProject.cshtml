@@ -53,6 +53,7 @@
                     <th style="width: 50px">Hình ảnh</th>
                     <th>Tên dự án</th>
                     <th>Danh mục</th>
+                    <th>URL</th>
                     <th style="width: 100px">Hiện trang chủ</th>
                     <th style="width: 100px">Hoạt động</th>
                     <th style="width: 140px;"></th>
@@ -65,15 +66,30 @@
                             <input type="number" name="Sort" value="@project.Sort" class="form_control w100" />
                         </td>
                         <td>
-                            @if (!string.IsNullOrEmpty(project.ListImage))
-                            {
-                                <img src="@Path.Combine("/images/projects/", project.ListImage.Split(',')[0])" class="img-border" />
-                            }
+                            <a href="@Url.Action("ProjectDetail", "Home", new{url = project.Url})" target="_blank">
+                                @if (!string.IsNullOrEmpty(project.ListImage))
+                                {
+                                    if (project.ListImage.StartsWith("https://lohoidonganh.com"))
+                                    {
+                                        <img src="@project.ListImage" class="img-border" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@Path.Combine("/images/projects/", project.ListImage.Split(',')[0])" class="img-border" />
+                                    }
+                                }
+                                else
+                                {
+                                    @:NO PICTURE
+                                }
+                            </a>
                         </td>
                         <td class="left">
                             <p><a href="@Url.Action("UpdateProject", new { proId = project.Id })"><strong>@project.ProjectName</strong></a></p>
+                            URL gốc: @project.UrlSource
                         </td>
                         <td>@project.ProjectCategory.CategoryName</td>
+                        <td>@project.Url</td>
                         <td>@Html.EditorFor(a => project.Home, new { htmlAttributes = new { id = "Home" } })</td>
                         <td>@Html.EditorFor(a => project.Active, new { htmlAttributes = new { id = "Active" } })</td>
                         <td>
@@ -86,7 +102,7 @@
                 @if (Model.Projects.PageCount > 1)
                 {
                     <tr>
-                        <td colspan="9">@Html.PagedListPager(Model.Projects, page => Url.Action("ListProject", new { page, catId = Model.CatId, parentId = Model.ParentId, name = Model.Name, sort = Model.Sort }))</td>
+                        <td colspan="8">@Html.PagedListPager(Model.Projects, page => Url.Action("ListProject", new { page, catId = Model.CatId, parentId = Model.ParentId, name = Model.Name, sort = Model.Sort }))</td>
                     </tr>
                 }
             </tbody>

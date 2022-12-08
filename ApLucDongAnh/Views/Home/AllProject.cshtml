@@ -4,6 +4,19 @@
     ViewBag.Title = "Dự án";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllProject");
     ViewBag.Robots = "noindex";
+
+    var fa = Model.Projects.FirstOrDefault();
+    if (fa?.ListImage != null)
+    {
+        if (fa.ListImage.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fa.ListImage;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/projects/", fa.ListImage);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -56,7 +69,15 @@
                     <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="project-img">
                         @if (item.ListImage != null)
                         {
-                            <img src="@Path.Combine("/images/projects/", item.ListImage.Split(',')[0])" alt="@item.ProjectName" />
+                            if (item.ListImage.StartsWith("https://lohoidonganh.com"))
+                            {
+                                <img data-src="@item.ListImage" alt="@item.ProjectName" class="lazyload"/>
+
+                            }
+                            else
+                            {
+                                <img data-src="@Path.Combine("/images/projects/", item.ListImage.Split(',')[0])" class="lazyload" alt="@item.ProjectName" />
+                            }
                         }
                     </a>
                     <a href="@Url.Action("ProjectDetail", new { url = item.Url })" class="subject">
@@ -72,16 +93,16 @@
                 </div>
                 delay += 100;
             }
+            if (Model.Projects.PageCount > 1)
+            {
+                <div class="text-center mt-5">
+                    @Html.PagedListPager(Model.Projects, page => Url.Action("AllProject", new { page }))
+                </div>
+            }
         }
         else
         {
             <p class="alert alert-success small mt-5">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
-        }
-        @if (Model.Projects.PageCount > 1)
-        {
-            <div class="text-center mt-5">
-                @Html.PagedListPager(Model.Projects, page => Url.Action("AllProject", new { page }))
-            </div>
         }
     </div>
 </section>

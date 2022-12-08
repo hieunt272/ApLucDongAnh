@@ -1,9 +1,22 @@
 ﻿@model ApLucDongAnh.ViewModel.ArticleSearchViewModel
+@using ApLucDongAnh.ViewModel
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Tìm kiếm";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("SearchArticle");
     ViewBag.Robots = "noindex";
+    var fa = Model.Articles.FirstOrDefault();
+    if (fa?.Image != null)
+    {
+        if (fa.Image.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fa.Image;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", fa.Image);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -31,8 +44,14 @@
                         var delay = 200;
                         foreach (var item in Model.Articles)
                         {
+                            var article = new ArticleItemPartial
+                            {
+                                Article = item,
+                                Delay = delay
+                            };
                             <div class="col-lg-6 col-md-6">
-                                <div class="main-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
+                                @Html.Partial("_ArticleItem", article)
+                                @*<div class="main-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
                                     <a href="@Url.Action("ArticleDetail", new { url = item.Url })" class="main-img">
                                         @if (item.Image != null)
                                         {
@@ -53,9 +72,15 @@
                                             <i class="far fa-long-arrow-right"></i>
                                         </a>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                             delay += 100;
+                        }
+                        if (Model.Articles.PageCount > 1)
+                        {
+                            <div class="col-12 text-center">
+                                @Html.PagedListPager(Model.Articles, page => Url.Action("SearchArticle", new { page, keywords = Model.Keywords }))
+                            </div>
                         }
                     }
                     else
@@ -63,12 +88,6 @@
                         <div class="col-12">
                             <h3 class="font-weight-bold text-danger text-uppercase">Không có kết quả</h3>
                             <p>Xin lỗi, không có nội dung phù hợp với cụm từ tìm kiếm của bạn. Vui lòng thử lại với một số từ khóa khác.</p>
-                        </div>
-                    }
-                    @if (Model.Articles.PageCount > 1)
-                    {
-                        <div class="col-12 text-center">
-                            @Html.PagedListPager(Model.Articles, page => Url.Action("SearchArticle", new { page, keywords = Model.Keywords }))
                         </div>
                     }
                 </div>

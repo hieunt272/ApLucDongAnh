@@ -33,6 +33,10 @@
                         <td class="form_text">@Html.EditorFor(a => Model.ProductCategory.Description)</td>
                     </tr>
                     <tr>
+                        <td class="form_name">@Html.LabelFor(a => Model.ProductCategory.Body)</td>
+                        <td class="form_text">@Html.EditorFor(a => Model.ProductCategory.Body)</td>
+                    </tr>
+                    <tr>
                         <td class="form_name">@Html.LabelFor(a => Model.ProductCategory.CoverImage)</td>
                         <td class="form_text">
                             @Html.TextBoxFor(a => Model.ProductCategory.CoverImage, new { type = "file" })

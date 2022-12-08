@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace ApLucDongAnh.Models 
+namespace ApLucDongAnh.Models
 {
     public class ProductCategory
     {
@@ -12,17 +9,15 @@ namespace ApLucDongAnh.Models
         [Display(Name = "Tên danh mục"), Required(ErrorMessage = "Hãy nhập tên danh mục"),
             StringLength(80, ErrorMessage = "Tối đa 80 ký tự"), UIHint("TextBox")]
         public string CategoryName { get; set; }
-
         [Display(Name = "Đường dẫn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
         public string Url { get; set; }
-
         [Display(Name = "Thứ tự"), Required(ErrorMessage = "Hãy nhập số thứ tự"),
-            RegularExpression(@"\d+", ErrorMessage = "Chỉ nhập số nguyên dương"), UIHint("NumberBox")]
+         RegularExpression(@"\d+", ErrorMessage = "Chỉ nhập số nguyên dương"), UIHint("NumberBox")]
         public int CategorySort { get; set; }
-
         [Display(Name = "Giới thiệu ngắn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextArea")]
         public string Description { get; set; }
-
+        [Display(Name = "Nội dung"), UIHint("EditorBox")]
+        public string Body { get; set; }
         [Display(Name = "Hoạt động")]
         public bool CategoryActive { get; set; }
         [Display(Name = "Danh mục cha")]
@@ -37,9 +32,10 @@ namespace ApLucDongAnh.Models
         public string DescriptionMeta { get; set; }
         [Display(Name = "Ảnh bìa"), StringLength(500)]
         public string CoverImage { get; set; }
-        [Display(Name = "Ảnh đại diện"), StringLength(500), UIHint("ImageProCat")]
+        [Display(Name = "Ảnh đại diện"), StringLength(500)]
         public string Image { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+
         public ProductCategory()
         {
             CategoryActive = true;

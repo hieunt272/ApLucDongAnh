@@ -3,6 +3,10 @@
     ViewBag.Title = "Giới thiệu";
     ViewBag.Description = Model.About.Description;
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Introduce");
+    if (Model.About.CoverImage != null)
+    {
+        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/abouts/", Model.About.CoverImage);
+    }
 }
 
 @Html.Action("Header")

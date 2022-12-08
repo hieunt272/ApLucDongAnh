@@ -16,7 +16,14 @@
                     <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="main-img">
                         @if (item.ListImage != null)
                         {
-                            <img src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" alt="@item.Name" />
+                            if (item.ListImage.StartsWith("https://lohoidonganh.com"))
+                            {
+                                <img data-src="@item.ListImage" alt="@item.Name" class="lazyload" />
+                            }
+                            else
+                            {
+                                <img data-src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" class="lazyload" alt="@item.Name" />
+                            }
                         }
                     </a>
                     <div class="body">
@@ -37,18 +44,18 @@
             </div>
             delay += 100;
         }
+        if (Model.Products.PageCount > 1)
+        {
+            <div class="col-12 text-center">
+                @Html.PagedListPager(Model.Products, page => Url.Action("SearchProduct", new { page, keywords = Model.Keywords, sort = Model.Sort }))
+            </div>
+        }
     }
     else
     {
         <div class="col-12">
             <h3 class="font-weight-bold text-danger text-uppercase">Không có kết quả</h3>
             <p>Xin lỗi, không có nội dung phù hợp với cụm từ tìm kiếm của bạn. Vui lòng thử lại với một số từ khóa khác.</p>
-        </div>
-    }
-    @if (Model.Products.PageCount > 1)
-    {
-        <div class="col-12 text-center">
-            @Html.PagedListPager(Model.Products, page => Url.Action("SearchProduct", new { page, keywords = Model.Keywords, sort = Model.Sort }))
         </div>
     }
 </div>

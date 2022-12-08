@@ -67,6 +67,7 @@ html {
 body {
     font-family: 'Roboto', sans-serif;
     top: 0 !important;
+    overflow-x: hidden;
 
     @include maxWidth(600px) {
         font-size: .875rem;
@@ -2470,7 +2471,9 @@ input::-webkit-inner-spin-button {
         background: $white;
         margin-bottom: 0 !important;
 
-        h2 {
+        .name {
+            font-size: 1.5rem;
+            font-weight: 700;
             line-height: 20px;
         }
 
@@ -4149,6 +4152,35 @@ input::-webkit-inner-spin-button {
     }
 }
 
+.aligncenter {
+    display: block;
+    margin: auto;
+}
+
+.content-detail, .tab-content {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    h4 {
+        font-size: 1.125rem;
+    }
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    iframe {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
 .article-detail {
     padding: 60px 0;
 
@@ -4194,26 +4226,6 @@ input::-webkit-inner-spin-button {
         background: #F5F5F5;
     }
 
-    .content-detail {
-        h2 {
-            font-size: 1.5rem;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        iframe {
-            max-width: 100%;
-            height: auto;
-        }
-    }
 
     .share {
         margin-top: 30px;
@@ -4357,19 +4369,6 @@ input::-webkit-inner-spin-button {
         &::before,
         &::after {
             display: none;
-        }
-    }
-
-    .content-detail {
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        iframe {
-            max-width: 100%;
-            height: auto;
         }
     }
 }

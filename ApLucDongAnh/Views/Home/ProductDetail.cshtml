@@ -8,7 +8,14 @@
 
     if (Model.Product.ListImage != null)
     {
-        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/products/", Model.Product.ListImage.Split(',')[0]);
+        if (Model.Product.ListImage.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = Model.Product.ListImage;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/products/", Model.Product.ListImage.Split(',')[0]);
+        }
     }
 }
 
@@ -46,7 +53,14 @@
                                 @foreach (var image in arrImg)
                                 {
                                     <div class="slider-nav-item">
-                                        <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
+                                        @if (image.StartsWith("https://lohoidonganh.com"))
+                                        {
+                                            <img src="@image" alt="@Model.Product.Name"/>
+                                        }
+                                        else
+                                        {
+                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name"/>
+                                        }
                                     </div>
                                 }
                             </div>
@@ -56,10 +70,20 @@
                                 @foreach (var image in arrImg)
                                 {
                                     <div class="slider-for-item">
-                                        <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
-                                        <a href="@Path.Combine("/images/products/", image)" data-fancybox="gallery" class="gallery">
-                                            <i class="far fa-search"></i>
-                                        </a>
+                                        @if (image.StartsWith("https://lohoidonganh.com"))
+                                        {
+                                            <img src="@image" alt="@Model.Product.Name"/>
+                                            <a href="@image" data-fancybox="gallery" class="gallery">
+                                                <i class="far fa-search"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name"/>
+                                            <a href="@Path.Combine("/images/products/", image)" data-fancybox="gallery" class="gallery">
+                                                <i class="far fa-search"></i>
+                                            </a>
+                                        }
                                     </div>
                                 }
                             </div>
@@ -143,7 +167,15 @@
                             <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="main-img">
                                 @if (item.ListImage != null)
                                 {
-                                    <img src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" alt="@item.Name" />
+                                    if (item.ListImage.StartsWith("https://lohoidonganh.com"))
+                                    {
+                                        <img data-src="@item.ListImage" alt="@item.Name" class="lazyload"/>
+
+                                    }
+                                    else
+                                    {
+                                        <img data-src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" class="lazyload" alt="@item.Name" />
+                                    }
                                 }
                             </a>
                             <div class="body">

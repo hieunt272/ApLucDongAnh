@@ -75,9 +75,16 @@
                 <tr id="ImgPreview2">
                     <td class="form_name"></td>
                     <td class="form_text">
-                        <img class="img-border mb-2" src="@Path.Combine("/images/articles/", Model.Article.Image)" />
-                        <br /><a href="javascript:;" onclick="$('#ImgPreview2').hide(); $('#CurrentFile2').val('');"><img src="/Content/admin/icon-delete-red.png" alt="" style="vertical-align: middle; margin-top: 0; height: 10px;" /> Xóa ảnh</a>
-                        <input type="hidden" name="CurrentFile2" id="CurrentFile2" value="@Model.Article.Image" />
+                        @if (Model.Article.Image.StartsWith("https://lohoidonganh.com"))
+                        {
+                            <img class="img-border mb-2" src="@Model.Article.Image"/>
+                        }
+                        else
+                        {
+                            <img class="img-border mb-2" src="@Path.Combine("/images/articles/", Model.Article.Image)"/>
+                        }
+                        <br/><a href="javascript:;" onclick="$('#ImgPreview2').hide();$('#CurrentFile2').val('');"><img src="/Content/admin/icon-delete-red.png" alt="" style="vertical-align: middle; margin-top: 0; height: 10px;"/> Xóa ảnh</a>
+                        <input type="hidden" name="CurrentFile2" id="CurrentFile2" value="@Model.Article.Image"/>
                     </td>
                 </tr>
             }

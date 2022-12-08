@@ -3,6 +3,10 @@
     ViewBag.Title = "Tuyển dụng";
     ViewBag.Description = Model.Recruit.Description;
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Recruit");
+    if (Model.Recruit.CoverImage != null)
+    {
+        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/recruits/", Model.Recruit.CoverImage);
+    }
 }
 
 @Html.Action("Header")

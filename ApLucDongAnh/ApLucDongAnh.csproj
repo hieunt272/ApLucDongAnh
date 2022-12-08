@@ -57,8 +57,8 @@
     <Reference Include="Helpers">
       <HintPath>..\..\Helpers\bin\Release\Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.46.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ImageResizer.4.2.8\lib\net45\ImageResizer.dll</HintPath>
@@ -71,7 +71,7 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.2-beta2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -141,6 +141,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CrawlerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductVcmsController.cs" />
     <Compile Include="Controllers\ProjectVcmsController.cs" />
@@ -149,6 +150,8 @@
     <Compile Include="DAL\DataEntities.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="Filters\AuthorLoginFilters.cs" />
+    <Compile Include="Filters\RedirectFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -167,6 +170,18 @@
     <Compile Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.cs" />
     <Compile Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.designer.cs">
       <DependentUpon>202211250243054_UpdateRequiredCompanyInContactClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212070347286_AddBodyToCategoryClass.cs" />
+    <Compile Include="Migrations\202212070347286_AddBodyToCategoryClass.designer.cs">
+      <DependentUpon>202212070347286_AddBodyToCategoryClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212080347261_AddUrlSourceToProject.cs" />
+    <Compile Include="Migrations\202212080347261_AddUrlSourceToProject.designer.cs">
+      <DependentUpon>202212080347261_AddUrlSourceToProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212080506002_AddLenghtTitleMeta.cs" />
+    <Compile Include="Migrations\202212080506002_AddLenghtTitleMeta.designer.cs">
+      <DependentUpon>202212080506002_AddLenghtTitleMeta.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\About.cs" />
@@ -367,6 +382,7 @@
     <Content Include="Content\adminSite.less" />
     <Content Include="Content\login.less" />
     <Content Include="Content\style.scss" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\aos.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
@@ -670,6 +686,9 @@
     <Content Include="Views\Vcms\UpdateRecruitPosition.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DisplayRegion.cshtml" />
+    <Content Include="Views\Shared\_ArticleItem.cshtml" />
+    <Content Include="Views\Vcms\RedirectConfig.cshtml" />
+    <Content Include="Views\Vcms\UpdateRobot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -695,6 +714,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211250243054_UpdateRequiredCompanyInContactClass.resx">
       <DependentUpon>202211250243054_UpdateRequiredCompanyInContactClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212070347286_AddBodyToCategoryClass.resx">
+      <DependentUpon>202212070347286_AddBodyToCategoryClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212080347261_AddUrlSourceToProject.resx">
+      <DependentUpon>202212080347261_AddUrlSourceToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212080506002_AddLenghtTitleMeta.resx">
+      <DependentUpon>202212080506002_AddLenghtTitleMeta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

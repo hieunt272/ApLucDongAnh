@@ -1,0 +1,31 @@
+﻿@model ApLucDongAnh.ViewModel.ArticleItemPartial
+
+<div class="main-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@Model.Delay">
+    <a href="@Url.Action("ArticleDetail", "Home", new { url = Model.Article.Url })" class="main-img">
+        @if (Model.Article.Image != null)
+        {
+            if (Model.Article.Image.StartsWith("https://lohoidonganh.com"))
+            {
+                <img src="@Model.Article.Image" alt="@Model.Article.Subject" />
+            }
+            else
+            {
+                <img src="@Path.Combine("/images/articles/", Model.Article.Image)" alt="@Model.Article.Subject" />
+            }
+        }
+    </a>
+    <div class="body">
+        <div class="subject truncate">
+            <a href="@Url.Action("ArticleDetail", "Home", new { url = Model.Article.Url })" title="@Model.Article.Subject">
+                @Model.Article.Subject
+            </a>
+        </div>
+        <div class="desc truncate" title="@Model.Article.Description">
+            @Model.Article.Description
+        </div>
+        <a href="@Url.Action("ArticleDetail", "Home", new { url = Model.Article.Url })" class="btn-view">
+            TÌM HIỂU THÊM
+            <i class="far fa-long-arrow-right"></i>
+        </a>
+    </div>
+</div>

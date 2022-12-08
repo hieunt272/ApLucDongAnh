@@ -1,8 +1,21 @@
-﻿@model ApLucDongAnh.ViewModel.SearchProductViewModel
+﻿@using PagedList.Mvc
+@model ApLucDongAnh.ViewModel.SearchProductViewModel
 @{
     ViewBag.Title = "Tìm kiếm";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("SearchProduct");
     ViewBag.Robots = "noindex";
+    var fp = Model.Products.FirstOrDefault();
+    if (fp?.ListImage != null)
+    {
+        if (fp.ListImage.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fp.ListImage;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/projects/", fp.ListImage.Split(',')[0]);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -24,7 +37,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
-                <input type="hidden" name="currentUrl" value="@Url.Action("SearchCategory")" />
+                <input type="hidden" name="currentUrl" value="@Url.Action("SearchProduct")" />
                 <input type="hidden" name="keywords" value="@Model.Keywords" />
                 <div class="filter">
                     <div class="result">
@@ -38,7 +51,64 @@
                     </div>
                 </div>
                 <div id="list-item-sort">
-                    @Html.Action("GetSearchProduct")
+                    <div class="row">
+                        @if (Model.Products.Any())
+                        {
+                            var delay = 200;
+                            foreach (var item in Model.Products)
+                            {
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="main-item product-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
+                                        @if (item.Hot == true)
+                                        {
+                                            <div class="product-hot">Best Seller</div>
+                                        }
+                                        <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="main-img">
+                                            @if (item.ListImage != null)
+                                            {
+                                                if (item.ListImage.StartsWith("https://lohoidonganh.com"))
+                                                {
+                                                    <img data-src="@item.ListImage" alt="@item.Name" class="lazyload" />
+                                                }
+                                                else
+                                                {
+                                                    <img data-src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" class="lazyload" alt="@item.Name" />
+                                                }
+                                            }
+                                        </a>
+                                        <div class="body">
+                                            <div class="subject truncate">
+                                                <a href="@Url.Action("ProductDetail", new { url = item.Url })" title="@item.Name">
+                                                    @item.Name
+                                                </a>
+                                            </div>
+                                            <div class="desc truncate" title="@item.ShortDescription">
+                                                @item.ShortDescription
+                                            </div>
+                                            <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="btn-view">
+                                                TÌM HIỂU THÊM
+                                                <i class="far fa-long-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                delay += 100;
+                            }
+                            if (Model.Products.PageCount > 1)
+                            {
+                                <div class="col-12 text-center">
+                                    @Html.PagedListPager(Model.Products, page => Url.Action("SearchProduct", new { page, keywords = Model.Keywords, sort = Model.Sort }))
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <h3 class="font-weight-bold text-danger text-uppercase">Không có kết quả</h3>
+                                <p>Xin lỗi, không có nội dung phù hợp với cụm từ tìm kiếm của bạn. Vui lòng thử lại với một số từ khóa khác.</p>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="col-lg-3 mt-lg-0 mt-5">
@@ -71,7 +141,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h2 class="mb-0">
                                                 <a href="@Url.Action("ProductCategory", "Home", new {url = item.Url})">@item.CategoryName</a>
-                                                <span>(@item.Products.Count())</span>
+                                                <span>(@item.Products.Count)</span>
                                             </h2>
                                             @if (Model.Categories.Any(a => a.ParentId == item.Id))
                                             {
@@ -81,7 +151,7 @@
                                             }
                                         </div>
                                     </div>
-                                    @if (Model.Categories.Where(a => a.ParentId == item.Id).Any())
+                                    @if (Model.Categories.Any(a => a.ParentId == item.Id))
                                     {
                                         <div id="collapse-@item.Id" class="collapse">
                                             <div class="card-body">
@@ -92,7 +162,7 @@
                                                             <a href="@Url.Action("ProductCategory", "Home", new {url = child.Url})">
                                                                 @child.CategoryName
                                                             </a>
-                                                            <span>(@child.Products.Count())</span>
+                                                            <span>(@child.Products.Count)</span>
                                                         </li>
                                                     }
                                                 </ul>

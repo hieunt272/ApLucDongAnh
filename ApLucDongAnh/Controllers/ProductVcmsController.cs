@@ -6,11 +6,9 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ApLucDongAnh.Controllers
@@ -42,7 +40,7 @@ namespace ApLucDongAnh.Controllers
 
             return View(model);
         }
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult ProductCategory(InsertProductCatViewModel model, FormCollection fc)
         {
             if (ModelState.IsValid)
@@ -98,7 +96,7 @@ namespace ApLucDongAnh.Controllers
 
             return View(model);
         }
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult UpdateCategory(InsertProductCatViewModel model, FormCollection fc)
         {
             var category = _unitOfWork.ProductCategoryRepository.GetById(model.ProductCategory.Id);
@@ -147,6 +145,7 @@ namespace ApLucDongAnh.Controllers
                 category.CategoryName = model.ProductCategory.CategoryName;
                 category.CategorySort = model.ProductCategory.CategorySort;
                 category.Description = model.ProductCategory.Description;
+                category.Body = model.ProductCategory.Body;
                 category.CategoryActive = model.ProductCategory.CategoryActive;
                 category.ParentId = model.ProductCategory.ParentId;
                 category.ShowMenu = model.ProductCategory.ShowMenu;
@@ -158,7 +157,7 @@ namespace ApLucDongAnh.Controllers
                 return RedirectToAction("ProductCategory", new { result = "update" });
             }
             ViewBag.RootCats = new SelectList(ProductCategories.Where(a => a.ParentId == null), "Id", "CategoryName");
-            return View(category);
+            return View(model);
         }
         [HttpPost]
         public bool DeleteCategory(int catId = 0)
@@ -172,6 +171,7 @@ namespace ApLucDongAnh.Controllers
             _unitOfWork.Save();
             return true;
         }
+        [HttpPost]
         public bool UpdateProductCat(int sort = 1, bool active = false, bool home = false, bool menu = false, int productCatId = 0)
         {
             var productCat = _unitOfWork.ProductCategoryRepository.GetById(productCatId);
@@ -417,6 +417,7 @@ namespace ApLucDongAnh.Controllers
             return true;
         }
         #endregion
+
         public JsonResult GetProductCategory(int? parentId)
         {
             var categories = ProductCategories.Where(a => a.ParentId == parentId);

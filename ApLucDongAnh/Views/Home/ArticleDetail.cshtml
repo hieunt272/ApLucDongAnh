@@ -5,7 +5,14 @@
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("ArticleDetail", new { url = Model.Article.Url });
     if (Model.Article.Image != null)
     {
-        ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", Model.Article.Image);
+        if (Model.Article.Image.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = Model.Article.Image;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", Model.Article.Image);
+        }
     }
 }
 
@@ -72,7 +79,14 @@
                                             <a href="@Url.Action("ArticleDetail", new { url = Model.Previous.Url })" class="article-img">
                                                 @if (Model.Previous.Image != null)
                                                 {
-                                                    <img data-src="@Path.Combine("/images/articles/", Model.Previous.Image)" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.Subject" class="lazyload" />
+                                                    if (Model.Previous.Image.StartsWith("https://lohoidonganh.com"))
+                                                    {
+                                                        <img data-src="@Model.Previous.Image" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.Subject" class="lazyload" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img data-src="@Path.Combine("/images/articles/", Model.Previous.Image)" src="~/Content/images/img-main/base64.gif" alt="@Model.Previous.Subject" class="lazyload" />
+                                                    }
                                                 }
                                                 <i class="far fa-long-arrow-left"></i>
                                             </a>
@@ -98,7 +112,14 @@
                                             <a href="@Url.Action("ArticleDetail", new { url = Model.Next.Url })" class="article-img">
                                                 @if (Model.Next.Image != null)
                                                 {
-                                                    <img data-src="@Path.Combine("/images/articles/", Model.Next.Image)" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.Subject" class="lazyload" />
+                                                    if (Model.Next.Image.StartsWith("https://lohoidonganh.com"))
+                                                    {
+                                                        <img data-src="@Model.Next.Image" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.Subject" class="lazyload" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img data-src="@Path.Combine("/images/articles/", Model.Next.Image)" src="~/Content/images/img-main/base64.gif" alt="@Model.Next.Subject" class="lazyload" />
+                                                    }
                                                 }
                                                 <i class="far fa-long-arrow-right"></i>
                                             </a>
@@ -117,3 +138,10 @@
         </div>
     </div>
 </section>
+
+@section scripts
+{
+    <script>
+        $(".content-detail table").addClass('table').wrap("<div class='table-responsive'>");
+    </script>
+}

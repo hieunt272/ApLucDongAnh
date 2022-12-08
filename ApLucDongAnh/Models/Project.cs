@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace ApLucDongAnh.Models
 {
     public class Project
     {
         public int Id { get; set; }
-        [Display(Name = "Tên dự án", Description = "Tên dự án dài tối đa 150 ký tự"),
-         Required(ErrorMessage = "Hãy nhập tên dự án"), StringLength(150, ErrorMessage = "Tối đa 150 ký tự"),
-         UIHint("TextBox")]
+        [Display(Name = "Tên dự án", Description = "Tên dự án dài tối đa 150 ký tự"), Required(ErrorMessage = "Hãy nhập tên dự án"), StringLength(150, ErrorMessage = "Tối đa 150 ký tự"), UIHint("TextBox")]
         public string ProjectName { get; set; }
         [Display(Name = "Ảnh bìa"), StringLength(500)]
         public string CoverImage { get; set; }
@@ -19,9 +14,9 @@ namespace ApLucDongAnh.Models
         public string ListImage { get; set; }
         [Display(Name = "Khách hàng"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự")]
         public string Client { get; set; }
-        [Display(Name = "Ngày bắt đầu")]
+        [Display(Name = "Ngày bắt đầu"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự")]
         public string StartDate { get; set; }
-        [Display(Name = "Ngày kết thúc")]
+        [Display(Name = "Ngày kết thúc"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự")]
         public string EndDate { get; set; }
         [Display(Name = "Địa điểm"), StringLength(50, ErrorMessage = "Tối đa 50 ký tự"), UIHint("TextBox")]
         public string Place { get; set; }
@@ -39,12 +34,16 @@ namespace ApLucDongAnh.Models
         public bool Active { get; set; }
         [Display(Name = "Hiện trang chủ")]
         public bool Home { get; set; }
-        [Display(Name="Đường dẫn"),StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
+        [Display(Name = "Đường dẫn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
         public string Url { get; set; }
-        [Display(Name = "Thẻ tiêu đề"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự"), UIHint("TextBox")]
+        [Display(Name = "Thẻ tiêu đề"), StringLength(200, ErrorMessage = "Tối đa 200 ký tự"), UIHint("TextBox")]
         public string TitleMeta { get; set; }
         [Display(Name = "Thẻ mô tả"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextArea")]
         public string DescriptionMeta { get; set; }
+
+        [StringLength(500)]
+        public string UrlSource { get; set; }
+
         public virtual ProjectCategory ProjectCategory { get; set; }
         [Display(Name = "Sản phẩm")]
         public int? ProductId { get; set; }

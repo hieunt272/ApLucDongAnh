@@ -8,8 +8,10 @@ namespace ApLucDongAnh.Models
         public int Id { get; set; }
         [Display(Name = "Tên danh mục"), Required(ErrorMessage = "Hãy nhập tên danh mục"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự"), UIHint("TextBox")]
         public string CategoryName { get; set; }
-        [Display(Name = "Trích dẫn ngắn"), UIHint("TextArea")]
+        [Display(Name = "Trích dẫn ngắn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextArea")]
         public string Description { get; set; }
+        [Display(Name = "Nội dung"), UIHint("EditorBox")]
+        public string Body { get; set; }
         [Display(Name = "Đường dẫn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
         public string Url { get; set; }
         [Display(Name = "Thứ tự"), Required(ErrorMessage = "Hãy nhập số thứ tự"), RegularExpression(@"\d+", ErrorMessage = "Chỉ nhập số nguyên dương"), UIHint("NumberBox")]
@@ -22,7 +24,6 @@ namespace ApLucDongAnh.Models
         public bool ShowMenu { get; set; }
         [Display(Name = "Hiển thị chân trang")]
         public bool ShowFooter { get; set; }
-
         [Display(Name = "Thẻ tiêu đề"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự"), UIHint("TextBox")]
         public string TitleMeta { get; set; }
         [Display(Name = "Thẻ mô tả"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextArea")]
@@ -31,6 +32,7 @@ namespace ApLucDongAnh.Models
         public string Image { get; set; }
         [Display(Name = "Loại danh mục")]
         public TypePost TypePost { get; set; }
+
         public virtual ICollection<Article> Articles { get; set; }
 
         public ArticleCategory()

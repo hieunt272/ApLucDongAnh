@@ -1,16 +1,15 @@
-﻿using Helpers;
+﻿using ApLucDongAnh.DAL;
+using ApLucDongAnh.Models;
+using ApLucDongAnh.ViewModel;
+using Helpers;
 using System;
+using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Drawing;
-using ApLucDongAnh.DAL;
-using ApLucDongAnh.Models;
-using ApLucDongAnh.ViewModel;
-using PagedList;
-using System.Data.Entity;
 
 namespace ApLucDongAnh.Controllers
 {
@@ -411,7 +410,7 @@ namespace ApLucDongAnh.Controllers
 
                 return RedirectToAction("RecruitPosition", new { result = "success" });
             }
-            
+
             return View(recruitPosition);
         }
         public ActionResult UpdateRecruitPosition(int recruitId = 0)
@@ -463,6 +462,55 @@ namespace ApLucDongAnh.Controllers
             return true;
         }
         #endregion
+
+        public ActionResult RedirectConfig(int result = 0)
+        {
+            var redirect = System.IO.File.ReadAllText(Server.MapPath(Path.Combine("/images/Redirect.txt")));
+            ViewBag.Config = redirect;
+            ViewBag.Result = result;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RedirectConfig(FormCollection fc)
+        {
+            var config = fc["Config"];
+            try
+            {
+                System.IO.File.WriteAllText(Server.MapPath(Path.Combine("/images/Redirect.txt")), config);
+                return RedirectToAction("RedirectConfig", new { result = 1 });
+            }
+            catch (Exception e)
+            {
+                ViewBag.Config = config;
+                return View();
+            }
+
+        }
+
+        public ActionResult UpdateRobot(int result = 0)
+        {
+            //if (Role != RoleAdmin.Admin)
+            //{
+            //    return RedirectToAction("Index", new { error = 403 });
+            //}
+
+            var robot = System.IO.File.ReadAllText(Server.MapPath("/robots.txt"));
+            ViewBag.Robot = robot;
+            ViewBag.Result = result;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateRobot(string robots)
+        {
+            //if (Role != RoleAdmin.Admin)
+            //{
+            //    return RedirectToAction("Index", new { error = 403 });
+            //}
+
+            System.IO.File.WriteAllText(Server.MapPath("/robots.txt"), robots);
+            return RedirectToAction("UpdateRobot", new { result = 1 });
+        }
+
 
         protected override void Dispose(bool disposing)
         {

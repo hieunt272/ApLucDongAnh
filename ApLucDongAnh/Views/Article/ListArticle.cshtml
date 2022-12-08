@@ -39,6 +39,8 @@
                 <th style="width: 50px">Hình ảnh</th>
                 <th style="width: 300px">Tiêu đề</th>
                 <th>Danh mục</th>
+                <th>Đường dẫn</th>
+                <th>Trang chủ</th>
                 <th>Hoạt động</th>
                 <th style="width: 130px"></th>
             </tr>
@@ -47,15 +49,33 @@
                 <tr data-id="@article.Id">
                     <td>@Html.DisplayFor(model => article.CreateDate)</td>
                     <td>
-                        @if (!string.IsNullOrEmpty(article.Image))
-                        {
-                            <img src="@Path.Combine("/images/articles/", article.Image)" class="img-article" />
-                        }
+                        <a href="@Url.Action("ArticleDetail", "Home", new{url = article.Url})" target="_blank">
+                            @if (!string.IsNullOrEmpty(article.Image))
+                            {
+                                if (article.Image.StartsWith("https://lohoidonganh.com"))
+                                {
+                                    <img src="@article.Image" class="img-article" />
+                                }
+                                else
+                                {
+                                    <img src="@Path.Combine("/images/articles/", article.Image)" class="img-article" />
+                                }
+                            }
+                            else
+                            {
+                                @:NO PICTURE
+                            }
+                        </a>
                     </td>
                     <td class="left">
-                        <a href="@Url.Action("UpdateArticle", new { articleId = article.Id })"><strong>@article.Subject</strong></a>
+                        <p>
+                            <a href="@Url.Action("UpdateArticle", new { articleId = article.Id })"><strong>@article.Subject</strong></a>
+                        </p>
+                        Url gốc: @article.UrlSource
                     </td>
                     <td>@article.ArticleCategory.CategoryName</td>
+                    <td>@article.Url</td>
+                    <td>@Html.DisplayFor(model => article.Home)</td>
                     <td>@Html.DisplayFor(model => article.Active)</td>
                     <td>
                         @Html.ActionLink("Sửa", "UpdateArticle", new { articleId = article.Id }) -

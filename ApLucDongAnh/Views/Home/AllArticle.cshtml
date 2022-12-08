@@ -4,6 +4,18 @@
     ViewBag.Title = "Tin Tức";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllArticle");
     ViewBag.Robots = "noindex";
+    var fa = Model.Articles.FirstOrDefault();
+    if (fa?.Image != null)
+    {
+        if (fa.Image.StartsWith("https://lohoidonganh.com"))
+        {
+            ViewBag.ImageShare = fa.Image;
+        }
+        else
+        {
+            ViewBag.ImageShare = Request.Url?.GetLeftPart(UriPartial.Authority) + Path.Combine("/images/articles/", fa.Image);
+        }
+    }
 }
 
 @Html.Action("Header")
@@ -57,6 +69,12 @@
                             </div>
                             delay += 100;
                         }
+                        if (Model.Articles.PageCount > 1)
+                        {
+                            <div class="col-12 text-center">
+                                @Html.PagedListPager(Model.Articles, page => Url.Action("AllArticle", new { page }))
+                            </div>
+                        }
                     }
                     else
                     {
@@ -64,12 +82,7 @@
                             <p class="alert alert-success small">Nội dung hiện chưa được cập nhật. Vui lòng quay lại sau !!!!</p>
                         </div>
                     }
-                    @if (Model.Articles.PageCount > 1)
-                    {
-                        <div class="col-12 text-center">
-                            @Html.PagedListPager(Model.Articles, page => Url.Action("AllArticle", new { page }))
-                        </div>
-                    }
+                    
                 </div>
             </div>
             <div class="col-lg-3">

@@ -28,7 +28,14 @@
                 {
                     <div class="recent-post-img">
                         <a href="@Url.Action("ArticleDetail", "Home", new { url = article.Url })" class="mr-3">
-                            <img data-src="@Path.Combine("/images/articles/", article.Image)" src="~/Content/images/img-main/base64.gif" class="lazyload" alt="@article.Subject">
+                            @if (article.Image.StartsWith("https://lohoidonganh.com"))
+                            {
+                                <img data-src="@article.Image" src="~/Content/images/img-main/base64.gif" class="lazyload" alt="@article.Subject">
+                            }
+                            else
+                            {
+                                <img data-src="@Path.Combine("/images/articles/", article.Image)" src="~/Content/images/img-main/base64.gif" class="lazyload" alt="@article.Subject">
+                            }
                         </a>
                     </div>
                 }

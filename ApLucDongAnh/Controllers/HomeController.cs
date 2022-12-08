@@ -1,17 +1,16 @@
 ﻿using ApLucDongAnh.DAL;
+using ApLucDongAnh.Filters;
 using ApLucDongAnh.Models;
 using ApLucDongAnh.ViewModel;
 using Helpers;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 
 namespace ApLucDongAnh.Controllers
 {
@@ -21,7 +20,6 @@ namespace ApLucDongAnh.Controllers
         private static string Email => WebConfigurationManager.AppSettings["email"];
         private static string Password => WebConfigurationManager.AppSettings["password"];
         public ConfigSite ConfigSite => (ConfigSite)HttpContext.Application["ConfigSite"];
-
         public SelectList CategorySelectList => new SelectList(_unitOfWork.ProductCategoryRepository.Get(orderBy: a => a.OrderBy(o => o.CategoryName)), "Id", "CategoryName");
 
         private IEnumerable<ArticleCategory> ArticleCategories =>
@@ -40,9 +38,9 @@ namespace ApLucDongAnh.Controllers
                 Banners = _unitOfWork.BannerRepository.GetQuery(b => b.Active),
                 Projects = _unitOfWork.ProjectRepository.GetQuery(a => a.Active && a.Home, o => o.OrderByDescending(a => a.CreateDate), 4),
                 ProductCategories = ProductCategories.Where(a => a.ShowHome),
-                Services = _unitOfWork.ArticleRepository.GetQuery(a => 
+                Services = _unitOfWork.ArticleRepository.GetQuery(a =>
                     a.Active && a.Home && a.ArticleCategory.TypePost == TypePost.Service, o => o.OrderByDescending(a => a.CreateDate), 10),
-                Articles = _unitOfWork.ArticleRepository.GetQuery(a => 
+                Articles = _unitOfWork.ArticleRepository.GetQuery(a =>
                     a.Active && a.Home && a.ArticleCategory.TypePost != TypePost.Service, o => o.OrderByDescending(a => a.CreateDate), 3),
                 Feedbacks = _unitOfWork.FeedbackRepository.GetQuery(a => a.Active && a.Home, o => o.OrderBy(a => a.Sort), 10),
 
@@ -145,7 +143,8 @@ namespace ApLucDongAnh.Controllers
         }
 
         #region Article 
-        [Route("blogs/{url}.html", Order = 1)]
+        [RedirectFilter]
+        [Route("{url}.html", Order = 1)]
         public ActionResult ArticleDetail(string url)
         {
             var article = _unitOfWork.ArticleRepository.GetQuery(a => a.Url == url && a.Active).FirstOrDefault();
@@ -157,14 +156,15 @@ namespace ApLucDongAnh.Controllers
             var model = new ArticleDetailsViewModel
             {
                 Article = article,
-                Previous = _unitOfWork.ArticleRepository.GetQuery(a => a.Active && a.Id < article.Id && 
+                Previous = _unitOfWork.ArticleRepository.GetQuery(a => a.Active && a.Id < article.Id &&
                     (a.ArticleCategory.Id == article.ArticleCategoryId || a.ArticleCategory.ParentId == article.ArticleCategoryId), o => o.OrderByDescending(a => a.CreateDate)).FirstOrDefault(),
-                Next = _unitOfWork.ArticleRepository.GetQuery(a => a.Active && a.Id > article.Id && 
+                Next = _unitOfWork.ArticleRepository.GetQuery(a => a.Active && a.Id > article.Id &&
                     (a.ArticleCategory.Id == article.ArticleCategoryId || a.ArticleCategory.ParentId == article.ArticleCategoryId), o => o.OrderBy(a => a.CreateDate)).FirstOrDefault(),
             };
             return View(model);
         }
-        [Route("blogs/{url:regex(^(?!.*(vcms|uploader|article|banner|contact|product|projectvcms)).*$)}", Order = 2)]
+        [RedirectFilter]
+        [Route("category/{url:regex(^(?!.*(vcms|uploader|article|banner|contact|product|projectvcms)).*$)}", Order = 2)]
         public ActionResult ArticleCategory(int? page, string url)
         {
             var category = _unitOfWork.ArticleCategoryRepository.GetQuery(a => a.CategoryActive && a.Url == url).FirstOrDefault();
@@ -186,7 +186,7 @@ namespace ApLucDongAnh.Controllers
             var model = new ArticleCategoryViewModel
             {
                 Category = category,
-                Articles = articles.ToPagedList(pageNumber, 8),
+                Articles = articles.ToPagedList(pageNumber, 10),
                 Categories = ArticleCategories.Where(a => a.TypePost == TypePost.Article),
             };
 
@@ -204,7 +204,7 @@ namespace ApLucDongAnh.Controllers
 
             var model = new AllArticleViewModel()
             {
-                Articles = articles.ToPagedList(pageNumber, 8),
+                Articles = articles.ToPagedList(pageNumber, 10),
                 Categories = ArticleCategories.Where(a => a.TypePost == TypePost.Article),
             };
             return View(model);
@@ -222,7 +222,7 @@ namespace ApLucDongAnh.Controllers
         public ActionResult SearchArticle(int? page, string keywords)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 8;
+            var pageSize = 10;
             var newkey = keywords.Trim();
             var articles = _unitOfWork.ArticleRepository.GetQuery(l =>
                 l.Active && l.Subject.Contains(newkey) && l.ArticleCategory.TypePost == TypePost.Article, c => c.OrderByDescending(a => a.CreateDate));
@@ -289,7 +289,7 @@ namespace ApLucDongAnh.Controllers
         public ActionResult ProductCategory(int? page, string url)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 8;
             var category = ProductCategories.FirstOrDefault(a => a.Url == url);
             if (category == null)
             {
@@ -313,11 +313,11 @@ namespace ApLucDongAnh.Controllers
         public PartialViewResult GetProductCategory(string url, int? page, string sort = "date-desc")
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 8;
             var category = ProductCategories.FirstOrDefault(a => a.Url == url);
 
             var products = _unitOfWork.ProductRepository.GetQuery(
-                p => p.Active && (p.ProductCategoryId  == category.Id || p.ProductCategory.ParentId == category.Id),
+                p => p.Active && (p.ProductCategoryId == category.Id || p.ProductCategory.ParentId == category.Id),
                 c => c.OrderByDescending(p => p.CreateDate));
 
             switch (sort)
@@ -339,7 +339,7 @@ namespace ApLucDongAnh.Controllers
             };
             return PartialView(model);
         }
-        [Route("{url}.html", Order = 1)]
+        [Route("san-pham/{url}", Order = 1)]
         public ActionResult ProductDetail(string url)
         {
             var product = _unitOfWork.ProductRepository.GetQuery(p => p.Url == url).FirstOrDefault();
@@ -362,7 +362,7 @@ namespace ApLucDongAnh.Controllers
         public ActionResult SearchProduct(int? page, string keywords)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 8;
             var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active && p.Name.Contains(keywords),
                             o => o.OrderByDescending(p => p.CreateDate));
 
@@ -385,7 +385,7 @@ namespace ApLucDongAnh.Controllers
         public PartialViewResult GetSearchProduct(string keywords, int? page, string sort = "date-desc")
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
+            var pageSize = 8;
             var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active && p.Name.Contains(keywords),
                             o => o.OrderByDescending(p => p.CreateDate));
             switch (sort)
@@ -409,7 +409,8 @@ namespace ApLucDongAnh.Controllers
         #endregion
 
         #region Service
-        [Route("dich-vu")]
+        [RedirectFilter]
+        [Route("dich-vu-ho-tro")]
         public ActionResult AllService(int? page)
         {
             var pageNumber = page ?? 1;
@@ -425,6 +426,7 @@ namespace ApLucDongAnh.Controllers
 
             return View(model);
         }
+        [RedirectFilter]
         [Route("dich-vu/{url}.html", Order = 1)]
         public ActionResult ServiceDetail(string url)
         {
@@ -459,6 +461,7 @@ namespace ApLucDongAnh.Controllers
             };
             return View(model);
         }
+        [RedirectFilter]
         [Route("du-an/{url:regex(^(?!.*(vcms|uploader|article|banner|contact|product|projectvcms)).*$)}", Order = 2)]
         public ActionResult ProjectCategory(int? page, string url)
         {
@@ -486,6 +489,7 @@ namespace ApLucDongAnh.Controllers
             }
             return View(model);
         }
+        [RedirectFilter]
         [Route("du-an/{url}.html", Order = 1)]
         public ActionResult ProjectDetail(string url)
         {

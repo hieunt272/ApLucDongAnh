@@ -52,9 +52,11 @@
                 <tr>
                     <th style="width: 100px">STT</th>
                     <th style="width: 50px">Hình ảnh</th>
-                    <th style="width: 200px">Tên sản phẩm</th>
+                    <th>Tên sản phẩm</th>
                     <th style="width: 130px">Danh mục</th>
-                    <th>Hoạt động</th>
+                    <th>Url</th>
+                    <th style="width: 80px;">Hoạt động</th>
+                    <th style="width: 80px;">Nổi bật</th>
                     <th style="width: 140px;"></th>
                 </tr>
                 @foreach (var product in Model.Products)
@@ -67,7 +69,14 @@
                         <td>
                             @if (product.ListImage != null)
                             {
-                                <a href="@Url.Action("ProductDetail", "Home", new {url = product.Url})" target="_blank"><img class="img-border" src="@Path.Combine("/images/products/", product.ListImage.Split(',')[0])?w=100&h=100" alt="" /></a>
+                                if (product.ListImage.StartsWith("https://lohoidonganh.com"))
+                                {
+                                    <a href="@Url.Action("ProductDetail", "Home", new {url = product.Url})" target="_blank"><img class="img-border" src="@product.ListImage" alt="" /></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("ProductDetail", "Home", new {url = product.Url})" target="_blank"><img class="img-border" src="@Path.Combine("/images/products/", product.ListImage.Split(',')[0])?w=100&h=100" alt="" /></a>
+                                }
                             }
                             else
                             {
@@ -75,19 +84,20 @@
                             }
                         </td>
                         <td class="left">
-                            <div>
+                            <p>
                                 <a href="@Url.Action("UpdateProduct", new { proId = product.Id })">
                                     <strong>@product.Name</strong>
                                 </a>
-                            </div>
+                            </p>
+                            URL gốc: @product.UrlSource
                         </td>
-                        <td>
-                            @product.ProductCategory.CategoryName
-                        </td>
+                        <td>@product.ProductCategory.CategoryName</td>
+                        <td>@product.Url</td>
                         <td>
                             @Html.DisplayFor(model => product.Active)<br />
                             <span id="statusResult"></span>
                         </td>
+                        <td>@Html.DisplayFor(a=>product.Hot)</td>
                         <td>
                             @Html.ActionLink("Sửa", "UpdateProduct", new { proId = product.Id })
                             - <a href="javascript:;" onclick="deleteProduct('@product.Id')" class="red-warring">Xóa</a>
