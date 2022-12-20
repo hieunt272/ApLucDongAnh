@@ -239,7 +239,7 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\images\img-main\About us.svg" />
-    <Content Include="Content\images\img-main\Achievements Acquired.svg" />
+    <Content Include="Content\images\img-main\Achievements.svg" />
     <Content Include="Content\images\img-main\banner-category.jpg" />
     <Content Include="Content\images\img-main\banner-contact.jpg" />
     <Content Include="Content\images\img-main\banner-intro.jpg" />
@@ -259,7 +259,7 @@
     <Content Include="Content\images\img-main\features.png" />
     <Content Include="Content\images\img-main\globe.png" />
     <Content Include="Content\images\img-main\google-plus.png" />
-    <Content Include="Content\images\img-main\History Begin.svg" />
+    <Content Include="Content\images\img-main\History.svg" />
     <Content Include="Content\images\img-main\icon-ability %281%29.png" />
     <Content Include="Content\images\img-main\icon-ability %282%29.png" />
     <Content Include="Content\images\img-main\icon-ability %283%29.png" />
