@@ -55,11 +55,11 @@
                                     <div class="slider-nav-item">
                                         @if (image.StartsWith("https://lohoidonganh.com"))
                                         {
-                                            <img src="@image" alt="@Model.Product.Name"/>
+                                            <img src="@image" alt="@Model.Product.Name" />
                                         }
                                         else
                                         {
-                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name"/>
+                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
                                         }
                                     </div>
                                 }
@@ -72,14 +72,14 @@
                                     <div class="slider-for-item">
                                         @if (image.StartsWith("https://lohoidonganh.com"))
                                         {
-                                            <img src="@image" alt="@Model.Product.Name"/>
+                                            <img src="@image" alt="@Model.Product.Name" />
                                             <a href="@image" data-fancybox="gallery" class="gallery">
                                                 <i class="far fa-search"></i>
                                             </a>
                                         }
                                         else
                                         {
-                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name"/>
+                                            <img src="@Path.Combine("/images/products/", image)" alt="@Model.Product.Name" />
                                             <a href="@Path.Combine("/images/products/", image)" data-fancybox="gallery" class="gallery">
                                                 <i class="far fa-search"></i>
                                             </a>
@@ -169,7 +169,7 @@
                                 {
                                     if (item.ListImage.StartsWith("https://lohoidonganh.com"))
                                     {
-                                        <img data-src="@item.ListImage" alt="@item.Name" class="lazyload"/>
+                                        <img data-src="@item.ListImage" alt="@item.Name" class="lazyload" />
 
                                     }
                                     else
@@ -204,6 +204,8 @@
 
 @section scripts {
     <script>
-        productDetail();
+        window.addEventListener("load", function () {
+            productDetail();
+        });
     </script>
 }

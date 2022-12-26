@@ -1,0 +1,34 @@
+﻿@model ApLucDongAnh.ViewModel.ProductItemPartial
+<div class="main-item product-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@Model.Delay">
+    @if (Model.Product.Hot)
+    {
+        <div class="product-hot">Best Seller</div>
+    }
+    <a href="@Url.Action("ProductDetail", "Home", new { url = Model.Product.Url })" class="main-img">
+        @if (Model.Product.ListImage != null)
+        {
+            if (Model.Product.ListImage.StartsWith("https://lohoidonganh.com"))
+            {
+                <img data-src="@Model.Product.ListImage" alt="@Model.Product.Name" class="lazyload" />
+            }
+            else
+            {
+                <img data-src="@Path.Combine("/images/products/", Model.Product.ListImage.Split(',')[0])" class="lazyload" alt="@Model.Product.Name" />
+            }
+        }
+    </a>
+    <div class="body">
+        <div class="subject truncate">
+            <a href="@Url.Action("ProductDetail",  "Home", new { url = Model.Product.Url })" title="@Model.Product.Name">
+                @Model.Product.Name
+            </a>
+        </div>
+        @*<div class="desc truncate" title="@Model.Product.ShortDescription">
+            @Model.Product.ShortDescription
+        </div>*@
+        <a href="@Url.Action("ProductDetail", "Home", new { url = Model.Product.Url })" class="btn-view">
+            TÌM HIỂU THÊM
+            <i class="far fa-long-arrow-right"></i>
+        </a>
+    </div>
+</div>

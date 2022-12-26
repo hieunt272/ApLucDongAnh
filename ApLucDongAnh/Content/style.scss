@@ -1868,7 +1868,7 @@ input::-webkit-inner-spin-button {
 .zalo {
     position: fixed;
     left: 20px;
-    bottom: 5rem;
+    bottom: 10rem;
     width: 60px;
     padding: 10px;
     border-radius: 50%;
@@ -2275,16 +2275,6 @@ input::-webkit-inner-spin-button {
     }
 }
 
-#list-item-sort {
-    .row {
-        margin: 0 -25px;
-
-        [class*="col-"] {
-            padding: 0 25px;
-        }
-    }
-}
-
 .main-item {
     position: relative;
     border: 1px solid #DEDEDE;
@@ -2362,19 +2352,19 @@ input::-webkit-inner-spin-button {
 
         img {
             width: 100%;
-            aspect-ratio: 3/2;
+            aspect-ratio: 1.375;
             object-fit: cover;
             transition: all .5s;
         }
     }
 
     .body {
-        padding: 25px 25px 30px;
+        padding: 1rem;
     }
 
     .subject {
         -webkit-line-clamp: 2;
-        line-height: 24px;
+        height: 3rem;
 
         &:hover {
             color: $colorMain;
@@ -2382,7 +2372,7 @@ input::-webkit-inner-spin-button {
 
         a {
             @include MontserratBold;
-            font-size: 1.25rem;
+            font-size: 1rem;
 
             &:hover {
                 color: $colorMain;
@@ -2416,6 +2406,25 @@ input::-webkit-inner-spin-button {
     .btn-view {
         color: $colorMain2;
         font-weight: 500;
+        position: relative;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        display: block;
+        font-size: .875rem;
+
+        &::before {
+            @include before(100%, 1px);
+            top: 0;
+            left: 0;
+            background: #DEDEDE;
+        }
+
+        &::after {
+            @include before(70px, 1px);
+            top: 0;
+            left: 0;
+            background: $colorMain;
+        }
 
         &:hover {
             color: $colorMain;
@@ -2428,7 +2437,6 @@ input::-webkit-inner-spin-button {
         i {
             color: $colorMain;
             transform: rotate(-45deg);
-            font-size: .875rem;
             transition: all .5s;
         }
     }
@@ -4159,20 +4167,24 @@ input::-webkit-inner-spin-button {
 
 .content-detail, .tab-content {
     h2 {
-        font-size: 1.5rem;
-    }
-
-    h3 {
         font-size: 1.25rem;
     }
 
-    h4 {
+    h3 {
         font-size: 1.125rem;
+    }
+
+    h4 {
+        font-size: 1rem;
     }
 
     img {
         max-width: 100% !important;
         height: auto !important;
+    }
+
+    table {
+        max-width: 100%;
     }
 
     iframe {
@@ -4681,7 +4693,7 @@ input::-webkit-inner-spin-button {
 
         .logo {
             img {
-                max-width: 100%;
+                max-width: 80%;
                 height: 40px;
                 object-fit: contain;
             }
@@ -5077,16 +5089,6 @@ input::-webkit-inner-spin-button {
 
     .product-category {
         padding: 40px 10px;
-    }
-
-    #list-item-sort {
-        .row {
-            margin: 0 -15px;
-
-            [class*="col-"] {
-                padding: 0 15px;
-            }
-        }
     }
 
     .slider-for {
@@ -5738,7 +5740,6 @@ input::-webkit-inner-spin-button {
         font-size: .875rem;
     }
 }
-
 
 @keyframes flyRightToLeft {
     0% {

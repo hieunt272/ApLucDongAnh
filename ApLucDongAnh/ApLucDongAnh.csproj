@@ -689,6 +689,8 @@
     <Content Include="Views\Shared\_ArticleItem.cshtml" />
     <Content Include="Views\Vcms\RedirectConfig.cshtml" />
     <Content Include="Views\Vcms\UpdateRobot.cshtml" />
+    <Content Include="Views\Shared\_ProductItem.cshtml" />
+    <Content Include="Views\Shared\_ContactInfoSide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

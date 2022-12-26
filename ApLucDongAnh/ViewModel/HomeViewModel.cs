@@ -150,4 +150,9 @@ namespace ApLucDongAnh.ViewModel
         public Article Article { get; set; }
         public int Delay { get; set; }
     }
+    public class ProductItemPartial
+    {
+        public Product Product { get; set; }
+        public int Delay { get; set; }
+    }
 }

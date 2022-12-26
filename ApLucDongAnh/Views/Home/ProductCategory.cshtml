@@ -1,4 +1,5 @@
-﻿@using PagedList.Mvc
+﻿@using ApLucDongAnh.ViewModel
+@using PagedList.Mvc
 @model ApLucDongAnh.ViewModel.CategoryProductViewModel
 @{
     ViewBag.Title = Model.Category.TitleMeta ?? Model.Category.CategoryName;
@@ -45,6 +46,7 @@
                     </div>
                     <div class="select">
                         <select name="sort" id="sort">
+                            <option value="">Mặc định</option>
                             <option value="date-desc">Mới nhất</option>
                             <option value="date-asc">Cũ nhất</option>
                         </select>
@@ -63,40 +65,13 @@
                             var delay = 200;
                             foreach (var item in Model.Products)
                             {
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="main-item product-item" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="@delay">
-                                        @if (item.Hot)
-                                        {
-                                            <div class="product-hot">Best Seller</div>
-                                        }
-                                        <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="main-img">
-                                            @if (item.ListImage != null)
-                                            {
-                                                if (item.ListImage.StartsWith("https://lohoidonganh.com"))
-                                                {
-                                                    <img data-src="@item.ListImage" alt="@item.Name" class="lazyload" />
-                                                }
-                                                else
-                                                {
-                                                    <img data-src="@Path.Combine("/images/products/", item.ListImage.Split(',')[0])" class="lazyload" alt="@item.Name" />
-                                                }
-                                            }
-                                        </a>
-                                        <div class="body">
-                                            <div class="subject truncate">
-                                                <a href="@Url.Action("ProductDetail", new { url = item.Url })" title="@item.Name">
-                                                    @item.Name
-                                                </a>
-                                            </div>
-                                            <div class="desc truncate" title="@item.ShortDescription">
-                                                @item.ShortDescription
-                                            </div>
-                                            <a href="@Url.Action("ProductDetail", new { url = item.Url })" class="btn-view">
-                                                TÌM HIỂU THÊM
-                                                <i class="far fa-long-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
+                                var itemProduct = new ProductItemPartial
+                                {
+                                    Delay = delay,
+                                    Product = item
+                                };
+                                <div class="col-lg-4 col-md-6">
+                                    @Html.Partial("_ProductItem", itemProduct)
                                 </div>
                                 delay += 100;
                             }
@@ -178,30 +153,7 @@
                         </div>
                     </div>
                 }
-                <div class="contact-info">
-                    <div class="contact-heading">
-                        GỌI NGAY CHO CHÚNG TÔI NHÉ!
-                    </div>
-                    <div class="text">
-                        Hãy cho chúng tôi đồng hành cùng bạn <br />
-                        Hãy gọi ngay cho chúng tôi hoặc kết nối trực tiếp qua Zalo để có câu trả lời nhanh nhất cho nhu cầu anh chị cần nhé
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        SALE THẢO
-                        <a href="tel:0968158598">0968.158.598</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        SALE LINH
-                        <a href="tel:0961568199">0961.568.199</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        SALE HÀ
-                        <a href="tel:0981851268">0981.851.268</a>
-                    </div>
-                </div>
+                @Html.Partial("_ContactInfoSide")
                 <a href="@Url.Action("Contact")" class="contact-us">
                     <span>LIÊN HỆ VỚI CHÚNG TÔI</span>
                 </a>

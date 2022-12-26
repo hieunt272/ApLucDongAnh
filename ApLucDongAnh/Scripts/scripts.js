@@ -1,5 +1,5 @@
 ﻿AOS.init({
-    once: true,
+    once: true
 });
 
 function homeJs() {
@@ -80,7 +80,7 @@ function homeJs() {
             }
         ]
     });
-    $('.service-list').slick({
+    $(".service-list").slick({
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
@@ -110,17 +110,17 @@ function homeJs() {
             }
         ]
     });
-    $('.video-slider-for').slick({
+    $(".video-slider-for").slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         fade: true,
-        asNavFor: '.video-slider-nav',
+        asNavFor: ".video-slider-nav",
         arrows: false,
     });
-    $('.video-slider-nav').slick({
+    $(".video-slider-nav").slick({
         slidesToShow: 3,
         slidesToScroll: 1,
-        asNavFor: '.video-slider-for',
+        asNavFor: ".video-slider-for",
         dots: false,
         speed: 1000,
         centerMode: false,
@@ -218,18 +218,18 @@ function homeJs() {
 }
 
 function productDetail() {
-    $('.slider-for').slick({
+    $(".slider-for").slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         fade: true,
-        asNavFor: '.slider-nav',
+        asNavFor: ".slider-nav",
         prevArrow: '<button class="chevron-prev"><i class="far fa-chevron-left"></i></button>',
-        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
+        nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>'
     });
-    $('.slider-nav').slick({
+    $(".slider-nav").slick({
         slidesToShow: 5,
         slidesToScroll: 1,
-        asNavFor: '.slider-for',
+        asNavFor: ".slider-for",
         speed: 1000,
         dots: false,
         focusOnSelect: true,
@@ -281,8 +281,8 @@ function productDetail() {
             }
         ]
     });
-
-    $(".content-detail table").addClass('table').wrap("<div class='table-responsive'>");
+    $(".product-detail table").addClass("table table-bordered").wrap("<div class='table-responsive'>");
+    $(".product-detail iframe").wrap("<div class='embed-responsive embed-responsive-16by9'>");
 }
 
 function serviceCategory() {
@@ -326,7 +326,7 @@ function introduce() {
         arrows: false,
     });
 
-    $('.banner-introduce').slick({
+    $(".banner-introduce").slick({
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -337,7 +337,7 @@ function introduce() {
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
     });
 
-    $('.production-img-list').slick({
+    $(".production-img-list").slick({
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -348,7 +348,7 @@ function introduce() {
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
     });
 
-    $('.history-list').slick({
+    $(".history-list").slick({
         infinite: false,
         slidesToShow: 5,
         slidesToScroll: 1,
@@ -430,7 +430,7 @@ function introduce() {
 }
 
 function projectDetail() {
-    $('.project-img-list').slick({
+    $(".project-img-list").slick({
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -441,19 +441,19 @@ function projectDetail() {
         nextArrow: '<button class="chevron-next"><i class="far fa-chevron-right"></i></button>',
     });
 
-    $(".content-detail table").addClass('table').wrap("<div class='table-responsive'>");
+    $(".content-detail table").addClass("table").wrap("<div class='table-responsive'>");
 }
 
 function getProject(action) {
-    $('#project-cat .nav-link').click(function () {
+    $("#project-cat .nav-link").click(function () {
         let catId = parseInt($(this).val());
 
-        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
+        $("body").append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
         $.get(action, { catId: catId }, function (data) {
-            $('#list-project-sort').empty();
-            $('#list-project-sort').html(data);
+            $("#list-project-sort").empty();
+            $("#list-project-sort").html(data);
         }).then(function () {
-            $('.loading').remove();
+            $(".loading").remove();
             AOS.init();
         });
     })
@@ -461,7 +461,7 @@ function getProject(action) {
 
 $(document).ready(function () {
 
-    $('.number').countUp();
+    $(".number").countUp();
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > 50) {
@@ -496,8 +496,8 @@ $(document).ready(function () {
     });
 
     $(".btn-search").click(function () {
-        $(".body-overlay").addClass('active');
-        $(".site-search").addClass('active');
+        $(".body-overlay").addClass("active");
+        $(".site-search").addClass("active");
 
         function delay() {
             $(".site-search .form-control").focus();
@@ -507,41 +507,41 @@ $(document).ready(function () {
     });
 
     $(".body-overlay, .site-search-close").click(function () {
-        $(".body-overlay").removeClass('active');
-        $(".site-search").removeClass('active');
+        $(".body-overlay").removeClass("active");
+        $(".site-search").removeClass("active");
     });
 
     $(".toggle").click(function () {
-        $(this).toggleClass('active');
-        $(this).siblings('.sub-nav-mb').slideToggle();
+        $(this).toggleClass("active");
+        $(this).siblings(".sub-nav-mb").slideToggle();
     });
 
     $(".project-item").hover(
         function () {
-            $(this).addClass('active');
-            $(this).parents('.slick-slide').siblings().find('.project-item').removeClass('active');
+            $(this).addClass("active");
+            $(this).parents(".slick-slide").siblings().find(".project-item").removeClass("active");
         },
         function () {
-            $(this).parents('.slick-slide').siblings().find('.project-item').removeClass('active');
+            $(this).parents(".slick-slide").siblings().find(".project-item").removeClass("active");
         }
     );
 
     var decoration = $(".decoration");
-    $(window).on('scroll',
+    $(window).on("scroll",
         function () {
             decoration.each(function () {
                 if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75) {
-                    $(this).addClass('active');
+                    $(this).addClass("active");
                 }
             });
         });
 
-    $('.service-item-link').hover(
+    $(".service-item-link").hover(
         function () {
-            $(this).find('.excerpt').slideDown(300);
+            $(this).find(".excerpt").slideDown(300);
         },
         function () {
-            $(this).find('.excerpt').slideUp(300);
+            $(this).find(".excerpt").slideUp(300);
         }
     );
 
@@ -600,17 +600,17 @@ $(document).ready(function () {
             $.post("/Home/OrderForm", $(this).serialize(), function (data) {
                 if (data.status) {
                     $.toast({
-                        heading: 'Đặt hàng thành công',
+                        heading: "Đặt hàng thành công",
                         text: data.msg,
-                        icon: 'success',
+                        icon: "success",
                         position: "bottom-right"
                     })
                     $("#orderForm").trigger("reset");
                 } else {
                     $.toast({
-                        heading: 'Đặt hàng không thành công',
+                        heading: "Đặt hàng không thành công",
                         text: data.msg,
-                        icon: 'error',
+                        icon: "error",
                         position: "bottom-right"
                     })
                 }
@@ -624,18 +624,18 @@ function Sort(action) {
         let sort = $(this).val();
         let url = $("input[name=currentUrl]").val();
         let keywords = $("input[name=keywords][type=hidden]").val();
-        let title = $('.breadcrumb-item.active').text();
+        let title = $(".breadcrumb-item.active").text();
 
-        url = url.split('/').at(-1);
+        url = url.split("/").at(-1);
 
-        window.history.pushState(title, '', url);
+        window.history.pushState(title, "", url);
 
-        $('body').append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
+        $("body").append('<div class="loading"><i class="fad fa-spin fa-spinner"></i></div>');
         $.get(action, { keywords: keywords, url, sort: sort }, function (data) {
-            $('#list-item-sort').empty();
-            $('#list-item-sort').html(data);
+            $("#list-item-sort").empty();
+            $("#list-item-sort").html(data);
         }).then(function () {
-            $('.loading').remove();
+            $(".loading").remove();
             AOS.init();
         });
     });
@@ -667,7 +667,7 @@ function doTranslate(a) {
     var c;
     const d = document.getElementsByTagName("select");
     for (let i = 0; i < d.length; i++) if (d[i].className === "goog-te-combo") c = d[i];
-    if (document.getElementById("google_translate_element2") === null || document.getElementById('google_translate_element2').innerHTML.length === 0 || c.length === 0 || c.innerHTML.length === 0) {
+    if (document.getElementById("google_translate_element2") === null || document.getElementById("google_translate_element2").innerHTML.length === 0 || c.length === 0 || c.innerHTML.length === 0) {
         setTimeout(function () {
             doTranslate(a);
         }, 500);

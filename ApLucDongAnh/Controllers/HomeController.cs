@@ -248,9 +248,8 @@ namespace ApLucDongAnh.Controllers
         public ActionResult AllProduct(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
-            var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active, o => o.OrderByDescending(p => p.CreateDate));
-
+            const int pageSize = 12;
+            var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active, o => o.OrderBy(p => p.Sort));
             var model = new CategoryProductViewModel
             {
                 Products = products.ToPagedList(pageNumber, pageSize),
@@ -261,18 +260,18 @@ namespace ApLucDongAnh.Controllers
             };
             return View(model);
         }
-        public PartialViewResult GetProduct(int? page, string sort = "date-desc")
+        public PartialViewResult GetProduct(int? page, string sort)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 4;
-            var products = _unitOfWork.ProductRepository.GetQuery(l => l.Active, c => c.OrderByDescending(a => a.CreateDate)).AsNoTracking();
+            const int pageSize = 12;
+            var products = _unitOfWork.ProductRepository.GetQuery(l => l.Active, c => c.OrderBy(a => a.Sort)).AsNoTracking();
 
             switch (sort)
             {
                 case "date-asc":
                     products = products.OrderBy(a => a.CreateDate);
                     break;
-                default:
+                case "date-desc":
                     products = products.OrderByDescending(a => a.CreateDate);
                     break;
             }
@@ -289,7 +288,7 @@ namespace ApLucDongAnh.Controllers
         public ActionResult ProductCategory(int? page, string url)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 8;
+            const int pageSize = 12;
             var category = ProductCategories.FirstOrDefault(a => a.Url == url);
             if (category == null)
             {
@@ -297,7 +296,7 @@ namespace ApLucDongAnh.Controllers
             }
             var products = _unitOfWork.ProductRepository.GetQuery(
                 p => p.Active && (p.ProductCategoryId == category.Id || p.ProductCategory.ParentId == category.Id),
-                c => c.OrderByDescending(p => p.CreateDate));
+                c => c.OrderBy(p => p.Sort));
 
             var model = new CategoryProductViewModel
             {
@@ -310,22 +309,22 @@ namespace ApLucDongAnh.Controllers
             };
             return View(model);
         }
-        public PartialViewResult GetProductCategory(string url, int? page, string sort = "date-desc")
+        public PartialViewResult GetProductCategory(string url, int? page, string sort)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 8;
+            const int pageSize = 12;
             var category = ProductCategories.FirstOrDefault(a => a.Url == url);
 
             var products = _unitOfWork.ProductRepository.GetQuery(
                 p => p.Active && (p.ProductCategoryId == category.Id || p.ProductCategory.ParentId == category.Id),
-                c => c.OrderByDescending(p => p.CreateDate));
+                c => c.OrderByDescending(p => p.Sort));
 
             switch (sort)
             {
                 case "date-asc":
                     products = products.OrderBy(a => a.CreateDate);
                     break;
-                default:
+                case "date-desc":
                     products = products.OrderByDescending(a => a.CreateDate);
                     break;
             }
@@ -362,9 +361,9 @@ namespace ApLucDongAnh.Controllers
         public ActionResult SearchProduct(int? page, string keywords)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 8;
+            const int pageSize = 12;
             var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active && p.Name.Contains(keywords),
-                            o => o.OrderByDescending(p => p.CreateDate));
+                            o => o.OrderBy(p => p.Sort));
 
             if (string.IsNullOrEmpty(keywords))
             {
@@ -382,18 +381,18 @@ namespace ApLucDongAnh.Controllers
             };
             return View(model);
         }
-        public PartialViewResult GetSearchProduct(string keywords, int? page, string sort = "date-desc")
+        public PartialViewResult GetSearchProduct(string keywords, int? page, string sort)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 8;
+            const int pageSize = 12;
             var products = _unitOfWork.ProductRepository.GetQuery(p => p.Active && p.Name.Contains(keywords),
-                            o => o.OrderByDescending(p => p.CreateDate));
+                            o => o.OrderBy(p => p.Sort));
             switch (sort)
             {
                 case "date-asc":
                     products = products.OrderBy(a => a.CreateDate);
                     break;
-                default:
+                case "date-desc":
                     products = products.OrderByDescending(a => a.CreateDate);
                     break;
             }
