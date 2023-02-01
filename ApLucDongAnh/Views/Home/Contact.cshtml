@@ -3,6 +3,7 @@
 @{
     var config = (ConfigSite)HttpContext.Current.Application["ConfigSite"];
     ViewBag.Title = "Liên hệ";
+    ViewBag.Description = "Liên hệ";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("Contact");
 }
 

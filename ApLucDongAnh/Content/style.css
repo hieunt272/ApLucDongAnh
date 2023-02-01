@@ -1868,7 +1868,7 @@ input::-webkit-inner-spin-button {
 }
 .banner-category .description {
   text-align: center;
-  width: 800px;
+  width: 900px;
   color: #fff;
   position: relative;
   line-height: 20px;
@@ -3384,6 +3384,7 @@ input::-webkit-inner-spin-button {
   font-family: "Montserrat-Bold";
   font-size: 1.5rem;
   line-height: 30px;
+  text-align: justify;
 }
 .product-detail .product-info {
   margin-top: 15px;
@@ -3421,6 +3422,7 @@ input::-webkit-inner-spin-button {
 .product-detail .tab-pane {
   padding: 30px 40px;
   border: 1px solid #DEDEDE;
+  text-align: justify;
 }
 .product-detail .tab-pane table {
   width: 100% !important;

@@ -145,6 +145,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductVcmsController.cs" />
     <Compile Include="Controllers\ProjectVcmsController.cs" />
+    <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="Controllers\UploaderController.cs" />
     <Compile Include="Controllers\VcmsController.cs" />
     <Compile Include="DAL\DataEntities.cs" />
@@ -382,6 +383,7 @@
     <Content Include="Content\adminSite.less" />
     <Content Include="Content\login.less" />
     <Content Include="Content\style.scss" />
+    <Content Include="google83ee31c4af3562ad.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\aos.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -559,6 +561,7 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\waypoints.min.js" />
+    <Content Include="sitemap.xml" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-duotone-900.svg" />
     <Content Include="webfonts\fa-light-300.svg" />

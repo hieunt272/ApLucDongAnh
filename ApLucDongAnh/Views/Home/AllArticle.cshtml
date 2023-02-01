@@ -2,8 +2,8 @@
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Tin Tức";
+    ViewBag.Description = "Tin tức";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllArticle");
-    ViewBag.Robots = "noindex";
     var fa = Model.Articles.FirstOrDefault();
     if (fa?.Image != null)
     {

@@ -2,8 +2,8 @@
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Dự án";
+    ViewBag.Description = "Dự án";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllProject");
-    ViewBag.Robots = "noindex";
 
     var fa = Model.Projects.FirstOrDefault();
     if (fa?.ListImage != null)

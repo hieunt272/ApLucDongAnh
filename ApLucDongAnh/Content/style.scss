@@ -3827,6 +3827,7 @@ input::-webkit-inner-spin-button {
         @include MontserratBold;
         font-size: 1.5rem;
         line-height: 30px;
+        text-align: justify;
     }
 
     .product-info {
@@ -3874,6 +3875,7 @@ input::-webkit-inner-spin-button {
     .tab-pane {
         padding: 30px 40px;
         border: 1px solid #DEDEDE;
+        text-align: justify;
 
         table {
             width: 100% !important;

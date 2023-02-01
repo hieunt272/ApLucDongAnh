@@ -3,8 +3,8 @@
 @model ApLucDongAnh.ViewModel.CategoryProductViewModel
 @{
     ViewBag.Title = "Sản phẩm";
+    ViewBag.Description = "Sản phẩm";
     ViewBag.Canonical = Request.Url?.GetLeftPart(UriPartial.Authority) + Url.Action("AllProduct");
-    ViewBag.Robots = "noindex";
     var fp = Model.Products.FirstOrDefault();
     if (fp?.ListImage != null)
     {

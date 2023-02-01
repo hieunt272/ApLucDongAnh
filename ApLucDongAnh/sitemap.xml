@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/products.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/products-categories.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/articles.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/article-categories.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/article-images.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://lohoidonganh.com/sitemap/product-images.xml</loc>
+  </sitemap>
+</sitemapindex>
