@@ -17,7 +17,10 @@
                     <input type="hidden" name="Order.ProductId" value="@Model.Product.Id" />
                     <input type="hidden" name="Order.ProductName" value="@Model.Product.Name" />
                     <input type="hidden" name="Order.ProductUrl" value="@Model.Product.Url" />
-                    <input type="hidden" name="Order.ProductImg" value="@Model.Product.ListImage.Split(',')[0]" />
+                    @if (Model.Product.ListImage != null)
+                    {
+                        <input type="hidden" name="Order.ProductImg" value="@Model.Product.ListImage.Split(',')[0]" />
+                    }
                     <div class="info-product">
                         <div class="product-title">Sản phẩm:</div>
                         <strong>@Model.Product.Name</strong>

@@ -511,12 +511,11 @@ namespace ApLucDongAnh.Controllers
         #endregion
 
         [ChildActionOnly]
-        public PartialViewResult OrderForm(string url)
+        public PartialViewResult OrderForm(Product product)
         {
-            var product = _unitOfWork.ProductRepository.GetQuery(a => a.Url == url).FirstOrDefault();
             var model = new OrderFormViewModel
             {
-                Product = product,
+                Product = product
             };
             return PartialView(model);
         }

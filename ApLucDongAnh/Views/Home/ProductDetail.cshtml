@@ -95,7 +95,7 @@
                 <h1 class="product-name">
                     @Model.Product.Name
                 </h1>
-                <div class="product-info">
+                <div class="product-info content-detail">
                     @Html.Raw(Model.Product.Infomation)
                 </div>
                 <div class="product-contact">
@@ -160,7 +160,7 @@
                     @foreach (var item in Model.Products)
                     {
                         <div class="main-item product-item">
-                            @if (item.Hot == true)
+                            @if (item.Hot)
                             {
                                 <div class="product-hot">Best Seller</div>
                             }
@@ -200,7 +200,7 @@
     </div>
 </section>
 
-@Html.Action("OrderForm")
+@Html.Action("OrderForm", new { product = Model.Product })
 
 @section scripts {
     <script>
